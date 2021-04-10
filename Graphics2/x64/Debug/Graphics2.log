@@ -1,0 +1,8 @@
+﻿  SceneNodePlane.cpp
+F:\Graphics 2 backups\Backups\DirectXFrameworkLive\DirectXFramework\Graphics2\SceneNodePlane.cpp(58,55): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
+F:\Graphics 2 backups\Backups\DirectXFrameworkLive\DirectXFramework\Graphics2\SceneNodePlane.cpp(71,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics 2 backups\Backups\DirectXFrameworkLive\DirectXFramework\Graphics2\SceneNodePlane.cpp(71,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics 2 backups\Backups\DirectXFrameworkLive\DirectXFramework\Graphics2\SceneNodePlane.cpp(71,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics 2 backups\Backups\DirectXFrameworkLive\DirectXFramework\Graphics2\SceneNodePlane.cpp(77,50): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+F:\Graphics 2 backups\Backups\DirectXFrameworkLive\DirectXFramework\Graphics2\SceneNodePlane.cpp(91,53): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  Graphics2.vcxproj -> F:\Graphics 2 backups\Backups\DirectXFrameworkLive\DirectXFramework\x64\Debug\Graphics2.exe

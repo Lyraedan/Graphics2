@@ -1,30 +1,4 @@
-﻿  SceneNodeTerrain.cpp
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(27,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(27,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(28,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(28,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(29,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(29,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(30,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(30,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(33,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(33,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(33,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(37,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(39,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(39,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(40,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(40,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(41,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(41,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(42,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(42,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(45,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(45,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(45,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(60,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(63,30): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(65,29): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+﻿  SceneNodeChunk.cpp
   SceneNodeWater.cpp
   Generating Code...
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

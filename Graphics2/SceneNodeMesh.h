@@ -43,6 +43,8 @@ public:
 	void AddIndice(UINT  p1, UINT  p2, UINT p3);
 
 	const wchar_t* texture = L"";
+	void BuildRendererState(D3D11_CULL_MODE mode);
+
 private:
 	void BuildGeometry();
 	void BuildConstantBuffer();
@@ -65,4 +67,7 @@ private:
 	ComPtr<ID3D11ShaderResourceView> _texture;
 	ComPtr<ID3D11Device> _device;
 	ComPtr<ID3D11DeviceContext> _deviceContext;
+
+	ComPtr<ID3D11RasterizerState>    _defaultRasteriserState;
+	ComPtr<ID3D11RasterizerState>    _noCullRasteriserState;
 };

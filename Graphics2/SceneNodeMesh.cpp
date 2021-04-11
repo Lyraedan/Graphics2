@@ -17,9 +17,7 @@ bool SceneNodeMesh::Initialise()
 }
 
 
-void SceneNodeMesh::Tick(XMMATRIX& completeTransform) { 
-
-}
+void SceneNodeMesh::Tick(XMMATRIX& completeTransform) { }
 
 
 void SceneNodeMesh::Render()
@@ -49,7 +47,9 @@ void SceneNodeMesh::Render()
 	_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
 	_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0); // This line is causing a crash before implementing shaders, vertex layout, constant buffer
+	_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0);
+
+	_deviceContext->RSSetState(_defaultRasteriserState.Get());
 }
 
 void SceneNodeMesh::SetupMesh() { }
@@ -172,6 +172,24 @@ void SceneNodeMesh::AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uv)
 void SceneNodeMesh::AddIndice(UINT p1, UINT p2, UINT p3)
 {
 	indices.push_back({ p1, p2, p3 });
+}
+
+void SceneNodeMesh::BuildRendererState(D3D11_CULL_MODE mode)
+{
+	D3D11_RASTERIZER_DESC rasteriserDesc;
+	rasteriserDesc.FillMode = D3D11_FILL_SOLID;
+	rasteriserDesc.CullMode = mode;
+	rasteriserDesc.FrontCounterClockwise = true;
+	rasteriserDesc.DepthBias = 0;
+	rasteriserDesc.SlopeScaledDepthBias = 0.0f;
+	rasteriserDesc.DepthBiasClamp = 0.0f;
+	rasteriserDesc.DepthClipEnable = true;
+	rasteriserDesc.ScissorEnable = false;
+	rasteriserDesc.MultisampleEnable = false;
+	rasteriserDesc.AntialiasedLineEnable = false;
+	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _defaultRasteriserState.GetAddressOf()));
+	rasteriserDesc.CullMode = D3D11_CULL_NONE;
+	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _noCullRasteriserState.GetAddressOf()));
 }
 
 void SceneNodeMesh::Shutdown()

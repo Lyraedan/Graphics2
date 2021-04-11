@@ -1,5 +1,5 @@
 ﻿  SceneNodePlane.cpp
-F:\Graphics2\Graphics2\SceneNodePlane.cpp(30,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
-F:\Graphics2\Graphics2\SceneNodePlane.cpp(30,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
-F:\Graphics2\Graphics2\SceneNodePlane.cpp(30,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(32,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(32,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(32,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

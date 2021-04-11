@@ -16,6 +16,7 @@ void SceneNodePlane::Tick(XMMATRIX& completeTransform)
 
 void SceneNodePlane::SetupMesh() {
 	// Load our plane model into memory
+	BuildRendererState(D3D11_CULL_BACK);
 	objLoader.LoadModel("models/plane.obj");
 	texture = L"models/plane.bmp";
 

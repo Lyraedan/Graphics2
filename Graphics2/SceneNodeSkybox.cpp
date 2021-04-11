@@ -7,24 +7,36 @@ bool SceneNodeSkybox::Initialise()
 	if (_device == nullptr || _deviceContext == nullptr) {
 		return false;
 	}
+	// Load our plane model into memory
+	objLoader.LoadModel("plane/skybox.obj");
+
 	BuildGeometry();
 	BuildShaders(); // causes crash without hlsl shader
 	BuildVertexLayout(); // causes crash fixed after adding hlsl shader
 	BuildConstantBuffer();
 	BuildRendererState(D3D11_CULL_NONE);
 	BuildTexture();
-    return true;
+	return true;
 }
+
+
+float skyY = 0;
+void SceneNodeSkybox::Tick()
+{
+	skyY++;
+	float skyScl = 150;
+	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0) * XMMatrixRotationAxis(XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f), skyY * 0.5f * XM_PI / 180.0f));
+
+}
+
 
 void SceneNodeSkybox::Render()
 {
-	// Disable culling
-	//_deviceContext->RSGetState();
 	XMMATRIX view = DirectXFramework::GetDXFramework()->GetViewTransformation();
 	XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
 	XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
-	float skyScl = 150;
-	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0));
+
+	Tick();
 
 	CBUFFER cBuffer;
 	cBuffer.CompleteTransformation = comp;
@@ -44,103 +56,50 @@ void SceneNodeSkybox::Render()
 	UINT offset = 0;
 	_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
 	_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // draw triangles
-	_deviceContext->DrawIndexed(36, 0, 0); // This line is causing a crash before implementing shaders, vertex layout, constant buffer
-
-	// Re-enable culling
+	_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0); // This line is causing a crash before implementing shaders, vertex layout, constant buffer
+	
 	_deviceContext->RSSetState(_defaultRasteriserState.Get());
 }
 
-// What im trying to achieve: world * view * projection
-//										= view * projection
-
 void SceneNodeSkybox::BuildGeometry() {
+	for(ObjLoader::Face face : objLoader.faces) {
+		for (XMFLOAT3 v : face.faceData) {
+			XMFLOAT3 verts = XMFLOAT3(objLoader.verts.at((int) v.x - 1));
+			XMFLOAT2 uv = XMFLOAT2(objLoader.uvs.at((int) v.y - 1));
+			XMFLOAT3 normals = XMFLOAT3(objLoader.normals.at((int) v.z - 1));
+			AddVertex(verts, normals, uv);
+		}
 
-	/*
-	float scale = 130;
-	AddVertex(XMFLOAT3(-scale, -scale, -scale), XMFLOAT3(0, 0, 0), XMFLOAT2(0.25f, 0.6f));
-	AddVertex(XMFLOAT3(-scale, scale, -scale), XMFLOAT3(0, 0, 0), XMFLOAT2(0.25f, 0.3f));
-	AddVertex(XMFLOAT3(scale, scale, -scale), XMFLOAT3(0, 0, 0), XMFLOAT2(0.5f, 0.3f));
-	AddVertex(XMFLOAT3(scale, -scale, -scale), XMFLOAT3(0, 0, 0), XMFLOAT2(0.5f, 0.6f));
-	AddVertex(XMFLOAT3(scale, scale, -scale), XMFLOAT3(0, 0, 0), XMFLOAT2(0.5f, 0.3f));
-	AddVertex(XMFLOAT3(scale, scale, scale), XMFLOAT3(0, 0, 0), XMFLOAT2(0.75f, 0.3f));
-	AddVertex(XMFLOAT3(scale, -scale, scale), XMFLOAT3(0, 0, 0), XMFLOAT2(0.75f, 0.6f));
-	*/
-
-	AddVertex(XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(0.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(0.0f, 1.0f));
-	AddVertex(XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(1.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
-
-	// Side 2
-	AddVertex(XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f, 0.0f));
-	AddVertex(XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f, 1.0f));
-	AddVertex(XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f, 1.0f));
-
-	// Side 3
-	AddVertex(XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-	AddVertex(XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 1.0f));
-	AddVertex(XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 1.0f));
-
-	// Side 4
-	AddVertex(XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(0.0f, 1.0f));
-	AddVertex(XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(1.0f, 1.0f));
-
-	// Side 5
-	AddVertex(XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 1.0f));
-	AddVertex(XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-	AddVertex(XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f));
-
-	// Side 6
-	AddVertex(XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-	AddVertex(XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 1.0f));
-	AddVertex(XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-	AddVertex(XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f));
+		for (XMFLOAT3 tris : face.tris) {
+			AddIndice(tris.x, tris.y, tris.z);
+		}
+	}
 
 	D3D11_BUFFER_DESC vbd;
 	vbd.Usage = D3D11_USAGE_IMMUTABLE;
-	vbd.ByteWidth = sizeof(Vertex) * 24;
+	vbd.ByteWidth = sizeof(Vertex) * vertices.size();
 	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vbd.CPUAccessFlags = 0;
 	vbd.MiscFlags = 0;
 	vbd.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA vinitData;
-	vinitData.pSysMem = vertices.data();
+	vinitData.pSysMem = vertices.data(); //objLoader.verts.data();
 
 	ThrowIfFailed(_device->CreateBuffer(&vbd, &vinitData, &vertexBuffer));
 
-	// Create the index buffer
-	UINT indices[] = {
-						0, 1, 2,
-						2, 1, 3,
-						4, 5, 6,
-						6, 5, 7,
-						8, 9, 10,
-						10, 9, 11,
-						12, 13, 14,
-						14, 13, 15,
-						16, 17, 18,
-						18, 17, 19,
-						20, 21, 22,
-						22, 21, 23
-	};
-
+	// Index buffer
 	D3D11_BUFFER_DESC ibd;
 	ibd.Usage = D3D11_USAGE_IMMUTABLE;
-	ibd.ByteWidth = sizeof(UINT) * 36;
+	ibd.ByteWidth = sizeof(UINT) * (indices.size() * 3);
 	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	ibd.CPUAccessFlags = 0;
 	ibd.MiscFlags = 0;
 	ibd.StructureByteStride = 0;
 
 	D3D11_SUBRESOURCE_DATA iinitData;
-	iinitData.pSysMem = indices;
+	iinitData.pSysMem = indices.data();
 
 	ThrowIfFailed(_device->CreateBuffer(&ibd, &iinitData, &indexBuffer));
 }
@@ -180,7 +139,7 @@ void SceneNodeSkybox::BuildShaders() {
 	ComPtr<ID3DBlob> compilationMessages = nullptr;
 
 	//Compile vertex shader
-	HRESULT hr = D3DCompileFromFile(L"skybox.hlsl",
+	HRESULT hr = D3DCompileFromFile(L"shader.hlsl",
 		nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"VS", "vs_5_0",
 		shaderCompileFlags, 0,
@@ -219,11 +178,21 @@ void SceneNodeSkybox::BuildTexture()
 {
 	ThrowIfFailed(CreateWICTextureFromFile(_device.Get(),
 		_deviceContext.Get(),
-		L"grass.bmp",
+		L"plane/skybox_temp.png",
 		nullptr,
 		_texture.GetAddressOf()
 	));
 
+}
+
+void SceneNodeSkybox::AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uv)
+{
+	vertices.push_back({ position,  normals,  uv });
+}
+
+void SceneNodeSkybox::AddIndice(UINT p1, UINT p2, UINT p3)
+{
+	indices.push_back({ p1, p2, p3 });
 }
 
 void SceneNodeSkybox::BuildRendererState(D3D11_CULL_MODE mode)
@@ -245,11 +214,7 @@ void SceneNodeSkybox::BuildRendererState(D3D11_CULL_MODE mode)
 	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _noCullRasteriserState.GetAddressOf()));
 }
 
-void SceneNodeSkybox::AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uv)
-{
-	vertices.push_back({ position,  normals,  uv });
-}
-
 void SceneNodeSkybox::Shutdown()
 {
+
 }

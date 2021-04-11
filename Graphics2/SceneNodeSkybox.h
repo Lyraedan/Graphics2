@@ -3,12 +3,11 @@
 #include "SceneNode.h"
 #include "Graphics2.h"
 #include "WICTextureLoader.h"
+#include "ObjLoader.h"
 #include <list>
 
 class SceneNodeSkybox : public SceneNode
 {
-	//Gerstner wave
-
 	struct Vertex
 	{
 		XMFLOAT3 Position;
@@ -25,27 +24,36 @@ class SceneNodeSkybox : public SceneNode
 		XMFLOAT4    AmbientColour;
 	};
 
+	struct Indice
+	{
+		UINT p1;
+		UINT p2;
+		UINT p3;
+	};
+
 public:
 	SceneNodeSkybox(wstring name) : SceneNode(name) {};
 
 	bool Initialise() override;
 	virtual void Render() override;
 	virtual void Shutdown() override;
+	void Tick();
 
 	void BuildGeometry();
 	void BuildConstantBuffer();
 	void BuildVertexLayout();
 	void BuildShaders();
 	void BuildTexture();
-
 	void BuildRendererState(D3D11_CULL_MODE mode);
 
 	void AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uvs);
+	void AddIndice(UINT  p1, UINT  p2, UINT p3);
 
 private:
+	ObjLoader objLoader;
 	XMMATRIX worldTransformation;
 	std::vector<Vertex> vertices = std::vector<Vertex>();
-
+	std::vector<Indice> indices = std::vector<Indice>();
 	ComPtr<ID3D11Buffer>			vertexBuffer;
 	ComPtr<ID3D11Buffer>			indexBuffer;
 	ComPtr<ID3D11Buffer>			constantBuffer;
@@ -58,7 +66,7 @@ private:
 	ComPtr<ID3D11ShaderResourceView> _texture;
 	ComPtr<ID3D11Device> _device;
 	ComPtr<ID3D11DeviceContext> _deviceContext;
-
+	
 	ComPtr<ID3D11RasterizerState>    _defaultRasteriserState;
 	ComPtr<ID3D11RasterizerState>    _noCullRasteriserState;
 };

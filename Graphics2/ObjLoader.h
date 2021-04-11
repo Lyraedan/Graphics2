@@ -2,7 +2,6 @@
 #include "Graphics2.h"
 #include <iostream>
 #include <fstream>
-#include <iomanip>
 
 class ObjLoader
 {

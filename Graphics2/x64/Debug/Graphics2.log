@@ -1,8 +1,25 @@
-﻿  SceneNodePlane.cpp
+﻿  ObjLoader.cpp
+F:\Graphics2\Graphics2\ObjLoader.cpp(68,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+F:\Graphics2\Graphics2\ObjLoader.cpp(69,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+F:\Graphics2\Graphics2\ObjLoader.cpp(70,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+  SceneNodePlane.cpp
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(58,55): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(77,50): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(91,53): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  Generating Code...
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

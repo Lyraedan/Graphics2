@@ -21,6 +21,7 @@ void Graphics2::CreateSceneGraph()
 {
 	SceneGraphPointer sceneGraph = GetSceneGraph();
 
+	/*
 	// Apply a seed to the generator
 	unsigned int stime = static_cast<unsigned int>(time(NULL));
 	srand(stime);

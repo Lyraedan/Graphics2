@@ -1,64 +1,8 @@
-﻿  AABB.cpp
-  Framework.cpp
-  DirectXFramework.cpp
-  Graphics2.cpp
-F:\Graphics2\Graphics2\Graphics2.cpp(29,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(29,19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(79,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(79,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(80,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(80,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(81,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(81,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(82,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(82,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(85,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(85,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(85,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(89,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(91,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(91,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(92,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(92,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(93,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(93,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(94,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(94,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(97,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(97,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(97,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(112,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\Graphics2.cpp(115,30): warning C4305: '+=': truncation from 'double' to 'float'
-F:\Graphics2\Graphics2\Graphics2.cpp(117,29): warning C4305: '+=': truncation from 'double' to 'float'
-  ObjLoader.cpp
-F:\Graphics2\Graphics2\ObjLoader.cpp(68,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-F:\Graphics2\Graphics2\ObjLoader.cpp(69,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-F:\Graphics2\Graphics2\ObjLoader.cpp(70,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=int
-          ]
-  PerlinNoise.cpp
-  SceneGraph.cpp
-  SceneNodePlane.cpp
+﻿  SceneNodePlane.cpp
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(58,55): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(77,50): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodePlane.cpp(91,53): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
-  SceneNodeSkybox.cpp
-  SceneNodeTerrain.cpp
-  SceneNodePhysicsCube.cpp
-  SceneNodeWater.cpp
-  WICTextureLoader.cpp
-  Generating Code...
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

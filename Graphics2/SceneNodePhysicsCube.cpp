@@ -11,6 +11,7 @@ void SceneNodePhysicsCube::Tick(XMMATRIX& completeTransform)
 	int z = (int)(floor(zPos + xPos / 5)); //(zPos * 50) / 5; // / 50
 
 	// Disable falling if passed a threashold
+	/*
 	if (yPos > -10) {
 		if (yPos > terrain[x][z] + 5) {
 			float gravity = 0.5f;
@@ -22,8 +23,18 @@ void SceneNodePhysicsCube::Tick(XMMATRIX& completeTransform)
 		}
 	}
 
+	*/
+	if (yPos > terrain[x][z] + 1) {
+		float gravity = 0.5f;
+		yPos -= gravity;
+	}
+	else {
+		yPos = terrain[x][z] + 1;
+		xPos += 0.1f;
+	}
+
 	yRot++;
-	SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-20, 0, 0) * XMMatrixRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), yRot * 0.5f * XM_PI / 180.0f));
+	SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(xPos, yPos, zPos)/* * XMMatrixRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), yRot * 0.5f * XM_PI / 180.0f)*/);
 
 }
 

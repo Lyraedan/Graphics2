@@ -23,7 +23,7 @@ public:
 	AABB aabb;
 
 	float xPos = 0;
-	float yPos = 100;
+	float yPos = 30;
 	float zPos = 0;
 	float terrain[50][50];
 

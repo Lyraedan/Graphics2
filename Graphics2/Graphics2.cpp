@@ -21,13 +21,6 @@ void Graphics2::CreateSceneGraph()
 	srand(stime);
 
 	/*
-	// Generate our terrain
-	UpdateHeight(rand(), rand());
-
-	// Create our mesh and apply the generated heightmap to it
-	GenerateTerrain(XMFLOAT3(0, 0, 0), sceneGraph);
-	*/
-
 	shared_ptr<SceneNodeTerrain> terrain = make_shared<SceneNodeTerrain>(L"Terrain");
 	terrain->SetSceneGraph(sceneGraph);
 	terrain->GenerateTerrain(XMFLOAT3(0, 0, 0));
@@ -40,13 +33,12 @@ void Graphics2::CreateSceneGraph()
 	cube->setPosition(0, 30, 0);
 	sceneGraph->Add(cube);
 	cube->SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(0, 30, 0));
-
+	*/
 
 	// Plane
 	shared_ptr<SceneNodePlane> plane = make_shared<SceneNodePlane>(L"Plane");
 	sceneGraph->Add(plane);
 	plane->SetWorldTransform(XMMatrixScaling(2.5f, 2.5f, 2.5f) * XMMatrixTranslation(0, 0, 0));
-
 
 }
 

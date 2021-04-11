@@ -9,6 +9,7 @@ bool SceneNodeTerrain::Initialise()
 
 void SceneNodeTerrain::Render()
 {
+
 }
 
 void SceneNodeTerrain::Shutdown()
@@ -22,6 +23,7 @@ void SceneNodeTerrain::GenerateTerrain(XMFLOAT3 terrainOffset) {
 		for (int x = 0; x < chunkSize - 1; x++) {
 
 			if (terrain[x][z] > minHeight) {
+				//Todo swap to a single mesh instead of a bunch of tiles
 				shared_ptr<SceneNodeChunk> mesh = make_shared<SceneNodeChunk>(L"Chunk");
 				int scl = 1;
 				mesh->AddVertex(XMFLOAT3(-scl + x, terrain[x][z], -scl + z), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));

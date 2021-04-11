@@ -35,14 +35,16 @@ void Graphics2::CreateSceneGraph()
 
 	// Create our mesh and apply the generated heightmap to it
 	GenerateTerrain(XMFLOAT3(0, 0, 0), sceneGraph);
-	
+	*/
+
 	// Place other objects
 	shared_ptr<SceneNodePhysicsCube> cube = make_shared<SceneNodePhysicsCube>(L"PhysicsCube");
 	cube->SetHeightMap(terrain);
 	cube->aabb.SetSize(5, 5, 5);
-	cube->SetPosition(0, 100, 0);
+	cube->setPosition(0, 30, 0);
 	sceneGraph->Add(cube);
-	*/
+	cube->SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(0, 30, 0));
+
 
 	// Plane
 	shared_ptr<SceneNodePlane> plane = make_shared<SceneNodePlane>(L"Plane");

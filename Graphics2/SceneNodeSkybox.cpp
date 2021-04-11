@@ -15,7 +15,6 @@ void SceneNodeSkybox::Tick(XMMATRIX& completeTransform)
 }
 
 void SceneNodeSkybox::SetupMesh() {
-	// Load our plane model into memory
 	BuildRendererState(D3D11_CULL_FRONT);
 	LoadModel("models/skybox.obj", L"models/skybox.png");
 }

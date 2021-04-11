@@ -28,7 +28,7 @@ void SceneNodePhysicsCube::Tick(XMMATRIX& completeTransform)
 }
 
 void SceneNodePhysicsCube::SetupMesh() {
-	BuildRendererState(D3D11_CULL_NONE);
+	BuildRendererState(D3D11_CULL_BACK);
 	LoadModel("models/block.obj", L"models/block.png");
 }
 

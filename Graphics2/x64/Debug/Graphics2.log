@@ -1,8 +1,16 @@
-﻿  SceneNodeSkybox.cpp
+﻿  SceneNodePlane.cpp
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(58,55): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(71,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(77,50): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodePlane.cpp(91,53): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  SceneNodeSkybox.cpp
 F:\Graphics2\Graphics2\SceneNodeSkybox.cpp(60,55): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeSkybox.cpp(75,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeSkybox.cpp(75,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeSkybox.cpp(75,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeSkybox.cpp(81,50): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeSkybox.cpp(95,53): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  Generating Code...
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

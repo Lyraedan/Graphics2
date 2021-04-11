@@ -8,7 +8,7 @@ bool SceneNodePlane::Initialise()
 		return false;
 	}
 	// Load our plane model into memory
-	objLoader.LoadModel("plane/plane.obj");
+	objLoader.LoadModel("models/plane.obj");
 
 	BuildGeometry();
 	BuildShaders(); // causes crash without hlsl shader
@@ -174,7 +174,7 @@ void SceneNodePlane::BuildTexture()
 {
 	ThrowIfFailed(CreateWICTextureFromFile(_device.Get(),
 		_deviceContext.Get(),
-		L"plane/plane2.bmp",
+		L"models/plane.bmp",
 		nullptr,
 		_texture.GetAddressOf()
 	));

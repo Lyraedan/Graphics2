@@ -8,7 +8,7 @@ bool SceneNodeSkybox::Initialise()
 		return false;
 	}
 	// Load our plane model into memory
-	objLoader.LoadModel("plane/skybox.obj");
+	objLoader.LoadModel("models/skybox.obj");
 
 	BuildGeometry();
 	BuildShaders(); // causes crash without hlsl shader
@@ -25,7 +25,7 @@ void SceneNodeSkybox::Tick()
 {
 	skyY++;
 	float skyScl = 150;
-	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0) * XMMatrixRotationAxis(XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f), skyY * 0.5f * XM_PI / 180.0f));
+	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0)/* * XMMatrixRotationAxis(XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f), skyY * 0.5f * XM_PI / 180.0f)*/);
 
 }
 
@@ -178,7 +178,7 @@ void SceneNodeSkybox::BuildTexture()
 {
 	ThrowIfFailed(CreateWICTextureFromFile(_device.Get(),
 		_deviceContext.Get(),
-		L"plane/skybox_temp.png",
+		L"models/skybox.png",
 		nullptr,
 		_texture.GetAddressOf()
 	));

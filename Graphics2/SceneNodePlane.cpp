@@ -2,63 +2,23 @@
 
 bool SceneNodePlane::Initialise()
 {
-	_device = DirectXFramework::GetDXFramework()->GetDevice();
-	_deviceContext = DirectXFramework::GetDXFramework()->GetDeviceContext();
-	if (_device == nullptr || _deviceContext == nullptr) {
-		return false;
-	}
-	// Load our plane model into memory
-	objLoader.LoadModel("models/plane.obj");
-
-	BuildGeometry();
-	BuildShaders(); // causes crash without hlsl shader
-	BuildVertexLayout(); // causes crash fixed after adding hlsl shader
-	BuildConstantBuffer();
-	BuildTexture();
-	return true;
+	return SceneNodeMesh::Initialise();
 }
 
 
 float y = 0;
-void SceneNodePlane::Tick()
+void SceneNodePlane::Tick(XMMATRIX& completeTransform)
 {
 	y++;
 	SetWorldTransform(XMMatrixScaling(2.5f, 2.5f, 2.5f) * XMMatrixTranslation(0, 0, 0) * XMMatrixRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), y * 0.5f * XM_PI / 180.0f));
 
 }
 
+void SceneNodePlane::SetupMesh() {
+	// Load our plane model into memory
+	objLoader.LoadModel("models/plane.obj");
+	texture = L"models/plane.bmp";
 
-void SceneNodePlane::Render()
-{
-	XMMATRIX view = DirectXFramework::GetDXFramework()->GetViewTransformation();
-	XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
-	XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
-
-	Tick();
-
-	CBUFFER cBuffer;
-	cBuffer.CompleteTransformation = comp;
-	cBuffer.WorldTransformation = XMLoadFloat4x4(&_worldTransformation);
-	cBuffer.AmbientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-	cBuffer.LightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 1.0f, 0.0f));
-	cBuffer.LightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-
-	_deviceContext->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
-	_deviceContext->UpdateSubresource(constantBuffer.Get(), 0, 0, &cBuffer, 0, 0);
-
-	// Set the texture to be used by the pixel shader
-	_deviceContext->PSSetShaderResources(0, 1, _texture.GetAddressOf());
-
-
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-	_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
-	_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0); // This line is causing a crash before implementing shaders, vertex layout, constant buffer
-}
-
-void SceneNodePlane::BuildGeometry() {
 	for(ObjLoader::Face face : objLoader.faces) {
 		for (XMFLOAT3 v : face.faceData) {
 			XMFLOAT3 verts = XMFLOAT3(objLoader.verts.at((int) v.x - 1));
@@ -71,124 +31,6 @@ void SceneNodePlane::BuildGeometry() {
 			AddIndice(tris.x, tris.y, tris.z);
 		}
 	}
-
-	D3D11_BUFFER_DESC vbd;
-	vbd.Usage = D3D11_USAGE_IMMUTABLE;
-	vbd.ByteWidth = sizeof(Vertex) * vertices.size();
-	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vbd.CPUAccessFlags = 0;
-	vbd.MiscFlags = 0;
-	vbd.StructureByteStride = 0;
-
-	D3D11_SUBRESOURCE_DATA vinitData;
-	vinitData.pSysMem = vertices.data(); //objLoader.verts.data();
-
-	ThrowIfFailed(_device->CreateBuffer(&vbd, &vinitData, &vertexBuffer));
-
-	// Index buffer
-	D3D11_BUFFER_DESC ibd;
-	ibd.Usage = D3D11_USAGE_IMMUTABLE;
-	ibd.ByteWidth = sizeof(UINT) * (indices.size() * 3);
-	ibd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	ibd.CPUAccessFlags = 0;
-	ibd.MiscFlags = 0;
-	ibd.StructureByteStride = 0;
-
-	D3D11_SUBRESOURCE_DATA iinitData;
-	iinitData.pSysMem = indices.data();
-
-	ThrowIfFailed(_device->CreateBuffer(&ibd, &iinitData, &indexBuffer));
-}
-
-void SceneNodePlane::BuildConstantBuffer()
-{
-	D3D11_BUFFER_DESC desc;
-	ZeroMemory(&desc, sizeof(desc));
-	desc.Usage = D3D11_USAGE_DEFAULT;
-	desc.ByteWidth = sizeof(CBUFFER);
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-
-	ThrowIfFailed(_device->CreateBuffer(&desc, NULL, constantBuffer.GetAddressOf()));
-}
-
-void SceneNodePlane::BuildVertexLayout()
-{
-	// Create the vertex input layout. This tells DirectX the format
-	// of each of the vertices we are sending to it.
-	D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
-	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	};
-
-	ThrowIfFailed(_device->CreateInputLayout(vertexDesc, ARRAYSIZE(vertexDesc), _vertexShaderByteCode->GetBufferPointer(), _vertexShaderByteCode->GetBufferSize(), _layout.GetAddressOf()));
-	_deviceContext->IASetInputLayout(_layout.Get());
-}
-
-void SceneNodePlane::BuildShaders() {
-	DWORD shaderCompileFlags = 0;
-#if defined( _DEBUG )
-	shaderCompileFlags = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
-#endif
-
-	ComPtr<ID3DBlob> compilationMessages = nullptr;
-
-	//Compile vertex shader
-	HRESULT hr = D3DCompileFromFile(L"shader.hlsl",
-		nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		"VS", "vs_5_0",
-		shaderCompileFlags, 0,
-		_vertexShaderByteCode.GetAddressOf(),
-		compilationMessages.GetAddressOf());
-
-	if (compilationMessages.Get() != nullptr)
-	{
-		// If there were any compilation messages, display them
-		MessageBoxA(0, (char*)compilationMessages->GetBufferPointer(), 0, 0);
-	}
-	// Even if there are no compiler messages, check to make sure there were no other errors.
-	ThrowIfFailed(hr);
-	ThrowIfFailed(_device->CreateVertexShader(_vertexShaderByteCode->GetBufferPointer(), _vertexShaderByteCode->GetBufferSize(), NULL, _vertexShader.GetAddressOf()));
-	_deviceContext->VSSetShader(_vertexShader.Get(), 0, 0);
-
-	// Compile pixel shader
-	hr = D3DCompileFromFile(L"shader.hlsl",
-		nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		"PS", "ps_5_0",
-		shaderCompileFlags, 0,
-		_pixelShaderByteCode.GetAddressOf(),
-		compilationMessages.GetAddressOf());
-
-	if (compilationMessages.Get() != nullptr)
-	{
-		// If there were any compilation messages, display them
-		MessageBoxA(0, (char*)compilationMessages->GetBufferPointer(), 0, 0);
-	}
-	ThrowIfFailed(hr);
-	ThrowIfFailed(_device->CreatePixelShader(_pixelShaderByteCode->GetBufferPointer(), _pixelShaderByteCode->GetBufferSize(), NULL, _pixelShader.GetAddressOf()));
-	_deviceContext->PSSetShader(_pixelShader.Get(), 0, 0);
-}
-
-void SceneNodePlane::BuildTexture()
-{
-	ThrowIfFailed(CreateWICTextureFromFile(_device.Get(),
-		_deviceContext.Get(),
-		L"models/plane.bmp",
-		nullptr,
-		_texture.GetAddressOf()
-	));
-
-}
-
-void SceneNodePlane::AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uv)
-{
-	vertices.push_back({ position,  normals,  uv });
-}
-
-void SceneNodePlane::AddIndice(UINT p1, UINT p2, UINT p3)
-{
-	indices.push_back({ p1, p2, p3 });
 }
 
 void SceneNodePlane::Shutdown()

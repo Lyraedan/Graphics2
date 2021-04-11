@@ -25,7 +25,7 @@ void SceneNodeSkybox::Tick()
 {
 	skyY++;
 	float skyScl = 150;
-	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0)/* * XMMatrixRotationAxis(XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f), skyY * 0.5f * XM_PI / 180.0f)*/);
+	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0) * XMMatrixRotationAxis(XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f), skyY * 0.5f * XM_PI / 180.0f));
 
 }
 
@@ -139,7 +139,7 @@ void SceneNodeSkybox::BuildShaders() {
 	ComPtr<ID3DBlob> compilationMessages = nullptr;
 
 	//Compile vertex shader
-	HRESULT hr = D3DCompileFromFile(L"shader.hlsl",
+	HRESULT hr = D3DCompileFromFile(L"skybox.hlsl",
 		nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"VS", "vs_5_0",
 		shaderCompileFlags, 0,
@@ -157,7 +157,7 @@ void SceneNodeSkybox::BuildShaders() {
 	_deviceContext->VSSetShader(_vertexShader.Get(), 0, 0);
 
 	// Compile pixel shader
-	hr = D3DCompileFromFile(L"shader.hlsl",
+	hr = D3DCompileFromFile(L"skybox.hlsl",
 		nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"PS", "ps_5_0",
 		shaderCompileFlags, 0,

@@ -156,6 +156,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="SceneNodeMesh.h" />
     <ClInclude Include="SceneNodePlane.h" />
     <ClInclude Include="SceneNodeSkybox.h" />
     <ClInclude Include="SceneNodeTerrain.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
+    <ClCompile Include="SceneNodeMesh.cpp" />
     <ClCompile Include="SceneNodePlane.cpp" />
     <ClCompile Include="SceneNodeSkybox.cpp" />
     <ClCompile Include="SceneNodeTerrain.cpp" />

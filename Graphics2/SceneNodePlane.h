@@ -1,12 +1,12 @@
 #pragma once
 
-#include "SceneNode.h"
+#include "SceneNodeMesh.h"
 #include "Graphics2.h"
 #include "WICTextureLoader.h"
 #include "ObjLoader.h"
 #include <list>
 
-class SceneNodePlane : public SceneNode
+class SceneNodePlane : public SceneNodeMesh
 {
 	struct Vertex
 	{
@@ -32,21 +32,12 @@ class SceneNodePlane : public SceneNode
 	};
 
 public:
-	SceneNodePlane(wstring name) : SceneNode(name) {};
+	SceneNodePlane(wstring name) : SceneNodeMesh(name) {};
 
 	bool Initialise() override;
-	virtual void Render() override;
+	virtual void Tick(XMMATRIX& completeTransform) override;
+	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
-	void Tick();
-
-	void BuildGeometry();
-	void BuildConstantBuffer();
-	void BuildVertexLayout();
-	void BuildShaders();
-	void BuildTexture();
-
-	void AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uvs);
-	void AddIndice(UINT  p1, UINT  p2, UINT p3);
 
 private:
 	ObjLoader objLoader;

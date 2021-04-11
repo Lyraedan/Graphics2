@@ -11,6 +11,7 @@ bool SceneNodeSkybox::Initialise()
 	BuildShaders(); // causes crash without hlsl shader
 	BuildVertexLayout(); // causes crash fixed after adding hlsl shader
 	BuildConstantBuffer();
+	BuildRendererState(D3D11_CULL_NONE);
 	BuildTexture();
     return true;
 }
@@ -22,8 +23,8 @@ void SceneNodeSkybox::Render()
 	XMMATRIX view = DirectXFramework::GetDXFramework()->GetViewTransformation();
 	XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
 	XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
-
-	SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(0, 30, 0));
+	float skyScl = 150;
+	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0));
 
 	CBUFFER cBuffer;
 	cBuffer.CompleteTransformation = comp;
@@ -47,7 +48,7 @@ void SceneNodeSkybox::Render()
 	_deviceContext->DrawIndexed(36, 0, 0); // This line is causing a crash before implementing shaders, vertex layout, constant buffer
 
 	// Re-enable culling
-	//_deviceContext->RSGetState();
+	_deviceContext->RSSetState(_defaultRasteriserState.Get());
 }
 
 // What im trying to achieve: world * view * projection
@@ -179,7 +180,7 @@ void SceneNodeSkybox::BuildShaders() {
 	ComPtr<ID3DBlob> compilationMessages = nullptr;
 
 	//Compile vertex shader
-	HRESULT hr = D3DCompileFromFile(L"shader.hlsl",
+	HRESULT hr = D3DCompileFromFile(L"skybox.hlsl",
 		nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"VS", "vs_5_0",
 		shaderCompileFlags, 0,
@@ -223,6 +224,25 @@ void SceneNodeSkybox::BuildTexture()
 		_texture.GetAddressOf()
 	));
 
+}
+
+void SceneNodeSkybox::BuildRendererState(D3D11_CULL_MODE mode)
+{
+	// Set default and no cull rasteriser states
+	D3D11_RASTERIZER_DESC rasteriserDesc;
+	rasteriserDesc.FillMode = D3D11_FILL_SOLID;
+	rasteriserDesc.CullMode = mode;
+	rasteriserDesc.FrontCounterClockwise = true;
+	rasteriserDesc.DepthBias = 0;
+	rasteriserDesc.SlopeScaledDepthBias = 0.0f;
+	rasteriserDesc.DepthBiasClamp = 0.0f;
+	rasteriserDesc.DepthClipEnable = true;
+	rasteriserDesc.ScissorEnable = false;
+	rasteriserDesc.MultisampleEnable = false;
+	rasteriserDesc.AntialiasedLineEnable = false;
+	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _defaultRasteriserState.GetAddressOf()));
+	rasteriserDesc.CullMode = D3D11_CULL_NONE;
+	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _noCullRasteriserState.GetAddressOf()));
 }
 
 void SceneNodeSkybox::AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uv)

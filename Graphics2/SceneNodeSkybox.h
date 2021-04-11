@@ -38,11 +38,14 @@ public:
 	void BuildShaders();
 	void BuildTexture();
 
+	void BuildRendererState(D3D11_CULL_MODE mode);
+
 	void AddVertex(XMFLOAT3 position, XMFLOAT3 normals, XMFLOAT2 uvs);
 
 private:
 	XMMATRIX worldTransformation;
 	std::vector<Vertex> vertices = std::vector<Vertex>();
+
 	ComPtr<ID3D11Buffer>			vertexBuffer;
 	ComPtr<ID3D11Buffer>			indexBuffer;
 	ComPtr<ID3D11Buffer>			constantBuffer;
@@ -55,4 +58,7 @@ private:
 	ComPtr<ID3D11ShaderResourceView> _texture;
 	ComPtr<ID3D11Device> _device;
 	ComPtr<ID3D11DeviceContext> _deviceContext;
+
+	ComPtr<ID3D11RasterizerState>    _defaultRasteriserState;
+	ComPtr<ID3D11RasterizerState>    _noCullRasteriserState;
 };

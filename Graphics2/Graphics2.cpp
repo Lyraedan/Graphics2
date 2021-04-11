@@ -38,14 +38,14 @@ void Graphics2::CreateSceneGraph()
 	cube->aabb.SetSize(5, 5, 5);
 	cube->SetPosition(0, 100, 0);
 	sceneGraph->Add(cube);
+	*/
 	
-	/*
 	// Skybox
 	float skyScale = 50;
 	shared_ptr<SceneNodeSkybox> sky = make_shared<SceneNodeSkybox>(L"Skybox");
 	sceneGraph->Add(sky);
-	sky->SetWorldTransform(XMMatrixScaling(skyScale, skyScale, skyScale) * XMMatrixTranslation(0, 30, 0));
-	*/
+	sky->SetWorldTransform(XMMatrixScaling(skyScale, skyScale, skyScale) * XMMatrixTranslation(0, 0, 0));
+	
 
 	// Plane
 	shared_ptr<SceneNodePlane> plane = make_shared<SceneNodePlane>(L"Plane");

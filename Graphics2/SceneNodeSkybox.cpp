@@ -10,7 +10,10 @@ float skyY = 0;
 void SceneNodeSkybox::Tick(XMMATRIX& completeTransform)
 {
 	skyY++;
-	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(0, 0, 0) * XMMatrixRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), skyY * 0.5f * XM_PI / 180.0f));
+	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
+	XMFLOAT4 position;
+	XMStoreFloat4(&position, cameraPosition);
+	SetWorldTransform(XMMatrixScaling(skyScl, skyScl, skyScl) * XMMatrixTranslation(position.x, position.y, position.z + (skyScl / 2)));
 
 }
 

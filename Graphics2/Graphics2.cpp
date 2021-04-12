@@ -12,7 +12,7 @@ void Graphics2::CreateSceneGraph()
 {
 	SceneGraphPointer sceneGraph = GetSceneGraph();
 
-	GetCamera()->SetCameraPosition(0.0f, 0.0f, -500.0f);
+	GetCamera()->SetCameraPosition(0.0f, 20.0f, -100.0f);
 
 	// Skybox
 	shared_ptr<SceneNodeSkybox> sky = make_shared<SceneNodeSkybox>(L"Skybox");
@@ -48,6 +48,7 @@ void Graphics2::UpdateSceneGraph()
 {
 	SceneGraphPointer sceneGraph = GetSceneGraph();
 
+	GetCamera()->SetForwardBack(1);
 	// This is where you make any changes to the local world transformations to nodes
 	// in the scene graph
 	//sceneGraph->Update(GetViewTransformation() * GetProjectionTransformation());

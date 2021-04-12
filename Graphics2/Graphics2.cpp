@@ -22,7 +22,6 @@ void Graphics2::CreateSceneGraph()
 	unsigned int stime = static_cast<unsigned int>(time(NULL));
 	srand(stime);
 
-	/*
 	shared_ptr<SceneNodeTerrain> terrain = make_shared<SceneNodeTerrain>(L"Terrain");
 	terrain->SetSceneGraph(sceneGraph);
 	terrain->GenerateTerrain(XMFLOAT3(0, 0, 0));
@@ -35,12 +34,11 @@ void Graphics2::CreateSceneGraph()
 	cube->setPosition(0, 30, 0);
 	sceneGraph->Add(cube);
 	cube->SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(0, 30, 0));
-	*/
 
 	// Plane
 	shared_ptr<SceneNodePlane> plane = make_shared<SceneNodePlane>(L"Plane");
 	sceneGraph->Add(plane);
-	plane->SetWorldTransform(XMMatrixScaling(2.5f, 2.5f, 2.5f) * XMMatrixTranslation(0, 0, 0));
+	plane->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 0, 0));
 
 }
 
@@ -69,9 +67,9 @@ void Graphics2::UpdateSceneGraph()
 	}
 	
 	if (GetAsyncKeyState(VK_NUMPAD4) < 0) {
-		GetCamera()->SetRoll(-1);
+		GetCamera()->SetYaw(-1);
 	} else if (GetAsyncKeyState(VK_NUMPAD6) < 0) {
-		GetCamera()->SetRoll(1);
+		GetCamera()->SetYaw(1);
 	}
 	// This is where you make any changes to the local world transformations to nodes
 	// in the scene graph

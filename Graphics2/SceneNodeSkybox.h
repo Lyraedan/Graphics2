@@ -15,5 +15,5 @@ public:
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
 
-	float skyScl = 150; // 150
+	float skyScl = 3000; // 150
 };

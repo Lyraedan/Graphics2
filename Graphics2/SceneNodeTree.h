@@ -3,11 +3,11 @@
 #include "SceneNodeObjModel.h"
 #include "Graphics2.h"
 
-class SceneNodePlane : public SceneNodeObjModel
+class SceneNodeTree : public SceneNodeObjModel
 {
 
 public:
-	SceneNodePlane(wstring name) : SceneNodeObjModel(name) {};
+	SceneNodeTree(wstring name) : SceneNodeObjModel(name) {};
 
 	bool Initialise() override;
 	virtual void Tick(XMMATRIX& completeTransform) override;

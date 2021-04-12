@@ -21,5 +21,7 @@ public:
 	int chunkSize = 16; //50
 private:
 	void UpdateHeight(float xOffset, float zOffset);
+	// Updated height calculation
+	float CalculateHeight(float offsetX, float offsetY, float x, float y);
 
 };

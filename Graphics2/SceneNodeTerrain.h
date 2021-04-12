@@ -8,6 +8,7 @@
 class SceneNodeTerrain : public SceneNode
 {
 	struct Chunk {
+		string id;
 		XMFLOAT3 position;
 	};
 
@@ -27,8 +28,8 @@ public:
 	float ChunkX(void);
 	float ChunkZ(void);
 
-	int chunkSize = 50; //50
-	float viewSize = 2;
+	int chunkSize = 16; //50
+	float viewSize = 1;
 
 private:
 	// making this & breaks the constructor

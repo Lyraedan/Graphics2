@@ -32,7 +32,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 
 				mesh->Initialise();
 				sceneGraph->Add(mesh);
-				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(terrainOffset.x, terrainOffset.y, terrainOffset.z));
+				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(terrainOffset.x + (x * scl), terrainOffset.y, terrainOffset.z + (z * scl)));
 			}
 			if (terrain[x][z] < minHeight + 2) {
 				int scl = 1;
@@ -45,7 +45,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 
 				mesh->Initialise();
 				sceneGraph->Add(mesh);
-				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(terrainOffset.x, terrainOffset.y + waterHeight, terrainOffset.z));
+				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(terrainOffset.x + (x * scl), terrainOffset.y + waterHeight, terrainOffset.z + (z * scl)));
 			}
 		}
 	}

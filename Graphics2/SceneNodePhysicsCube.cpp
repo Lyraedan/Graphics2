@@ -55,11 +55,11 @@ void SceneNodePhysicsCube::setPosition(float x, float y, float z)
 	zPos = z;
 }
 
-void SceneNodePhysicsCube::SetHeightMap(float heightMap[50][50])
+void SceneNodePhysicsCube::SetHeightMap(float heightMap[16][16])
 {
 	// I hate this :)
-	for (int x = 0; x < 50; x++) {
-		for (int z = 0; z < 50; z++) {
+	for (int x = 0; x < 16; x++) {
+		for (int z = 0; z < 16; z++) {
 			terrain[x][z] = heightMap[x][z];
 		}
 	}

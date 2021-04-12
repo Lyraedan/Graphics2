@@ -4,13 +4,13 @@
 
 bool SceneNodeTerrain::Initialise()
 {
-	//GenerateChunkAt(XMFLOAT3(0, 0, 0));
+	GenerateChunkAt(XMFLOAT3(0, 0, 0));
     return true;
 }
 
 void SceneNodeTerrain::Render()
 {
-	GenerateChunkIfWeNeedTo();
+	//GenerateChunkIfWeNeedTo();
 }
 
 void SceneNodeTerrain::Shutdown()
@@ -28,7 +28,8 @@ void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 	chunk->GenerateTerrain(position, sceneGraph);
 	sceneGraph->Add(chunk);
 	chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
-	chunks.push_back({ position });
+	string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);
+	chunks.push_back({ id, position });
 }
 
 void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
@@ -45,13 +46,14 @@ void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
 	}
 }
 
+// This is the issue
 bool SceneNodeTerrain::ChunkExistsAt(XMFLOAT3 position)
 {
+	string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);
 	for (Chunk chunk : chunks) {
-		if (round(chunk.position.x) == round(position.x) &&
-			round(chunk.position.y) == round(position.y) &&
-			round(chunk.position.z) == round(position.z));
+		if (chunk.id.compare(id) == 0) {
 			return true;
+		}
 	}
 	return false;
 }

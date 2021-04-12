@@ -18,7 +18,7 @@ public:
 
 	void setPosition(float x, float y, float z);
 
-	void SetHeightMap(float heightmap[50][50]);
+	void SetHeightMap(float heightmap[16][16]);
 
 	AABB aabb;
 

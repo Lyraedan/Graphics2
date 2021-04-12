@@ -9,7 +9,7 @@ bool SceneNodeTerrain::Initialise()
 
 void SceneNodeTerrain::Render()
 {
-	GenerateChunkIfWeNeedTo();
+	//GenerateChunkIfWeNeedTo();
 }
 
 void SceneNodeTerrain::Shutdown()
@@ -60,7 +60,7 @@ void SceneNodeTerrain::UpdateHeight(float xOffset, float zOffset)
 {
 	for (int x = 0; x < chunkSize; x++) {
 		for (int z = 0; z < chunkSize; z++) {
-			float noise = 0; //PerlinNoise::perlin(xOffset, zOffset, xOffset / zOffset); // xOffset / zOffset
+			float noise = PerlinNoise::perlin(xOffset, zOffset, xOffset / zOffset); // xOffset / zOffset
 			float frequancy = 25.0;
 			terrain[x][z] = (noise * frequancy);
 			zOffset += 1.0 / chunkSize;

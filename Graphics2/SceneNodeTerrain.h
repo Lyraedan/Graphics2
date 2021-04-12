@@ -29,7 +29,7 @@ public:
 
 	int chunkSize = 50; //50
 	float terrain[50][50];
-	float viewSize = 1;
+	float viewSize = 0;
 
 private:
 	// making this & breaks the constructor

@@ -31,9 +31,9 @@ void SceneNodeMesh::Render()
 	CBUFFER cBuffer;
 	cBuffer.CompleteTransformation = comp;
 	cBuffer.WorldTransformation = XMLoadFloat4x4(&_worldTransformation);
-	cBuffer.AmbientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-	cBuffer.LightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 1.0f, 0.0f));
-	cBuffer.LightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	cBuffer.AmbientColour = ambientColour;
+	cBuffer.LightVector = lightVector;
+	cBuffer.LightColour = lightColour;
 
 	_deviceContext->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
 	_deviceContext->UpdateSubresource(constantBuffer.Get(), 0, 0, &cBuffer, 0, 0);

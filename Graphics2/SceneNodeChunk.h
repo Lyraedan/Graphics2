@@ -3,6 +3,7 @@
 #include "SceneNodeMesh.h"
 #include "Graphics2.h"
 #include "PerlinNoise.h"
+#include <math.h>
 
 class SceneNodeChunk : public SceneNodeMesh
 {

@@ -58,7 +58,7 @@ void SceneNodeChunk::UpdateHeight(float xOffset, float zOffset)
 {
 	for (int x = 0; x < chunkSize; x++) {
 		for (int z = 0; z < chunkSize; z++) {
-			float noise = PerlinNoise::perlin(xOffset, zOffset, xOffset / zOffset); // xOffset / zOffset
+			float noise = PerlinNoise::perlin(abs(xOffset), abs(zOffset), abs(xOffset / zOffset)); // xOffset / zOffset
 			float frequancy = 25.0;
 			terrain[x][z] = (noise * frequancy);
 			zOffset += 1.0 / chunkSize;

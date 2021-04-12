@@ -14,4 +14,6 @@ public:
 	virtual void Tick(XMMATRIX& completeTransform) override;
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
+
+	float skyScl = 150; // 150
 };

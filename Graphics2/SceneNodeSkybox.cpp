@@ -5,11 +5,8 @@ bool SceneNodeSkybox::Initialise()
 	return SceneNodeMesh::Initialise();
 }
 
-float skyScl = 150;
-float skyY = 0;
 void SceneNodeSkybox::Tick(XMMATRIX& completeTransform)
 {
-	skyY++;
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
 	XMStoreFloat4(&position, cameraPosition);

@@ -24,7 +24,7 @@ void Graphics2::CreateSceneGraph()
 
 	shared_ptr<SceneNodeTerrain> terrain = make_shared<SceneNodeTerrain>(L"Terrain");
 	terrain->SetSceneGraph(sceneGraph);
-	terrain->GenerateTerrain(XMFLOAT3(0, 0, 0));
+	//terrain->GenerateTerrain(XMFLOAT3(0, 0, 0));
 	sceneGraph->Add(terrain);
 
 	// Place other objects

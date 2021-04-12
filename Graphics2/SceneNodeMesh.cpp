@@ -13,6 +13,7 @@ bool SceneNodeMesh::Initialise()
 	BuildVertexLayout();
 	BuildConstantBuffer();
 	BuildTexture();
+	readyToBeRendered = true;
 	return true;
 }
 
@@ -22,34 +23,38 @@ void SceneNodeMesh::Tick(XMMATRIX& completeTransform) { }
 
 void SceneNodeMesh::Render()
 {
-	XMMATRIX view = DirectXFramework::GetDXFramework()->GetCamera()->GetViewMatrix();
-	XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
-	XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
+	if (!readyToBeRendered) return;
 
-	Tick(comp);
+	if (doRender) {
+		XMMATRIX view = DirectXFramework::GetDXFramework()->GetCamera()->GetViewMatrix();
+		XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
+		XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
 
-	CBUFFER cBuffer;
-	cBuffer.CompleteTransformation = comp;
-	cBuffer.WorldTransformation = XMLoadFloat4x4(&_worldTransformation);
-	cBuffer.AmbientColour = ambientColour;
-	cBuffer.LightVector = lightVector;
-	cBuffer.LightColour = lightColour;
+		Tick(comp);
 
-	_deviceContext->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
-	_deviceContext->UpdateSubresource(constantBuffer.Get(), 0, 0, &cBuffer, 0, 0);
+		CBUFFER cBuffer;
+		cBuffer.CompleteTransformation = comp;
+		cBuffer.WorldTransformation = XMLoadFloat4x4(&_worldTransformation);
+		cBuffer.AmbientColour = ambientColour;
+		cBuffer.LightVector = lightVector;
+		cBuffer.LightColour = lightColour;
 
-	// Set the texture to be used by the pixel shader
-	_deviceContext->PSSetShaderResources(0, 1, _texture.GetAddressOf());
+		_deviceContext->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
+		_deviceContext->UpdateSubresource(constantBuffer.Get(), 0, 0, &cBuffer, 0, 0);
+
+		// Set the texture to be used by the pixel shader
+		_deviceContext->PSSetShaderResources(0, 1, _texture.GetAddressOf());
 
 
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-	_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
-	_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0);
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+		_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+		_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0);
 
-	_deviceContext->RSSetState(_defaultRasteriserState.Get());
+		_deviceContext->RSSetState(_defaultRasteriserState.Get());
+	}
 }
 
 void SceneNodeMesh::SetupMesh() { }

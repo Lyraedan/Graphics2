@@ -4,6 +4,7 @@
 
 bool SceneNodeTerrain::Initialise()
 {
+	//GenerateChunkAt(XMFLOAT3(0, 0, 0));
     return true;
 }
 
@@ -24,8 +25,9 @@ void SceneNodeTerrain::SetSceneGraph(SceneGraphPointer ptr)
 void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 {
 	shared_ptr<SceneNodeChunk> chunk = make_shared<SceneNodeChunk>(L"Chunk");
-	sceneGraph->Add(chunk);
 	chunk->GenerateTerrain(position, sceneGraph);
+	sceneGraph->Add(chunk);
+	chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
 	chunks.push_back({ position });
 }
 

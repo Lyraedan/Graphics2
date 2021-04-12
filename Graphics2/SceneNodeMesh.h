@@ -56,6 +56,9 @@ private:
 	void BuildShaders();
 	void BuildTexture();
 
+	bool doRender = true;
+	bool readyToBeRendered = false;
+
 	XMMATRIX worldTransformation;
 	std::vector<Vertex> vertices = std::vector<Vertex>();
 	std::vector<Indice> indices = std::vector<Indice>();

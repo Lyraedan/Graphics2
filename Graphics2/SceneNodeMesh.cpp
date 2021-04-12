@@ -22,7 +22,7 @@ void SceneNodeMesh::Tick(XMMATRIX& completeTransform) { }
 
 void SceneNodeMesh::Render()
 {
-	XMMATRIX view = DirectXFramework::GetDXFramework()->GetViewTransformation();
+	XMMATRIX view = DirectXFramework::GetDXFramework()->GetCamera()->GetViewMatrix();
 	XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
 	XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
 

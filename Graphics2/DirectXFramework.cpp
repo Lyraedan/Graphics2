@@ -20,23 +20,12 @@ DirectXFramework::DirectXFramework(unsigned int width, unsigned int height) : Fr
 	_backgroundColour[2] = 0.0f;
 	_backgroundColour[3] = 1.0f;
 
-	// Initialise vectors used to create camera.  We will move these
-	// to a separate Camera class later
-	//_eyePosition = XMFLOAT4(0.0f, 1.0f, -15.0f, 0.0f);
-	//_focalPointPosition = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
-	_eyePosition = XMFLOAT4(0.0f, 20.0f, -90.0f, 0.0f);
-	_focalPointPosition = XMFLOAT4(0.0f, 20.0f, 0.0f, 0.0f);
-	_upVector = XMFLOAT4(0.0f, 1.0f, 0.0f, 0.0f);
+	_camera = make_shared<Camera>();
 }
 
 DirectXFramework * DirectXFramework::GetDXFramework()
 {
 	return _dxFramework;
-}
-
-XMMATRIX DirectXFramework::GetViewTransformation()
-{
-	return XMLoadFloat4x4(&_viewTransformation);
 }
 
 XMMATRIX DirectXFramework::GetProjectionTransformation()
@@ -96,6 +85,7 @@ void DirectXFramework::Update()
 	UpdateSceneGraph();
 	// Now apply any updates that have been made to world transformations
 	// to all the nodes
+	_camera->Update();
 	_sceneGraph->Update(XMMatrixIdentity());
 }
 
@@ -113,7 +103,6 @@ void DirectXFramework::Render()
 void DirectXFramework::OnResize(WPARAM wParam)
 {
 	// Update view and projection matrices to allow for the window size change
-	XMStoreFloat4x4(&_viewTransformation, XMMatrixLookAtLH(XMLoadFloat4(&_eyePosition), XMLoadFloat4(&_focalPointPosition), XMLoadFloat4(&_upVector)));
 	XMStoreFloat4x4(&_projectionTransformation, XMMatrixPerspectiveFovLH(XM_PIDIV4, (float)GetWindowWidth() / GetWindowHeight(), 1.0f, 10000.0f));
 
 	// This will free any existing render and depth views (which

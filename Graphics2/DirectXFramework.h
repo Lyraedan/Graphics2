@@ -3,6 +3,7 @@
 #include "Framework.h"
 #include "DirectXCore.h"
 #include "SceneGraph.h"
+#include "Camera.h"
 
 class DirectXFramework : public Framework
 {
@@ -19,18 +20,21 @@ public:
 	void OnResize(WPARAM wParam);
 	void Shutdown();
 
-	static DirectXFramework *			GetDXFramework();
+	static DirectXFramework* GetDXFramework();
 
 	inline SceneGraphPointer			GetSceneGraph() { return _sceneGraph; }
 	inline ComPtr<ID3D11Device>			GetDevice() { return _device; }
 	inline ComPtr<ID3D11DeviceContext>	GetDeviceContext() { return _deviceContext; }
 
-	XMMATRIX							GetViewTransformation();
 	XMMATRIX							GetProjectionTransformation();
 
 	void								SetBackgroundColour(XMFLOAT4 backgroundColour);
 
+	inline shared_ptr<Camera> GetCamera() { return _camera; }
+
 private:
+	shared_ptr<Camera> _camera;
+
 	ComPtr<ID3D11Device>				_device;
 	ComPtr<ID3D11DeviceContext>			_deviceContext;
 	ComPtr<IDXGISwapChain>				_swapChain;
@@ -45,13 +49,6 @@ private:
 	// to be aligned on 16-byte boundaries and the compiler cannot
 	// guarantee this for class variables
 
-	// For now, we are storing our camera vectors and matrix here.
-	// We will move it to a separate Camera class later
-	XMFLOAT4							_eyePosition;
-	XMFLOAT4							_focalPointPosition;
-	XMFLOAT4							_upVector;
-
-	XMFLOAT4X4							_viewTransformation;
 	XMFLOAT4X4							_projectionTransformation;
 
 	SceneGraphPointer					_sceneGraph;

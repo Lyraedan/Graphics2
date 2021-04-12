@@ -26,8 +26,9 @@ void SceneNodeChunk::Shutdown()
 }
 
 void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer sceneGraph) {
-	float chunkX = terrainOffset.x * chunkSize + chunkSize;
-	float chunkZ = terrainOffset.z * chunkSize + chunkSize;
+	float chunkX = terrainOffset.x * chunkSize + (chunkSize + (chunkSize / 2));
+	float chunkZ = terrainOffset.z * chunkSize + (chunkSize + (chunkSize / 2));
+	//shared_ptr<SceneNodeTile> mesh = make_shared<SceneNodeTile>(L"Tile");
 
 	UpdateHeight(chunkX, chunkZ);
 	int minHeight = 10;
@@ -43,8 +44,21 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 				mesh->AddVertex(XMFLOAT3(scl + x, terrain[x + 1][z], -scl + z), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
 				mesh->AddVertex(XMFLOAT3(scl + x, terrain[x + 1][z + 1], scl + z), XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
 
-				mesh->Initialise();
+				
+				/*
+				// Generate indices
+				if (z < chunkSize - 1 && x < chunkSize - 1) {
+					int leftTop = x * scl + z;
+					int leftBottom = (x + 1) * scl + z;
+					int rightBottom = (x + 1) * scl + z + 1;
+					int rightTop = x * scl + z + 1;
+					AddIndice(leftTop, rightTop, leftBottom);
+					AddIndice(rightBottom, leftBottom, rightTop);
+				}
+				*/
+
 				sceneGraph->Add(mesh);
+				mesh->Initialise();
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y, chunkZ + (z * scl)));
 			}
 			if (terrain[x][z] < minHeight + 2) {
@@ -56,8 +70,8 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 				mesh->AddVertex(XMFLOAT3(scl + x, 0, -scl + z), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
 				mesh->AddVertex(XMFLOAT3(scl + x, 0, scl + z), XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
 
-				mesh->Initialise();
 				sceneGraph->Add(mesh);
+				mesh->Initialise();
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y + waterHeight, chunkZ + (z * scl)));
 			}
 		}
@@ -76,8 +90,8 @@ void SceneNodeChunk::UpdateHeight(float xOffset, float zOffset)
 			float noise = PerlinNoise::perlin(abs(xOffset), abs(zOffset), abs(xOffset / zOffset)); // xOffset / zOffset
 			float frequancy = 25.0;
 			terrain[x][z] = (noise * frequancy);
-			zOffset += 1.0 / chunkSize;
+			zOffset += 1.0f / chunkSize; // todo change to give different variaty
 		}
-		xOffset += 1.0 / chunkSize;
+		xOffset += 1.0f / chunkSize; // todo change to give different variaty
 	}
 }

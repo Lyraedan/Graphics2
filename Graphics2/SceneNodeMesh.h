@@ -48,6 +48,8 @@ public:
 	XMFLOAT4 ambientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
 	XMVECTOR lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 1.0f, 0.0f));
 	XMFLOAT4 lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	
+	void CalculateIndices(float width, float height);
 
 private:
 	void BuildGeometry();

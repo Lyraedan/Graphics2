@@ -13,7 +13,7 @@ void Graphics2::CreateSceneGraph()
 	SceneGraphPointer sceneGraph = GetSceneGraph();
 
 	//								0, -20, -500
-	GetCamera()->SetCameraPosition(0.0f, -20.0f, 0.0f);
+	GetCamera()->SetCameraPosition(0.0f, 30.0f, 0.0f);
 
 	// Skybox
 	shared_ptr<SceneNodeSkybox> sky = make_shared<SceneNodeSkybox>(L"Skybox");

@@ -48,18 +48,29 @@ void Graphics2::CreateSceneGraph()
 void Graphics2::UpdateSceneGraph()
 {
 	SceneGraphPointer sceneGraph = GetSceneGraph();
+	// This is where you make any changes to the local world transformations to nodes
+	// in the scene graph
 
+	/*
 	if (GetAsyncKeyState(VK_UP) < 0) {
 		GetCamera()->SetForwardBack(1);
 	}
 	else if (GetAsyncKeyState(VK_DOWN) < 0) {
 		GetCamera()->SetForwardBack(-1);
 	}
-	
+
 	if (GetAsyncKeyState(VK_LEFT) < 0) {
 		GetCamera()->SetLeftRight(-1);
-	} else if (GetAsyncKeyState(VK_RIGHT) < 0) {
+	}
+	else if (GetAsyncKeyState(VK_RIGHT) < 0) {
 		GetCamera()->SetLeftRight(1);
+	}
+
+	if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(VK_RIGHT) < 0) {
+		moving = true;
+	}
+	else {
+		moving = false;
 	}
 
 	if (GetAsyncKeyState(VK_NUMPAD8) < 0) {
@@ -68,13 +79,12 @@ void Graphics2::UpdateSceneGraph()
 	else if (GetAsyncKeyState(VK_NUMPAD2) < 0) {
 		GetCamera()->SetPitch(-1);
 	}
-	
+
 	if (GetAsyncKeyState(VK_NUMPAD4) < 0) {
 		GetCamera()->SetYaw(-1);
-	} else if (GetAsyncKeyState(VK_NUMPAD6) < 0) {
+	}
+	else if (GetAsyncKeyState(VK_NUMPAD6) < 0) {
 		GetCamera()->SetYaw(1);
 	}
-	// This is where you make any changes to the local world transformations to nodes
-	// in the scene graph
-	//sceneGraph->Update(GetViewTransformation() * GetProjectionTransformation());
+	*/
 }

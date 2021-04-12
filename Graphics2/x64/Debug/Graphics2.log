@@ -1,4 +1,61 @@
 ﻿  Graphics2.cpp
+  ObjLoader.cpp
+F:\Graphics2\Graphics2\ObjLoader.cpp(68,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+F:\Graphics2\Graphics2\ObjLoader.cpp(69,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+F:\Graphics2\Graphics2\ObjLoader.cpp(70,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+  SceneNodeChunk.cpp
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(28,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(28,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(29,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(29,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(30,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(30,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(31,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(31,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(35,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(35,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(35,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(39,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(41,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(41,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(42,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(42,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(43,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(43,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(44,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(44,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(48,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(48,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(48,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(63,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(66,30): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(68,29): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  SceneNodeMesh.cpp
+F:\Graphics2\Graphics2\SceneNodeMesh.cpp(54,56): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeMesh.cpp(65,50): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeMesh.cpp(79,53): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  SceneNodeObjModel.cpp
+F:\Graphics2\Graphics2\SceneNodeObjModel.cpp(27,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeObjModel.cpp(27,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeObjModel.cpp(27,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+  SceneNodePlane.cpp
+  SceneNodeSkybox.cpp
   SceneNodeTerrain.cpp
+  SceneNodePhysicsCube.cpp
+  SceneNodeTile.cpp
+  SceneNodeWater.cpp
   Generating Code...
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

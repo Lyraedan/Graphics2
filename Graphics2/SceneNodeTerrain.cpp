@@ -4,7 +4,7 @@
 
 bool SceneNodeTerrain::Initialise()
 {
-	//GenerateChunkAt(XMFLOAT3(0, 0, 0));
+	GenerateChunkAt(XMFLOAT3(0, 0, 0));
     return true;
 }
 
@@ -65,6 +65,8 @@ void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 
 void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
 {
+	if (!generateDynamically) return;
+
 	float camX = ChunkX();
 	float camZ = ChunkZ();
 

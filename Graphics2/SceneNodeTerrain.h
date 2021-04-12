@@ -30,6 +30,7 @@ public:
 
 	int chunkSize = 16; //50
 	float viewSize = 1;
+	bool generateDynamically = false;
 
 private:
 	// making this & breaks the constructor

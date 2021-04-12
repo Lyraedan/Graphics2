@@ -7,6 +7,7 @@ bool SceneNodePlane::Initialise()
 
 void SceneNodePlane::Tick(XMMATRIX& completeTransform)
 {
+	// TODO Clamp plane infront of camera
 	SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 50, 0));
 
 }

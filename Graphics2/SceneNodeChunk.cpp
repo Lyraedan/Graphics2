@@ -9,6 +9,16 @@ bool SceneNodeChunk::Initialise()
 
 void SceneNodeChunk::Render()
 {
+	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
+	XMFLOAT4 position;
+	XMStoreFloat4(&position, cameraPosition);
+	for (int x = 0; x < chunkSize; x++) {
+		for (int z = 0; z < chunkSize; z++) {
+			if (position.y <= terrain[x][z]) {
+				DirectXFramework::GetDXFramework()->GetCamera()->SetCameraPosition(position.x, terrain[x][z] + 0.5f, position.z);
+			}
+		}
+	}
 }
 
 void SceneNodeChunk::Shutdown()

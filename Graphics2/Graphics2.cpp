@@ -24,16 +24,18 @@ void Graphics2::CreateSceneGraph()
 
 	shared_ptr<SceneNodeTerrain> terrain = make_shared<SceneNodeTerrain>(L"Terrain");
 	terrain->SetSceneGraph(sceneGraph);
-	terrain->GenerateTerrain(XMFLOAT3(0, 0, 0));
+	//terrain->GenerateTerrain(XMFLOAT3(0, 0, 0));
 	sceneGraph->Add(terrain);
 
 	// Place other objects
+	/*
 	shared_ptr<SceneNodePhysicsCube> cube = make_shared<SceneNodePhysicsCube>(L"PhysicsCube");
 	cube->SetHeightMap(terrain->terrain);
 	cube->aabb.SetSize(5, 5, 5);
 	cube->setPosition(0, 30, 0);
 	sceneGraph->Add(cube);
 	cube->SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(0, 30, 0));
+	*/
 
 	// Plane
 	shared_ptr<SceneNodePlane> plane = make_shared<SceneNodePlane>(L"Plane");

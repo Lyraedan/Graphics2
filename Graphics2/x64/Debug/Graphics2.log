@@ -1,2 +1,3 @@
-﻿  Graphics2.cpp
+﻿  SceneNodeTerrain.cpp
+F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(51,49): warning C4390: ';': empty controlled statement found; is this the intent?
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

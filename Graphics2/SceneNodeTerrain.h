@@ -18,9 +18,9 @@ public:
 	virtual void Render() override;
 	virtual void Shutdown() override;
 
-	void GenerateTerrain(XMFLOAT3 terrainOffset);
 	void SetSceneGraph(SceneGraphPointer ptr);
 
+	void GenerateChunkAt(XMFLOAT3 position);
 	void GenerateChunkIfWeNeedTo();
 
 	bool ChunkExistsAt(XMFLOAT3 position);
@@ -28,13 +28,11 @@ public:
 	float ChunkZ(void);
 
 	int chunkSize = 50; //50
-	float terrain[50][50];
-	float viewSize = 0;
+	float viewSize = 2;
 
 private:
 	// making this & breaks the constructor
 	SceneGraphPointer sceneGraph;
 	std::vector<Chunk> chunks;
-	void UpdateHeight(float xOffset, float zOffset);
 
 };

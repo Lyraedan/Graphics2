@@ -163,6 +163,7 @@
     <ClInclude Include="SceneNodeSkybox.h" />
     <ClInclude Include="SceneNodeTerrain.h" />
     <ClInclude Include="SceneNodePhysicsCube.h" />
+    <ClInclude Include="SceneNodeTile.h" />
     <ClInclude Include="SceneNodeWater.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WICTextureLoader.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="SceneNodeSkybox.cpp" />
     <ClCompile Include="SceneNodeTerrain.cpp" />
     <ClCompile Include="SceneNodePhysicsCube.cpp" />
+    <ClCompile Include="SceneNodeTile.cpp" />
     <ClCompile Include="SceneNodeWater.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>

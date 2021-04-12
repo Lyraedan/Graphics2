@@ -5,7 +5,10 @@
 
 bool SceneNodeTerrain::Initialise()
 {
-	GenerateChunkAt(XMFLOAT3(0, 0, 0));
+	//For demoing
+	if (!generateDynamically) {
+		GenerateChunkAt(XMFLOAT3(0, 0, 0));
+	}
 	return true;
 }
 

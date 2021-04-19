@@ -31,18 +31,19 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 	float chunkZ = terrainOffset.z * chunkSize + (chunkSize + (chunkSize / 2));
 	//shared_ptr<SceneNodeTile> mesh = make_shared<SceneNodeTile>(L"Tile");
 
-	UpdateHeight(chunkX, chunkZ);
+	//UpdateHeight(chunkX, chunkZ);
 	float minHeight = 0.05f;
-	float zOffset = 0;
 	for (int z = 0; z < chunkSize - 1; z++) {
-		float xOffset = 0;
 		for (int x = 0; x < chunkSize - 1; x++) {
-			//terrain[x][z] = CalculateHeight(chunkX, chunkZ, x, z);
+			int scl = 1;
+			terrain[x][z] = CalculateHeight(chunkX, chunkZ, x, z, scl);
+			terrain[x][z + 1] = CalculateHeight(chunkX, chunkZ, x, z + 1, scl);
+			terrain[x + 1][z] = CalculateHeight(chunkX, chunkZ, x + 1, z, scl);
+			terrain[x + 1][z + 1] = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, scl);
 
-			if (terrain[x][z] > minHeight) {
+			//if (terrain[x][z] > minHeight) {
 				//Todo swap to a single mesh instead of a bunch of tiles
 				shared_ptr<SceneNodeTile> mesh = make_shared<SceneNodeTile>(L"Tile");
-				int scl = 1;
 				// Vertices
 				XMFLOAT3 v1 = XMFLOAT3(-scl + x, terrain[x][z], -scl + z);
 				XMFLOAT3 v2 = XMFLOAT3(-scl + x, terrain[x][z + 1], scl + z);
@@ -77,7 +78,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 				mesh->Initialise();
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y, chunkZ + (z * scl)));
 
-				/*
+				/* Spawn trees
 				bool spawnTree = std::rand() % 2 == 0;
 				if (spawnTree) {
 					shared_ptr<SceneNodeTree> tree = make_shared<SceneNodeTree>(L"Tree");
@@ -86,6 +87,8 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 					tree->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, terrain[x][z], 0));
 				}
 				*/
+
+			/*
 			}		
 			if (terrain[x][z] < minHeight + 2) {
 				int scl = 1;
@@ -100,6 +103,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 				mesh->Initialise();
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y + waterHeight, chunkZ + (z * scl)));
 			}
+			*/
 		}
 	}
 }
@@ -122,23 +126,11 @@ void SceneNodeChunk::UpdateHeight(float xOffset, float zOffset)
 	}
 }
 
-float SceneNodeChunk::CalculateHeight(float offsetX, float offsetY, float x, float y)
+float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)
 {
-	/*
-	float posX = offsetX + x;
-	float posY = offsetY + y;
-	float noise = PerlinNoise::perlin(abs(posX), abs(posY), abs(posX / posY));
-	return 1.0f / (noise * 25.0f);
-	*/
-	/*
-	float scale = 13.2575f;
-	float persistance = 7.18271f;
-	float heightModifier = 2.0f;
-
-	float noise = PerlinNoise::perlin(((offsetX + x) / scale) * persistance,
-									 1.0f,
-									 ((offsetY + y) / scale) * persistance) * heightModifier;
-									 */
-	//float noise = PerlinNoise::perlin(offsetX + x, 1.0f, offsetY + y); // xOffset / zOffset
-	return 1.0f;
+	float perlinX = (chunkX + (x * tileScale)) / chunkSize;
+	float perlinZ = (chunkZ + (z * tileScale)) / chunkSize;
+	float noise = PerlinNoise::perlin(perlinX, perlinZ, 1);
+	float frequancy = 1;
+	return noise * frequancy;
 }

@@ -22,6 +22,6 @@ public:
 private:
 	void UpdateHeight(float xOffset, float zOffset);
 	// Updated height calculation
-	float CalculateHeight(float offsetX, float offsetY, float x, float y);
+	float CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale);
 
 };

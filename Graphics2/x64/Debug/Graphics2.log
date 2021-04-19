@@ -1,4 +1,65 @@
-﻿  Graphics2.cpp
+﻿  DirectXFramework.cpp
+  Graphics2.cpp
+  ObjLoader.cpp
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\ObjLoader.cpp(68,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\ObjLoader.cpp(69,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\ObjLoader.cpp(70,13): warning C4244: 'initializing': conversion from '_Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+  SceneGraph.cpp
+  SceneNodeChunk.cpp
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(39,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(39,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(39,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(40,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(40,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(40,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(41,66): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(41,63): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(41,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(42,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(42,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(42,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(48,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(48,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(49,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(49,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(50,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(50,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(51,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(51,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(79,55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(79,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(79,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(119,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeChunk.cpp(132,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  SceneNodeMesh.cpp
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeMesh.cpp(54,56): warning C4267: 'argument': conversion from 'size_t' to 'UINT', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeMesh.cpp(64,24): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeMesh.cpp(69,23): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeMesh.cpp(80,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeMesh.cpp(90,50): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeMesh.cpp(104,53): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  SceneNodeObjModel.cpp
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeObjModel.cpp(27,34): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeObjModel.cpp(27,26): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeObjModel.cpp(27,18): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+  SceneNodePhysicsCube.cpp
+  SceneNodePlane.cpp
+  SceneNodeSkybox.cpp
   SceneNodeTerrain.cpp
+  SceneNodeTile.cpp
+  SceneNodeTree.cpp
+  SceneNodeWater.cpp
   Generating Code...
-  Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe
+  Graphics2.vcxproj -> \\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\x64\Debug\Graphics2.exe

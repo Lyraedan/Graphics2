@@ -4,6 +4,7 @@
 #include "Graphics2.h"
 #include "PerlinNoise.h"
 #include <math.h>
+#include <thread>
 
 class SceneNodeTerrain : public SceneNode
 {
@@ -36,5 +37,4 @@ private:
 	// making this & breaks the constructor
 	SceneGraphPointer sceneGraph;
 	std::vector<Chunk> chunks;
-
 };

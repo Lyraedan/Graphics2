@@ -1,7 +1,6 @@
 #include "SceneNodeTerrain.h"
 #include "SceneNodeWater.h"
 #include "SceneNodeChunk.h"
-#include <thread>
 
 bool SceneNodeTerrain::Initialise()
 {
@@ -59,20 +58,6 @@ void SceneNodeTerrain::SetSceneGraph(SceneGraphPointer ptr)
 
 void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 {
-	// Multithread -> https://www.geeksforgeeks.org/multithreading-in-cpp/
-
-	/*
-	std::thread generator([&] {
-		shared_ptr<SceneNodeChunk> chunk = make_shared<SceneNodeChunk>(L"Chunk");
-		chunk->GenerateTerrain(position, sceneGraph);
-		sceneGraph->Add(chunk);
-		chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
-		string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);
-		chunks.push_back({ id, position });
-		});
-	generator.join();
-	*/
-	
 	shared_ptr<SceneNodeChunk> chunk = make_shared<SceneNodeChunk>(L"Chunk");
 	chunk->GenerateTerrain(position, sceneGraph);
 	sceneGraph->Add(chunk);
@@ -91,12 +76,10 @@ void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
 	for (float x = camX - viewSize; x <= camX + viewSize; x++) {
 		for (float z = camZ - viewSize; z <= camZ + viewSize; z++) {
 			if (!ChunkExistsAt(XMFLOAT3(x, 0, z))) {
-				GenerateChunkAt(XMFLOAT3(x, 0, z));
-				/*
 				std::thread generator([&] {
 					GenerateChunkAt(XMFLOAT3(x, 0, z));
 				});
-				*/
+				generator.detach();
 			}
 		}
 	}

@@ -6,12 +6,25 @@ bool SceneNodeTerrain::Initialise()
 {
 	//For demoing
 	if (!generateDynamically) {
+		/*
 		for (int x = 0; x < 1; x++) {
 			for (int z = 0; z < 1; z++) {
 				GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}
-		//GenerateChunkAt(XMFLOAT3(0, 0, 0));
+		*/
+		GenerateChunkAt(XMFLOAT3(0, 0, 0));
+	}
+	else {
+		std::thread generator([&] {
+			while (true) {
+				bool condition = (GetAsyncKeyState(VK_UP) < 0) || (GetAsyncKeyState(VK_DOWN) < 0) || (GetAsyncKeyState(VK_LEFT) < 0) || (GetAsyncKeyState(VK_RIGHT) < 0);
+				if(condition)
+					GenerateChunkIfWeNeedTo();
+			}
+			});
+
+		generator.detach();
 	}
 	return true;
 }
@@ -21,20 +34,20 @@ void SceneNodeTerrain::Render()
 
 	if (GetAsyncKeyState(VK_UP) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(1);
-		GenerateChunkIfWeNeedTo();
+		//GenerateChunkIfWeNeedTo();
 	}
 	else if (GetAsyncKeyState(VK_DOWN) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(-1);
-		GenerateChunkIfWeNeedTo();
+		//GenerateChunkIfWeNeedTo();
 	}
 
 	if (GetAsyncKeyState(VK_LEFT) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(-1);
-		GenerateChunkIfWeNeedTo();
+		//GenerateChunkIfWeNeedTo();
 	}
 	else if (GetAsyncKeyState(VK_RIGHT) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(1);
-		GenerateChunkIfWeNeedTo();
+		//GenerateChunkIfWeNeedTo();
 	}
 
 	if (GetAsyncKeyState(VK_NUMPAD8) < 0) {
@@ -81,13 +94,14 @@ void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
 	for (float x = camX - viewSize; x <= camX + viewSize; x++) {
 		for (float z = camZ - viewSize; z <= camZ + viewSize; z++) {
 			if (!ChunkExistsAt(XMFLOAT3(x, 0, z))) {
-				
+				/*
 				std::thread generator([&] {
 					GenerateChunkAt(XMFLOAT3(x, 0, z));
 					});
-					
+
 				generator.detach();
-				//GenerateChunkAt(XMFLOAT3(x, 0, z));
+				*/
+				GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}
 	}

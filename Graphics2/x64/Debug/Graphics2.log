@@ -1,4 +1,2 @@
 ﻿  SceneNodeTerrain.cpp
-\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Graphics2.vcxproj -> \\university.ds.derby.ac.uk\dfs\Student\Home\100527733\GitHub\Graphics2\x64\Debug\Graphics2.exe
+  Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

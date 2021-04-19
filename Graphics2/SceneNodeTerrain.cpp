@@ -6,7 +6,12 @@ bool SceneNodeTerrain::Initialise()
 {
 	//For demoing
 	if (!generateDynamically) {
-		GenerateChunkAt(XMFLOAT3(0, 0, 0));
+		for (int x = 0; x < 1; x++) {
+			for (int z = 0; z < 1; z++) {
+				GenerateChunkAt(XMFLOAT3(x, 0, z));
+			}
+		}
+		//GenerateChunkAt(XMFLOAT3(0, 0, 0));
 	}
 	return true;
 }
@@ -76,9 +81,11 @@ void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
 	for (float x = camX - viewSize; x <= camX + viewSize; x++) {
 		for (float z = camZ - viewSize; z <= camZ + viewSize; z++) {
 			if (!ChunkExistsAt(XMFLOAT3(x, 0, z))) {
+				
 				std::thread generator([&] {
 					GenerateChunkAt(XMFLOAT3(x, 0, z));
 					});
+					
 				generator.detach();
 				//GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}

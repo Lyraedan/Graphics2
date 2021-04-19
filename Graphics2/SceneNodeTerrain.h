@@ -30,8 +30,8 @@ public:
 	float ChunkZ(void);
 
 	int chunkSize = 16; //50
-	float viewSize = 4;
-	bool generateDynamically = true;
+	float viewSize = 1;
+	bool generateDynamically = false;
 
 private:
 	// making this & breaks the constructor

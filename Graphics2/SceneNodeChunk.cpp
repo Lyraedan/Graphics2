@@ -43,10 +43,22 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 				//Todo swap to a single mesh instead of a bunch of tiles
 				shared_ptr<SceneNodeTile> mesh = make_shared<SceneNodeTile>(L"Tile");
 				int scl = 1;
-				mesh->AddVertex(XMFLOAT3(-scl + x, terrain[x][z], -scl + z), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(-scl + x, terrain[x][z + 1], scl + z), XMFLOAT3(0.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, terrain[x + 1][z], -scl + z), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, terrain[x + 1][z + 1], scl + z), XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
+				// Vertices
+				XMFLOAT3 v1 = XMFLOAT3(-scl + x, terrain[x][z], -scl + z);
+				XMFLOAT3 v2 = XMFLOAT3(-scl + x, terrain[x][z + 1], scl + z);
+				XMFLOAT3 v3 = XMFLOAT3(scl + x, terrain[x + 1][z], -scl + z);
+				XMFLOAT3 v4 = XMFLOAT3(scl + x, terrain[x + 1][z + 1], scl + z);
+
+				// Normals
+				XMFLOAT3 n1 = mesh->CalculateNormals(v1);
+				XMFLOAT3 n2 = mesh->CalculateNormals(v2);
+				XMFLOAT3 n3 = mesh->CalculateNormals(v3);
+				XMFLOAT3 n4 = mesh->CalculateNormals(v4);
+
+				mesh->AddVertex(v1, n1, XMFLOAT2(0.0f, 0.0f));
+				mesh->AddVertex(v2, n2, XMFLOAT2(0.0f, 1.0f));
+				mesh->AddVertex(v3, n3, XMFLOAT2(1.0f, 0.0f));
+				mesh->AddVertex(v4, n4, XMFLOAT2(1.0f, 1.0f));
 
 				
 				/*

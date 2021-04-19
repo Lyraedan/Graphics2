@@ -59,6 +59,31 @@ void SceneNodeMesh::Render()
 
 void SceneNodeMesh::SetupMesh() { }
 
+int SceneNodeMesh::GetVertices(void)
+{
+	return vertices.size();
+}
+
+int SceneNodeMesh::GetIndices(void)
+{
+	return indices.size();
+}
+
+SceneNodeMesh::Vertex SceneNodeMesh::GetVertex(int index)
+{
+	return vertices[index];
+}
+
+XMFLOAT3 SceneNodeMesh::normalise(XMFLOAT3 vector)
+{
+	XMFLOAT3 v = vector;
+	float len = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+	v.x /= len;
+	v.y /= len;
+	v.z /= len;
+	return v;
+}
+
 void SceneNodeMesh::BuildGeometry() {
 	D3D11_BUFFER_DESC vbd;
 	vbd.Usage = D3D11_USAGE_IMMUTABLE;

@@ -7,6 +7,7 @@
 
 class SceneNodeMesh : public SceneNode
 {
+public:
 	struct Vertex
 	{
 		XMFLOAT3 Position;
@@ -30,7 +31,6 @@ class SceneNodeMesh : public SceneNode
 		UINT p3;
 	};
 
-public:
 	SceneNodeMesh(wstring name) : SceneNode(name) {};
 
 	bool Initialise() override;
@@ -50,6 +50,13 @@ public:
 	XMFLOAT4 lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	void CalculateIndices(float width, float height);
+
+	int GetVertices(void);
+	int GetIndices(void);
+
+	Vertex GetVertex(int index);
+
+	XMFLOAT3 normalise(XMFLOAT3 vector);
 
 private:
 	void BuildGeometry();

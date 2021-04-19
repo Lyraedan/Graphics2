@@ -78,15 +78,14 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 				mesh->Initialise();
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y, chunkZ + (z * scl)));
 
-				/* Spawn trees
-				bool spawnTree = std::rand() % 2 == 0;
+				//Spawn trees
+				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
 					shared_ptr<SceneNodeTree> tree = make_shared<SceneNodeTree>(L"Tree");
 					sceneGraph->Add(tree);
-					//tree->Initialise(); // crashing
-					tree->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, terrain[x][z], 0));
+					tree->Initialise();
+					tree->SetWorldTransform(XMMatrixScaling(0.5f, 0.5f, 0.5f) * XMMatrixTranslation(chunkX + (x * 2), terrain[x][z] + 0.25f, chunkZ + (z * 2)));
 				}
-				*/
 
 			/*
 			}		

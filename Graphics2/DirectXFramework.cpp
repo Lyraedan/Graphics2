@@ -67,7 +67,7 @@ bool DirectXFramework::Initialise()
 	// Create camera and projection matrices (we will look at how the 
 	// camera matrix is created from vectors later)
 	XMStoreFloat4x4(&_projectionTransformation, XMMatrixPerspectiveFovLH(XM_PIDIV4, (float)GetWindowWidth() / GetWindowHeight(), 1.0f, 10000.0f));
-	_sceneGraph = make_shared<SceneGraph>();
+	_sceneGraph = new SceneGraph();
 	CreateSceneGraph();
 	return _sceneGraph->Initialise();
 }

@@ -9,9 +9,9 @@ using namespace std;
 
 class SceneNode;
 
-typedef shared_ptr<SceneNode>	SceneNodePointer;
+//typedef shared_ptr<SceneNode>	SceneNodePointer;
 
-class SceneNode : public enable_shared_from_this<SceneNode>
+class SceneNode// : public enable_shared_from_this<SceneNode>
 {
 public:
 	SceneNode(wstring name) {_name = name; XMStoreFloat4x4(&_worldTransformation, XMMatrixIdentity()); };
@@ -29,9 +29,9 @@ public:
 		
 	// Although only required in the composite class, these are provided
 	// in order to simplify the code base.
-	virtual void Add(SceneNodePointer node) {}
-	virtual void Remove(SceneNodePointer node) {};
-	virtual	SceneNodePointer Find(wstring name) { return (_name == name) ? shared_from_this() : nullptr; }
+	virtual void Add(SceneNode* node) {}
+	virtual void Remove(SceneNode* node) {};
+	virtual	SceneNode* Find(wstring name) { return (_name == name) ? this : nullptr; }
 
 protected:
 	XMFLOAT4X4			_worldTransformation;

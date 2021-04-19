@@ -51,14 +51,14 @@ void SceneNodeTerrain::Shutdown()
 {
 }
 
-void SceneNodeTerrain::SetSceneGraph(SceneGraphPointer ptr)
+void SceneNodeTerrain::SetSceneGraph(SceneGraph* ptr)
 {
 	this->sceneGraph = ptr;
 }
 
 void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 {
-	shared_ptr<SceneNodeChunk> chunk = make_shared<SceneNodeChunk>(L"Chunk");
+	SceneNodeChunk* chunk = new SceneNodeChunk(L"Chunk");
 	chunk->GenerateTerrain(position, sceneGraph);
 	sceneGraph->Add(chunk);
 	chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
@@ -78,8 +78,9 @@ void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
 			if (!ChunkExistsAt(XMFLOAT3(x, 0, z))) {
 				std::thread generator([&] {
 					GenerateChunkAt(XMFLOAT3(x, 0, z));
-				});
+					});
 				generator.detach();
+				//GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}
 	}

@@ -3,59 +3,51 @@
 #include <iostream>
 
 bool SceneGraph::Initialise() {
-	for (SceneNodePointer& ptr : _children) {
+	for (SceneNode*& ptr : _children) {
 		bool init = ptr->Initialise();
 		if (!init) {
 			return false;
 		}
 	}
-	return true; //!failed;
+	return true;
 }
 void SceneGraph::Update(FXMMATRIX& currentWorldTransformation) {
 	SceneNode::Update(currentWorldTransformation);
-	// No access to DirectXFramework including #graphics2.h causes circular headers
-	//XMMATRIX view = DirectXFramework::GetDXFramework()->GetViewTransformation();
-	//XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
 	XMMATRIX combinedWorldTransform = XMLoadFloat4x4(&_combinedWorldTransformation);
 
-	for (SceneNodePointer& ptr : _children) {
+	for (SceneNode*& ptr : _children) {
 		ptr->Update(combinedWorldTransform);
 	}
 }
 
 void SceneGraph::Render() {
-	for (SceneNodePointer& ptr : _children) {
+	for (SceneNode*& ptr : _children) {
 		ptr->Render();
 	}
 }
 
 void SceneGraph::Shutdown() {
-	for (SceneNodePointer& ptr : _children) {
+	for (SceneNode*& ptr : _children) {
 		ptr->Shutdown();
 	}
 }
 
-void SceneGraph::Add(SceneNodePointer node) {
+void SceneGraph::Add(SceneNode* node) {
 	_children.push_back(node);
 }
 
-void SceneGraph::Remove(SceneNodePointer node) {
-	// Look at linked list example online
-	/*
-	Find the node then remove it and erase it
-	*/
-	//node->Remove(node);
+void SceneGraph::Remove(SceneNode* node) {
 	_children.remove(node);
 }
 
-SceneNodePointer SceneGraph::Find(wstring name) {
+SceneNode* SceneGraph::Find(wstring name) {
 	if (_name == name) {
-		return shared_from_this();
+		return this;
 	}
 
-	SceneNodePointer searchFor = nullptr;
+	SceneNode* searchFor = nullptr;
 
-	for (SceneNodePointer& ptr : _children) {
+	for (SceneNode*& ptr : _children) {
 		searchFor = ptr->Find(name);
 		if (searchFor != nullptr)
 			break;

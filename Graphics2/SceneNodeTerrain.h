@@ -20,7 +20,7 @@ public:
 	virtual void Render() override;
 	virtual void Shutdown() override;
 
-	void SetSceneGraph(SceneGraphPointer ptr);
+	void SetSceneGraph(SceneGraph* ptr);
 
 	void GenerateChunkAt(XMFLOAT3 position);
 	void GenerateChunkIfWeNeedTo();
@@ -30,11 +30,12 @@ public:
 	float ChunkZ(void);
 
 	int chunkSize = 16; //50
-	float viewSize = 1;
+	float viewSize = 4;
 	bool generateDynamically = true;
 
 private:
 	// making this & breaks the constructor
-	SceneGraphPointer sceneGraph;
+	SceneGraph* sceneGraph;
 	std::vector<Chunk> chunks;
+	std::thread chunkThread;
 };

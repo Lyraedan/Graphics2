@@ -26,7 +26,7 @@ void SceneNodeChunk::Shutdown()
 {
 }
 
-void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer sceneGraph) {
+void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph) {
 	float chunkX = terrainOffset.x * chunkSize + (chunkSize + (chunkSize / 2));
 	float chunkZ = terrainOffset.z * chunkSize + (chunkSize + (chunkSize / 2));
 	//shared_ptr<SceneNodeTile> mesh = make_shared<SceneNodeTile>(L"Tile");
@@ -43,7 +43,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 
 			//if (terrain[x][z] > minHeight) {
 				//Todo swap to a single mesh instead of a bunch of tiles
-				shared_ptr<SceneNodeTile> mesh = make_shared<SceneNodeTile>(L"Tile");
+				SceneNodeTile* mesh = new SceneNodeTile(L"Tile");
 				// Vertices
 				XMFLOAT3 v1 = XMFLOAT3(-scl + x, terrain[x][z], -scl + z);
 				XMFLOAT3 v2 = XMFLOAT3(-scl + x, terrain[x][z + 1], scl + z);
@@ -81,10 +81,11 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer s
 				//Spawn trees
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
-					shared_ptr<SceneNodeTree> tree = make_shared<SceneNodeTree>(L"Tree");
+					SceneNodeTree* tree = new SceneNodeTree(L"Tree");
 					sceneGraph->Add(tree);
 					tree->Initialise();
 					tree->SetWorldTransform(XMMatrixScaling(0.5f, 0.5f, 0.5f) * XMMatrixTranslation(chunkX + (x * 2), terrain[x][z] + 0.25f, chunkZ + (z * 2)));
+
 				}
 
 			/*
@@ -129,7 +130,7 @@ float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float
 {
 	float perlinX = (chunkX + (x * tileScale)) / chunkSize;
 	float perlinZ = (chunkZ + (z * tileScale)) / chunkSize;
-	float noise = PerlinNoise::perlin(perlinX, perlinZ, 1);
+	float noise = PerlinNoise::perlin(abs(perlinX), abs(perlinZ), 1);
 	float frequancy = 1;
 	return noise * frequancy;
 }

@@ -15,7 +15,7 @@ public:
 	virtual void Render() override;
 	virtual void Shutdown() override;
 
-	void GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraphPointer sceneGraph);
+	void GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph);
 	float terrain[16][16];
 
 	int chunkSize = 16; //50

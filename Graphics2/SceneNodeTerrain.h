@@ -3,6 +3,8 @@
 #include "SceneNode.h"
 #include "Graphics2.h"
 #include "PerlinNoise.h"
+#include "SceneNodeWater.h"
+#include "SceneNodeChunk.h"
 #include <math.h>
 #include <thread>
 
@@ -12,6 +14,7 @@ public:
 	struct Chunk {
 		string id;
 		XMFLOAT3 position;
+		SceneNodeChunk* data;
 	};
 
 	SceneNodeTerrain(wstring name) : SceneNode(name) {};
@@ -37,5 +40,6 @@ private:
 	// making this & breaks the constructor
 	SceneGraph* sceneGraph;
 	std::vector<Chunk> chunks;
+	std::vector<SceneNodeChunk*> chunkPtrs;
 	std::thread chunkThread;
 };

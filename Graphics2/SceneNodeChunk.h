@@ -19,11 +19,11 @@ public:
 	float terrain[16][16];
 
 	int chunkSize = 16; //50
+	std::vector<SceneNode*> entities;
 private:
 	void UpdateHeight(float xOffset, float zOffset);
 	// Updated height calculation
 	float CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale);
 
-	std::vector<SceneNode*> entities;
 
 };

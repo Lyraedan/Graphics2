@@ -1,6 +1,4 @@
 #include "SceneNodeTerrain.h"
-#include "SceneNodeWater.h"
-#include "SceneNodeChunk.h"
 
 bool SceneNodeTerrain::Initialise()
 {
@@ -48,7 +46,6 @@ void SceneNodeTerrain::Render()
 		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(1);
 		//GenerateChunkIfWeNeedTo();
 	}
-
 	if (GetAsyncKeyState(VK_NUMPAD8) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetPitch(1);
 	}
@@ -77,10 +74,13 @@ void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 {
 	SceneNodeChunk* chunk = new SceneNodeChunk(L"Chunk");
 	chunk->GenerateTerrain(position, sceneGraph);
+	/*for (auto c : chunk->entities) {
+		sceneGraph->Add(c);
+	}*/
 	sceneGraph->Add(chunk);
 	chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
 	string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);
-	chunks.push_back({ id, position });
+	chunks.push_back({ id, position, chunk });
 }
 
 void SceneNodeTerrain::GenerateChunkIfWeNeedTo()

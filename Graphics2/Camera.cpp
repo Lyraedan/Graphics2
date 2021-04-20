@@ -12,6 +12,9 @@ Camera::Camera()
 	_cameraYaw = 0.0f;
 	_cameraPitch = 0.0f;
 	_cameraRoll = 0.0f;
+
+	bounds.SetSize(2, 2, 2);
+	bounds.SetPosition(0, 0, 0);
 }
 
 Camera::~Camera()
@@ -66,11 +69,13 @@ float Camera::GetRoll() const
 void Camera::SetLeftRight(float leftRight)
 {
 	_moveLeftRight = leftRight;
+	bounds.SetPosition(_cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
 }
 
 void Camera::SetForwardBack(float forwardBack)
 {
 	_moveForwardBack = forwardBack;
+	bounds.SetPosition(_cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
 }
 
 XMMATRIX Camera::GetViewMatrix(void)
@@ -118,6 +123,7 @@ void Camera::Update(void)
 	// Reset the amount we are moving
 	_moveLeftRight = 0.0f;
 	_moveForwardBack = 0.0f;
+	prevPosition = XMFLOAT3(_cameraPosition.x, _cameraPosition.y, _cameraPosition.z);
 
 	// Calculate a vector that tells us the direction the camera is looking in
 	cameraTarget = cameraPosition + XMVector3Normalize(cameraForward);

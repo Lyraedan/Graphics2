@@ -13,4 +13,11 @@ public:
 	virtual void Tick(XMMATRIX& completeTransform) override;
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
+
+	void PlaceAt(XMFLOAT3 pos);
+
+	AABB bounds;
+
+	bool doFly = false;
+	float ytest = 0;
 };

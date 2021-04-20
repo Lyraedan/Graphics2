@@ -3,7 +3,6 @@
 #include "SceneNodeObjModel.h"
 #include "Graphics2.h"
 #include "ObjLoader.h"
-#include "AABB.h"
 
 class SceneNodePhysicsCube : public SceneNodeObjModel
 {
@@ -19,8 +18,6 @@ public:
 	void setPosition(float x, float y, float z);
 
 	void SetHeightMap(float heightmap[16][16]);
-
-	AABB aabb;
 
 	float xPos = 0;
 	float yPos = 30;

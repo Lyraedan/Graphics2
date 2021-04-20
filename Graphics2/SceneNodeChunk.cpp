@@ -56,36 +56,36 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				XMFLOAT3 n3 = mesh->CalculateNormals(v3);
 				XMFLOAT3 n4 = mesh->CalculateNormals(v4);
 
-				mesh->AddVertex(v1, n1, XMFLOAT2(0.0f, 0.0f));
-				mesh->AddVertex(v2, n2, XMFLOAT2(0.0f, 1.0f));
-				mesh->AddVertex(v3, n3, XMFLOAT2(1.0f, 0.0f));
-				mesh->AddVertex(v4, n4, XMFLOAT2(1.0f, 1.0f));
+				// Textures
+				XMFLOAT2 uvs[] = {
+					XMFLOAT2(0.0f, 0.0f),
+					XMFLOAT2(0.0f, 1.0f),
+					XMFLOAT2(1.0f, 0.0f),
+					XMFLOAT2(1.0f, 1.0f)
+				};
 
-				
-				/*
-				// Generate indices
-				if (z < chunkSize - 1 && x < chunkSize - 1) {
-					int leftTop = x * scl + z;
-					int leftBottom = (x + 1) * scl + z;
-					int rightBottom = (x + 1) * scl + z + 1;
-					int rightTop = x * scl + z + 1;
-					AddIndice(leftTop, rightTop, leftBottom);
-					AddIndice(rightBottom, leftBottom, rightTop);
-				}
-				*/
+				// Todo randomise to hide tiling
+				int uvIndex = rand() % 4;
 
-				sceneGraph->Add(mesh);
-				mesh->Initialise();
+				mesh->AddVertex(v1, n1, uvs[0]);
+				mesh->AddVertex(v2, n2, uvs[1]);
+				mesh->AddVertex(v3, n3, uvs[2]);
+				mesh->AddVertex(v4, n4, uvs[3]);
+
+				//sceneGraph->Add(mesh);
+				//mesh->Initialise();
+				entities.push_back(mesh);
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y, chunkZ + (z * scl)));
 
 				//Spawn trees
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
 					SceneNodeTree* tree = new SceneNodeTree(L"Tree");
-					sceneGraph->Add(tree);
-					tree->Initialise();
-					tree->SetWorldTransform(XMMatrixScaling(0.5f, 0.5f, 0.5f) * XMMatrixTranslation(chunkX + (x * 2), terrain[x][z] + 0.25f, chunkZ + (z * 2)));
-
+					//sceneGraph->Add(tree);
+					//tree->Initialise();
+					XMFLOAT3 pos = XMFLOAT3(chunkX + (x * 2), terrain[x][z] + 0.25f, chunkZ + (z * 2));
+					tree->PlaceAt(pos);
+					entities.push_back(tree);
 				}
 
 			/*
@@ -105,6 +105,13 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			}
 			*/
 		}
+	}
+
+
+	int done = 0;
+	for (auto c : entities) {
+		c->Initialise();
+		//sceneGraph->Add(c); // This is causing the crash
 	}
 }
 
@@ -131,6 +138,6 @@ float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float
 	float perlinX = (chunkX + (x * tileScale)) / chunkSize;
 	float perlinZ = (chunkZ + (z * tileScale)) / chunkSize;
 	float noise = PerlinNoise::perlin(abs(perlinX), abs(perlinZ), 1);
-	float frequancy = 1;
+	float frequancy = 25.0f;
 	return noise * frequancy;
 }

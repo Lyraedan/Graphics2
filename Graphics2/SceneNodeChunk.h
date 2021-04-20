@@ -24,4 +24,6 @@ private:
 	// Updated height calculation
 	float CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale);
 
+	std::vector<SceneNode*> entities;
+
 };

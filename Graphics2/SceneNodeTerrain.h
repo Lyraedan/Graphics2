@@ -8,12 +8,12 @@
 
 class SceneNodeTerrain : public SceneNode
 {
+public:
 	struct Chunk {
 		string id;
 		XMFLOAT3 position;
 	};
 
-public:
 	SceneNodeTerrain(wstring name) : SceneNode(name) {};
 
 	bool Initialise() override;
@@ -30,7 +30,7 @@ public:
 	float ChunkZ(void);
 
 	int chunkSize = 16; //50
-	float viewSize = 4;
+	float viewSize = 1;
 	bool generateDynamically = true;
 
 private:

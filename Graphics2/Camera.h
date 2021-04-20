@@ -1,6 +1,7 @@
 #pragma once
 #include "core.h"
 #include "DirectXCore.h"
+#include "AABB.h"
 
 class Camera
 {
@@ -24,6 +25,8 @@ public:
 	void SetLeftRight(float leftRight);
 	void SetForwardBack(float forwardBack);
 
+	AABB bounds;
+	XMFLOAT3 prevPosition;
 private:
 	XMFLOAT4    _cameraPosition;
 

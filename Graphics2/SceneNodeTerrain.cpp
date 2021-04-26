@@ -4,11 +4,13 @@ bool SceneNodeTerrain::Initialise()
 {
 	//For demoing
 	if (!generateDynamically) {
+		/*
 		std::thread generator([&] {
 			GenerateChunkIfWeNeedTo();
 		});
-		generator.detach();
-			//GenerateChunkAt(XMFLOAT3(0, 0, 0));
+		*/
+		//generator.detach();
+			GenerateChunkAt(XMFLOAT3(0, 0, 0));
 	}
 	else {
 		std::thread generator([&] {
@@ -74,9 +76,11 @@ void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 {
 	SceneNodeChunk* chunk = new SceneNodeChunk(L"Chunk");
 	chunk->GenerateTerrain(position, sceneGraph);
-	/*for (auto c : chunk->entities) {
+	int entities = chunk->entities.size();
+	// Memory is being absolutely destroyed here
+	for (auto c : chunk->entities) {
 		sceneGraph->Add(c);
-	}*/
+	}
 	sceneGraph->Add(chunk);
 	chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
 	string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);

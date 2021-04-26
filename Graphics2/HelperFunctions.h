@@ -1,4 +1,4 @@
-#pragma once
+#pragma once687628268
 
 // Various helper functions
 
@@ -11,3 +11,4 @@ inline void ThrowIfFailed(HRESULT hr)
 		throw exception();
 	}
 }
+66

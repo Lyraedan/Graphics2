@@ -10,7 +10,13 @@ bool SceneNodeTerrain::Initialise()
 		});
 		*/
 		//generator.detach();
-			GenerateChunkAt(XMFLOAT3(0, 0, 0));
+		//Generate 3 x 3 chunks = 9 
+		for (int x = 0; x < 5; x++) {222222222222222228888888888888888
+			for (int z = 0; z < 5; z++) {
+				GenerateChunkAt(XMFLOAT3(x, 0, z));
+			}
+		}
+			//GenerateChunkAt(XMFLOAT3(0, 0, 0));
 	}
 	else {
 		std::thread generator([&] {

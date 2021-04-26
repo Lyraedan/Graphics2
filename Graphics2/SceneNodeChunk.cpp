@@ -27,21 +27,24 @@ void SceneNodeChunk::Shutdown()
 }
 
 void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph) {
+	// Todo cleanup these equations
 	float chunkX = terrainOffset.x * chunkSize + (chunkSize + (chunkSize / 2));
 	float chunkZ = terrainOffset.z * chunkSize + (chunkSize + (chunkSize / 2));
 	//shared_ptr<SceneNodeTile> mesh = make_shared<SceneNodeTile>(L"Tile");
 
-	//UpdateHeight(chunkX, chunkZ);
+	// I don't like this because it double parses but allows easy use of implementing water
+	UpdateHeight(chunkX, chunkZ);
+	int scl = 1;
 	float minHeight = 0.05f;
 	for (int z = 0; z < chunkSize - 1; z++) {
 		for (int x = 0; x < chunkSize - 1; x++) {
-			int scl = 1;
-			terrain[x][z] = CalculateHeight(chunkX, chunkZ, x, z, scl);
-			terrain[x][z + 1] = CalculateHeight(chunkX, chunkZ, x, z + 1, scl);
-			terrain[x + 1][z] = CalculateHeight(chunkX, chunkZ, x + 1, z, scl);
-			terrain[x + 1][z + 1] = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, scl);
+			// This on the other hand is much more optimised but makes calculating water height into 4 seperate equations
+			//terrain[x][z] = CalculateHeight(chunkX, chunkZ, x, z, scl);
+			//terrain[x][z + 1] = CalculateHeight(chunkX, chunkZ, x, z + 1, scl);
+			//terrain[x + 1][z] = CalculateHeight(chunkX, chunkZ, x + 1, z, scl);
+			//terrain[x + 1][z + 1] = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, scl);
 
-			//if (terrain[x][z] > minHeight) {
+			if (terrain[x][z] > minHeight) {
 				//Todo swap to a single mesh instead of a bunch of tiles
 				SceneNodeTile* mesh = new SceneNodeTile(L"Tile");
 				// Vertices
@@ -72,8 +75,6 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				mesh->AddVertex(v3, n3, uvs[2]);
 				mesh->AddVertex(v4, n4, uvs[3]);
 
-				//sceneGraph->Add(mesh);
-				//mesh->Initialise();
 				entities.push_back(mesh);
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y, chunkZ + (z * scl)));
 
@@ -88,22 +89,18 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 					entities.push_back(tree);
 				}
 
-			/*
 			}		
 			if (terrain[x][z] < minHeight + 2) {
-				int scl = 1;
 				float waterHeight = minHeight + 2;
-				shared_ptr<SceneNodeWater> mesh = make_shared<SceneNodeWater>(L"Water");
+				SceneNodeWater* mesh = new SceneNodeWater(L"Water");
 				mesh->AddVertex(XMFLOAT3(-scl + x, 0, -scl + z), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
 				mesh->AddVertex(XMFLOAT3(-scl + x, 0, scl + z), XMFLOAT3(0.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f));
 				mesh->AddVertex(XMFLOAT3(scl + x, 0, -scl + z), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
 				mesh->AddVertex(XMFLOAT3(scl + x, 0, scl + z), XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
 
-				sceneGraph->Add(mesh);
-				mesh->Initialise();
+				entities.push_back(mesh);
 				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y + waterHeight, chunkZ + (z * scl)));
 			}
-			*/
 		}
 	}
 
@@ -127,7 +124,7 @@ void SceneNodeChunk::UpdateHeight(float xOffset, float zOffset)
 			float noise = PerlinNoise::perlin(abs(xOffset), abs(zOffset), abs(xOffset / zOffset)); // xOffset / zOffset
 			float frequancy = 25.0;
 			terrain[x][z] = (noise * frequancy);
-			zOffset += 1.0f / chunkSize; // todo change to give different variaty
+			zOffset += 1.0 / chunkSize; // todo change to give different variaty
 		}
 		xOffset += 1.0f / chunkSize; // todo change to give different variaty:lol
 	}

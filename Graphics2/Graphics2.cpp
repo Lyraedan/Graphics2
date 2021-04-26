@@ -15,10 +15,6 @@ void Graphics2::CreateSceneGraph()
 	//								0, -20, -500
 	GetCamera()->SetCameraPosition(0.0f, 30.0f, 0.0f);
 
-	// Skybox
-	SceneNodeSkybox* sky = new SceneNodeSkybox(L"Skybox");
-	sceneGraph->Add(sky);
-
 	// Apply a seed to the generator
 	unsigned int stime = static_cast<unsigned int>(time(NULL));
 	srand(stime);
@@ -42,6 +38,10 @@ void Graphics2::CreateSceneGraph()
 	SceneNodePlane* plane = new SceneNodePlane(L"Plane");
 	sceneGraph->Add(plane);
 	plane->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 0, 0));
+
+	// Skybox
+	SceneNodeSkybox* sky = new SceneNodeSkybox(L"Skybox");
+	sceneGraph->Add(sky);
 
 }
 

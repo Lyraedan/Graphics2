@@ -33,31 +33,21 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	SceneNodeTile* mesh = new SceneNodeTile(L"Tile");
 
 	UpdateHeight(chunkX, chunkZ);
-	int scl = 1;
+	int scl = 2;
 	float minHeight = 0.05f;
-	for (int x = 0; x < 20; x++) {
-		for (int z = 0; z < 20; z++) {
-			AddQuad(mesh, x, z, scl, new float[4]{ 0, 0, 0, 0 });
-		}
-	}
-	entities.push_back(mesh);
 
-	SceneNodeTree* tree = new SceneNodeTree(L"Tree");
-	XMFLOAT3 pos = XMFLOAT3(10, 0, 10);
-	tree->PlaceAt(pos);
-	entities.push_back(tree);
+	int index = 0;
 	for (int z = 0; z < chunkSize - 1; z++) {
 		for (int x = 0; x < chunkSize - 1; x++) {
 			if (terrain[x][z] > minHeight) {
-				/*AddQuad(mesh, x, z, scl, new float[4] { terrain[x][z + 1],
+				AddQuad(mesh, x, z, scl, index, new float[4]{ terrain[x][z + 1],
 														terrain[x][z],
 														terrain[x + 1][z],
-														terrain[x + 1][z + 1] },
-														);
+														terrain[x + 1][z + 1] });
 				entities.push_back(mesh);
-				*/
+
+				index += 4;
 				//Spawn trees
-				/*
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
 					SceneNodeTree* tree = new SceneNodeTree(L"Tree");
@@ -67,8 +57,6 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 					tree->PlaceAt(pos);
 					entities.push_back(tree);
 				}
-				*/
-
 			}
 			/*
 			if (terrain[x][z] < minHeight + 2) {
@@ -94,12 +82,13 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	}
 }
 
-void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, int x, int z, float scl, float heights[4])
+void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, int x, int z, float scl, int index, float heights[4])
 {
 	XMFLOAT3 topLeft = XMFLOAT3(x * scl, heights[0], (z + 1) * scl);
 	XMFLOAT3 bottomLeft = XMFLOAT3(x * scl, heights[1], z * scl);
 	XMFLOAT3 bottomRight = XMFLOAT3((x + 1) * scl, heights[2], z * scl);
 	XMFLOAT3 topRight = XMFLOAT3((x + 1) * scl, heights[3], (z + 1) * scl);
+
 	// Normals
 	XMFLOAT3 n1 = mesh->CalculateNormals(topLeft);
 	XMFLOAT3 n2 = mesh->CalculateNormals(bottomLeft);
@@ -112,7 +101,7 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, int x, int z, float scl, float
 		XMFLOAT2(0.0f, 1.0f),
 		XMFLOAT2(1.0f, 1.0f),
 		XMFLOAT2(1.0f, 0.0f)
-		
+
 	};
 
 	mesh->AddVertex(bottomLeft, n2, uvs[0]);
@@ -120,7 +109,7 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, int x, int z, float scl, float
 	mesh->AddVertex(topRight, n4, uvs[2]);
 	mesh->AddVertex(bottomRight, n3, uvs[3]);
 
-	int index = (z * chunkSize) + x;
+	//int index = (z * chunkSize) + x;
 	mesh->AddIndice(index, index + 1, index + 2);
 	mesh->AddIndice(index, index + 2, index + 3);
 }

@@ -19,7 +19,7 @@ public:
 	void GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph);
 	float terrain[16][16];
 
-	void AddQuad(SceneNodeTile* mesh, int x, int z, float scl, float heights[4]);
+	void AddQuad(SceneNodeTile* mesh, int x, int z, float scl, int index, float heights[4]);
 
 	int chunkSize = 16; //50
 	std::vector<SceneNode*> entities;

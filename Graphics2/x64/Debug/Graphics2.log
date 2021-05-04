@@ -1,15 +1,6 @@
-﻿  Graphics2.cpp
-F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
-  SceneNodeChunk.cpp
-F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(43,25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(126,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(129,30): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(139,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  SceneNodeTerrain.cpp
+﻿  SceneNodeTerrain.cpp
 F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
 F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(16,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(16,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(85,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
+F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(89,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

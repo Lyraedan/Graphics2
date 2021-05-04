@@ -11,25 +11,25 @@ bool SceneNodeTerrain::Initialise()
 		*/
 		//generator.detach();
 		//Generate 3 x 3 chunks = 9 
-		for (int x = 0; x < 1; x++) {
-			for (int z = 0; z < 1; z++) {
+		for (int x = 0; x < 2; x++) {
+			for (int z = 0; z < 2; z++) {
 				GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}
-			//GenerateChunkAt(XMFLOAT3(0, 0, 0));
+		//GenerateChunkAt(XMFLOAT3(0, 0, 0));
 	}
 	else {
-		std::thread generator([&] {
-			while (generateDynamically) {
-				bool condition = (GetAsyncKeyState(VK_UP) < 0) || (GetAsyncKeyState(VK_DOWN) < 0) || (GetAsyncKeyState(VK_LEFT) < 0) || (GetAsyncKeyState(VK_RIGHT) < 0);
-				if (condition) {
-					GenerateChunkIfWeNeedTo();
-				}
-			}
-			});
+		//std::thread generator([&] {
+			//while (generateDynamically) {
+			//	bool condition = (GetAsyncKeyState(VK_UP) < 0) || (GetAsyncKeyState(VK_DOWN) < 0) || (GetAsyncKeyState(VK_LEFT) < 0) || (GetAsyncKeyState(VK_RIGHT) < 0);
+			//	if (condition) {
+		GenerateChunkIfWeNeedTo();
+		//	}
+		//}
+		//});
 
-		generator.detach();
-		//generator.join();
+	//generator.detach();
+	//generator.join();
 	}
 	return true;
 }
@@ -39,20 +39,24 @@ void SceneNodeTerrain::Render()
 
 	if (GetAsyncKeyState(VK_UP) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(1);
-		//GenerateChunkIfWeNeedTo();
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
 	}
 	else if (GetAsyncKeyState(VK_DOWN) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(-1);
-		//GenerateChunkIfWeNeedTo();
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
 	}
 
 	if (GetAsyncKeyState(VK_LEFT) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(-1);
-		//GenerateChunkIfWeNeedTo();
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
 	}
 	else if (GetAsyncKeyState(VK_RIGHT) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(1);
-		//GenerateChunkIfWeNeedTo();
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
 	}
 	if (GetAsyncKeyState(VK_NUMPAD8) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetPitch(1);

@@ -34,6 +34,7 @@ public:
 
 	int chunkSize = 16; //50
 	float viewSize = 1;
+	// Enable or disable infinite terrain
 	bool generateDynamically = false;
 
 private:

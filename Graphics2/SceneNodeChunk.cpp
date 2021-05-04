@@ -32,18 +32,30 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	float chunkZ = terrainOffset.z * chunkSize;
 	SceneNodeTile* mesh = new SceneNodeTile(L"Tile");
 
-	UpdateHeight(chunkX, chunkZ);
+	//UpdateHeight(chunkX, chunkZ);
 	int scl = 2;
-	float minHeight = 0.05f;
+	float minHeight = 1; // 10 | 0.005
 
 	int index = 0;
 	for (int z = 0; z < chunkSize - 1; z++) {
 		for (int x = 0; x < chunkSize - 1; x++) {
-			if (terrain[x][z] > minHeight) {
+
+			float tr = CalculateHeight(chunkX, chunkZ, x, z + 1, scl);
+			float tl = CalculateHeight(chunkX, chunkZ, x, z, scl);
+			float bl = CalculateHeight(chunkX, chunkZ, x + 1, z, scl);
+			float br = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, scl);
+			float avg = (tr + tl + bl + br) / 4;
+
+			terrain[x][z + 1] = tr;
+			terrain[x][z] = tl;
+			terrain[x + 1][z] = bl;
+			terrain[x + 1][z + 1] = br;
+
+			if (avg > minHeight) {
 				AddQuad(mesh, x, z, scl, index, new float[4]{ terrain[x][z + 1],
-														terrain[x][z],
-														terrain[x + 1][z],
-														terrain[x + 1][z + 1] });
+															  terrain[x][z],
+															  terrain[x + 1][z],
+															  terrain[x + 1][z + 1] });
 				entities.push_back(mesh);
 
 				index += 4;
@@ -58,6 +70,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 					entities.push_back(tree);
 				}
 			}
+
 			/*
 			if (terrain[x][z] < minHeight + 2) {
 				float waterHeight = minHeight + 2;

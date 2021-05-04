@@ -161,6 +161,7 @@
     <ClInclude Include="SceneNodeObjModel.h" />
     <ClInclude Include="SceneNodePlane.h" />
     <ClInclude Include="SceneNodeSkybox.h" />
+    <ClInclude Include="SceneNodeStaticTerrain.h" />
     <ClInclude Include="SceneNodeTerrain.h" />
     <ClInclude Include="SceneNodePhysicsCube.h" />
     <ClInclude Include="SceneNodeTile.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="SceneNodeObjModel.cpp" />
     <ClCompile Include="SceneNodePlane.cpp" />
     <ClCompile Include="SceneNodeSkybox.cpp" />
+    <ClCompile Include="SceneNodeStaticTerrain.cpp" />
     <ClCompile Include="SceneNodeTerrain.cpp" />
     <ClCompile Include="SceneNodePhysicsCube.cpp" />
     <ClCompile Include="SceneNodeTile.cpp" />

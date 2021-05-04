@@ -11,4 +11,3 @@ inline void ThrowIfFailed(HRESULT hr)
 		throw exception();
 	}
 }
-66

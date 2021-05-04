@@ -11,8 +11,8 @@ bool SceneNodeTerrain::Initialise()
 		*/
 		//generator.detach();
 		//Generate 3 x 3 chunks = 9 
-		for (int x = 0; x < 5; x++) {222222222222222228888888888888888
-			for (int z = 0; z < 5; z++) {
+		for (int x = 0; x < 1; x++) {
+			for (int z = 0; z < 1; z++) {
 				GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}

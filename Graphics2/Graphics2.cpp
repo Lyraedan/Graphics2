@@ -3,6 +3,7 @@
 #include "SceneNodePhysicsCube.h"
 #include "SceneNodeSkybox.h"
 #include "SceneNodePlane.h"
+#include "SceneNodeStaticTerrain.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -33,6 +34,11 @@ void Graphics2::CreateSceneGraph()
 	sceneGraph->Add(cube);
 	cube->SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(0, 30, 0));
 	*/
+
+	// Static Terrain
+	//SceneNodeStaticTerrain* staticTerrain = new SceneNodeStaticTerrain(L"StaticTerrain");
+	//sceneGraph->Add(staticTerrain);
+	//staticTerrain->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 0, 0));
 
 	// Plane
 	SceneNodePlane* plane = new SceneNodePlane(L"Plane");

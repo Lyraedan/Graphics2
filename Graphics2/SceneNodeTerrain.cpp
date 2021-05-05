@@ -10,9 +10,10 @@ bool SceneNodeTerrain::Initialise()
 		});
 		*/
 		//generator.detach();
-		//Generate 3 x 3 chunks = 9 
-		for (int x = 0; x < 2; x++) {
-			for (int z = 0; z < 2; z++) {
+		int numberOfChunks = 3;
+		//if number of chunks = 3 -> Generate 3 x 3 chunks = 9 
+		for (int x = 0; x < numberOfChunks; x++) {
+			for (int z = 0; z < numberOfChunks; z++) {
 				GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}
@@ -23,7 +24,7 @@ bool SceneNodeTerrain::Initialise()
 			//while (generateDynamically) {
 			//	bool condition = (GetAsyncKeyState(VK_UP) < 0) || (GetAsyncKeyState(VK_DOWN) < 0) || (GetAsyncKeyState(VK_LEFT) < 0) || (GetAsyncKeyState(VK_RIGHT) < 0);
 			//	if (condition) {
-		GenerateChunkIfWeNeedTo();
+			//GenerateChunkIfWeNeedTo();
 		//	}
 		//}
 		//});

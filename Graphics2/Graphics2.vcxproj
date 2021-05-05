@@ -153,6 +153,7 @@
     <ClInclude Include="HelperFunctions.h" />
     <ClInclude Include="ObjLoader.h" />
     <ClInclude Include="PerlinNoise.h" />
+    <ClInclude Include="PerlinRevised.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneGraph.h" />
     <ClInclude Include="SceneNode.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Graphics2.cpp" />
     <ClCompile Include="ObjLoader.cpp" />
     <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="PerlinRevised.cpp" />
     <ClCompile Include="SceneGraph.cpp" />
     <ClCompile Include="SceneNodeChunk.cpp" />
     <ClCompile Include="SceneNodeMesh.cpp" />

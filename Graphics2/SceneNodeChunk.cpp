@@ -52,7 +52,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			terrain[x + 1][z + 1] = br;
 
 			if (avg > minHeight) {
-				AddQuad(mesh, x, z, scl, index, new float[4]{ terrain[x][z + 1],
+				AddQuad(mesh, chunkX + x, chunkZ + z, scl, index, new float[4]{ terrain[x][z + 1],
 															  terrain[x][z],
 															  terrain[x + 1][z],
 															  terrain[x + 1][z + 1] });
@@ -65,7 +65,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 					SceneNodeTree* tree = new SceneNodeTree(L"Tree");
 					//sceneGraph->Add(tree);
 					//tree->Initialise();
-					XMFLOAT3 pos = XMFLOAT3(chunkX + (x * 2), terrain[x][z] + 0.25f, chunkZ + (z * 2));
+					XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
 					tree->PlaceAt(pos);
 					entities.push_back(tree);
 				}
@@ -149,7 +149,8 @@ float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float
 {
 	float perlinX = (chunkX + (x * tileScale)) / chunkSize;
 	float perlinZ = (chunkZ + (z * tileScale)) / chunkSize;
-	float noise = PerlinNoise::perlin(abs(perlinX), abs(perlinZ), 1);
-	float frequancy = 25.0f;
+	//float noise = PerlinNoise::perlin(abs(perlinX), abs(perlinZ), 1);
+	float noise = PerlinRevised::perlin(perlinX, perlinZ);
+	float frequancy = 8;
 	return noise * frequancy;
 }

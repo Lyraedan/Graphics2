@@ -13,8 +13,6 @@ void SceneNodeTile::SetupMesh()
 {
 	BuildRendererState(D3D11_CULL_FRONT);
 	texture = L"grass.bmp";
-	//AddIndice(0, 1, 2);
-	//AddIndice(2, 1, 3);
 }
 
 // Ref: Newell's Method -> https://www.khronos.org/opengl/wiki/Calculating_a_Surface_Normal

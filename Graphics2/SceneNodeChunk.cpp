@@ -51,7 +51,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			terrain[x + 1][z] = bl;
 			terrain[x + 1][z + 1] = br;
 
-			if (avg > minHeight) {
+			//if (avg > minHeight) {
 				AddQuad(mesh, chunkX + x, chunkZ + z, scl, index, new float[4]{ terrain[x][z + 1],
 															  terrain[x][z],
 															  terrain[x + 1][z],
@@ -60,16 +60,19 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 
 				index += 4;
 				//Spawn trees
+				// Trees suddenly causing a crash?
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
-					SceneNodeTree* tree = new SceneNodeTree(L"Tree");
-					//sceneGraph->Add(tree);
-					//tree->Initialise();
-					XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
-					tree->PlaceAt(pos);
-					entities.push_back(tree);
+					if (x >= 10 && z >= 10) {
+						SceneNodeTree* tree = new SceneNodeTree(L"Tree");
+						//sceneGraph->Add(tree);
+						//tree->Initialise();
+						XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
+						tree->PlaceAt(pos);
+						entities.push_back(tree);
+					}
 				}
-			}
+			//}
 
 			/*
 			if (terrain[x][z] < minHeight + 2) {

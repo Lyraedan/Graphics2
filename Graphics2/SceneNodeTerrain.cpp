@@ -13,17 +13,7 @@ bool SceneNodeTerrain::Initialise()
 		}
 	}
 	else {
-		//std::thread generator([&] {
-			//while (generateDynamically) {
-			//	bool condition = (GetAsyncKeyState(VK_UP) < 0) || (GetAsyncKeyState(VK_DOWN) < 0) || (GetAsyncKeyState(VK_LEFT) < 0) || (GetAsyncKeyState(VK_RIGHT) < 0);
-			//	if (condition) {
-			//GenerateChunkIfWeNeedTo();
-		//	}
-		//}
-		//});
-
-	//generator.detach();
-	//generator.join();
+		GenerateChunkIfWeNeedTo();
 	}
 	return true;
 }

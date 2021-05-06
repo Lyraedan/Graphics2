@@ -57,8 +57,6 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 																					  terrain[x][z],
 																					  terrain[x + 1][z],
 																					  terrain[x + 1][z + 1] });
-				entities.push_back(ground);
-
 				groundIndex += 4;
 				//Spawn trees
 				bool spawnTree = std::rand() % chunkSize == 0;
@@ -74,24 +72,12 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			else {
 				float waterHeight = minHeight;
 				AddQuad(water, chunkX, chunkZ, x, z, scl, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
-				entities.push_back(water);
 				waterIndex += 4;
 			}
-
-			/*
-			if (terrain[x][z] < minHeight + 2) {
-				float waterHeight = minHeight + 2;
-				SceneNodeWater* mesh = new SceneNodeWater(L"Water");
-				mesh->AddVertex(XMFLOAT3(-scl + x, 0, -scl + z), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(-scl + x, 0, scl + z), XMFLOAT3(0.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, 0, -scl + z), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, 0, scl + z), XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
-
-				entities.push_back(mesh);
-				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(chunkX + (x * scl), terrainOffset.y + waterHeight, chunkZ + (z * scl)));
-			}
-			*/
 		}
+
+		entities.push_back(ground);
+		entities.push_back(water);
 	}
 
 

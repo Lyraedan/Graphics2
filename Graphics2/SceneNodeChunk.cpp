@@ -1,7 +1,4 @@
 #include "SceneNodeChunk.h"
-#include "SceneNodeWater.h"
-#include "SceneNodeTree.h"
-#include "SceneNodeTile.h"
 
 bool SceneNodeChunk::Initialise()
 {
@@ -24,16 +21,15 @@ void SceneNodeChunk::Render()
 
 void SceneNodeChunk::Shutdown()
 {
+	//delete ground;
+	//delete water;
+	//delete tree;
 }
 
 void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph) {
 	float chunkX = terrainOffset.x * chunkSize;
 	float chunkZ = terrainOffset.z * chunkSize;
-	SceneNodeTile* ground = new SceneNodeTile(L"Ground");
-	SceneNodeTile* water = new SceneNodeWater(L"Water");
-	SceneNodeTree* tree = new SceneNodeTree(L"Tree");
 
-	//UpdateHeight(chunkX, chunkZ);
 	int scl = 2;
 	float minHeight = 1; // 10 | 0.005
 
@@ -73,10 +69,14 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				waterIndex += 4;
 			}
 		}
-
+		// Ground is fine here
 		entities.push_back(ground);
-		entities.push_back(water);
+
 	}
+
+	// Ground is upside down here :/
+	//entities.insert(entities.begin(), ground);
+	entities.push_back(water);
 
 	for (auto c : entities) {
 		c->Initialise();
@@ -104,7 +104,6 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, in
 		XMFLOAT2(0.0f, 1.0f),
 		XMFLOAT2(1.0f, 1.0f),
 		XMFLOAT2(1.0f, 0.0f)
-
 	};
 
 	mesh->AddVertex(bottomLeft, n2, uvs[0]);
@@ -118,23 +117,14 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, in
 }
 
 /// <summary>
-/// Generate a height map using perlin noise
+/// New heightmap calculation
 /// </summary>
-/// <param name="xOffset">- Our sampling X offset</param>
-/// <param name="zOffset">- Our sampling Z offset</param>
-void SceneNodeChunk::UpdateHeight(float xOffset, float zOffset)
-{
-	for (int x = 0; x < chunkSize; x++) {
-		for (int z = 0; z < chunkSize; z++) {
-			float noise = PerlinNoise::perlin(abs(xOffset), abs(zOffset), abs(xOffset / zOffset)); // xOffset / zOffset
-			float frequancy = 25.0;
-			terrain[x][z] = (noise * frequancy);
-			zOffset += 1.0 / chunkSize; // todo change to give different variaty
-		}
-		xOffset += 1.0f / chunkSize; // todo change to give different variaty:lol
-	}
-}
-
+/// <param name="chunkX">Chunk offset X</param>
+/// <param name="chunkZ">Chunk offset Z</param>
+/// <param name="x">Tile index X</param>
+/// <param name="z">Tile index Z</param>
+/// <param name="tileScale">Tile size</param>
+/// <returns>Noise value at that given coordinate</returns>
 float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)
 {
 	float perlinX = (chunkX + (x * tileScale)) / chunkSize;

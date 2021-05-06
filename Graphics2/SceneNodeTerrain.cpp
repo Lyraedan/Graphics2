@@ -59,6 +59,11 @@ void SceneNodeTerrain::Render()
 
 void SceneNodeTerrain::Shutdown()
 {
+	/*
+	for (auto c : chunks) {
+		delete c.data;
+	}
+	*/
 }
 
 void SceneNodeTerrain::SetSceneGraph(SceneGraph* ptr)
@@ -83,8 +88,6 @@ void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 
 void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
 {
-	//if (!generateDynamically) return;
-
 	float camX = ChunkX();
 	float camZ = ChunkZ();
 
@@ -114,6 +117,7 @@ float SceneNodeTerrain::ChunkX(void)
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
 	XMStoreFloat4(&position, cameraPosition);
+	// Equation = round ( cam x / (tile scale * chunk size)
 	return roundf(position.x / (2 * chunkSize));
 }
 
@@ -122,5 +126,6 @@ float SceneNodeTerrain::ChunkZ(void)
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
 	XMStoreFloat4(&position, cameraPosition);
+	// Equation = round ( cam z / (tile scale * chunk size)
 	return roundf(position.z / (2 * chunkSize));
 }

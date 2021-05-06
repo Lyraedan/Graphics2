@@ -30,7 +30,7 @@ void SceneNodeTree::SetupMesh() {
 	lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	LoadModel("models/tree.obj", L"models/tree.png");
-	bounds.SetSize(6, 12, 6);
+	bounds.SetSize(scale * 12, scale * 24, scale * 12); // 6, 12, 6
 }
 
 void SceneNodeTree::Shutdown()
@@ -41,5 +41,5 @@ void SceneNodeTree::Shutdown()
 void SceneNodeTree::PlaceAt(XMFLOAT3 pos)
 {
 	bounds.SetPosition(pos.x, pos.y, pos.z);
-	SetWorldTransform(XMMatrixScaling(0.5f, 0.5f, 0.5f) * XMMatrixTranslation(pos.x, pos.y, pos.z));
+	SetWorldTransform(XMMatrixScaling(scale, scale, scale) * XMMatrixTranslation(pos.x, pos.y, pos.z));
 }

@@ -5,11 +5,13 @@
 #include "PerlinNoise.h"
 #include "PerlinRevised.h"
 #include "SceneNodeTile.h"
+#include "SceneNodeWater.h"
+#include "SceneNodeTree.h"
 #include <math.h>
 
 class SceneNodeChunk : public SceneNodeMesh
 {
-	//Gerstner wave
+
 public:
 	SceneNodeChunk(wstring name) : SceneNodeMesh(name) {};
 
@@ -23,10 +25,13 @@ public:
 	void AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, int x, int z, float scl, int index, float heights[4]);
 
 	int chunkSize = 16; //50
+
 	std::vector<SceneNode*> entities;
+	SceneNodeTile* ground = new SceneNodeTile(L"Ground");
+	SceneNodeTile* water = new SceneNodeWater(L"Water");
+	SceneNodeTree* tree = new SceneNodeTree(L"Tree");
+
 private:
-	void UpdateHeight(float xOffset, float zOffset);
-	// Updated height calculation
 	float CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale);
 
 

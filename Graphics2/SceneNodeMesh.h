@@ -44,7 +44,7 @@ public:
 
 	const wchar_t* texture = L"";
 	void BuildRendererState(D3D11_CULL_MODE mode);
-	void BuildBlendState();
+	void BuildBlendState(BOOL enabled, UINT8 writeMask);
 	void SetupBlendState(float blendFactor[4], UINT sampleMask);
 
 	XMFLOAT4 ambientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
@@ -53,6 +53,9 @@ public:
 	
 	int GetVertices(void);
 	int GetIndices(void);
+
+	bool useCulling = true;
+	bool useBlending = false;
 
 	Vertex GetVertex(int index);
 

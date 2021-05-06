@@ -53,9 +53,11 @@ void SceneNodeMesh::Render()
 		_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		_deviceContext->DrawIndexed(vertices.size() * 3, 0, 0);
 
-		_deviceContext->RSSetState(_defaultRasteriserState.Get());
+		if(useCulling)
+			_deviceContext->RSSetState(_defaultRasteriserState.Get());
 
-		_deviceContext->OMSetBlendState(_blendState.Get(), blendFactor, sampleMask);
+		if(useBlending)
+			_deviceContext->OMSetBlendState(_blendState.Get(), blendFactor, sampleMask);
 	}
 }
 
@@ -214,11 +216,11 @@ void SceneNodeMesh::BuildRendererState(D3D11_CULL_MODE mode)
 	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _noCullRasteriserState.GetAddressOf()));
 }
 
-void SceneNodeMesh::BuildBlendState() {
+void SceneNodeMesh::BuildBlendState(BOOL enabled, UINT8 writeMask) {
 	D3D11_BLEND_DESC BlendState;
 	ZeroMemory(&BlendState, sizeof(D3D11_BLEND_DESC));
-	BlendState.RenderTarget[0].BlendEnable = FALSE;
-	BlendState.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	BlendState.RenderTarget[0].BlendEnable = enabled;
+	BlendState.RenderTarget[0].RenderTargetWriteMask = writeMask; //D3D11_COLOR_WRITE_ENABLE_ALL;
 	ThrowIfFailed(_device->CreateBlendState(&BlendState, _blendState.GetAddressOf()));
 }
 

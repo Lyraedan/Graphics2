@@ -26,7 +26,8 @@ void SceneNodeWater::Tick(XMMATRIX& completeTransform)
 void SceneNodeWater::SetupMesh()
 {
 	BuildRendererState(D3D11_CULL_FRONT);
-	BuildBlendState();
-	SetupBlendState(new float[4] {0.5f, 0.5f, 0.5f, 0.5f}, 0xffffffff);
+	BuildBlendState(FALSE, D3D11_COLOR_WRITE_ENABLE_ALL);
+	SetupBlendState(new float[4]{ 0.0f, 0.0f, 0.0f, 0.0f }, 0xffffffff);
+	useBlending = false;
 	texture = L"water.bmp";
 }

@@ -33,7 +33,7 @@ public:
 	float ChunkZ(void);
 
 	int chunkSize = 16; //50
-	float viewSize = 1;
+	float viewSize = 3;
 	// Enable or disable infinite terrain
 	bool generateDynamically = true;
 

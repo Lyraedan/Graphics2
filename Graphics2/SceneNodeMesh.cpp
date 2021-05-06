@@ -51,7 +51,7 @@ void SceneNodeMesh::Render()
 		_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
 		_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 		_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0);
+		_deviceContext->DrawIndexed(vertices.size() * 3, 0, 0);
 
 		_deviceContext->RSSetState(_defaultRasteriserState.Get());
 	}

@@ -18,7 +18,7 @@ void SceneNodeTree::Tick(XMMATRIX& completeTransform)
 
 	// Make the tree fly if the camera collides with it
 	if (doFly) {
-		ytest += 0.01f;
+		ytest += 0.001f;
 		SetWorldTransform(XMMatrixScaling(0.5f, 0.5f, 0.5f) * XMMatrixTranslation(bounds.x, bounds.y + ytest, bounds.z));
 		bounds.SetPosition(bounds.x, bounds.y + ytest, bounds.z);
 	}

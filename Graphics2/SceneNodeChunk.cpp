@@ -57,7 +57,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				//Spawn trees
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
-					XMFLOAT3 pos = XMFLOAT3(chunkX + (x * chunkSize), terrain[x][z] + 0.2f, chunkZ + (z * chunkSize));
+					XMFLOAT3 pos = XMFLOAT3(chunkX + (x + chunkSize), terrain[x][z] + 0.2f, chunkZ + (z + chunkSize));
 					tree->PlaceAt(pos);
 					entities.push_back(tree);
 				}
@@ -71,7 +71,9 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 
 			bool spawnBird = std::rand() % chunkSize == 0;
 			if (spawnBird) {
-
+				XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
+				bird->PlaceAt(pos);
+				//entities.push_back(bird);
 			}
 		}
 		// Ground is fine here

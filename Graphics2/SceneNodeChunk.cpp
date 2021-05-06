@@ -35,25 +35,33 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 
 	int groundIndex = 0;
 	int waterIndex = 0;
-	for (int z = 0; z < chunkSize - 1; z++) {
-		for (int x = 0; x < chunkSize - 1; x++) {
+	for (int z = 0; z <= chunkSize - 1; z++) {
+		for (int x = 0; x <= chunkSize - 1; x++) {
+
 			float tr = CalculateHeight(chunkX, chunkZ, x, z + 1, tileSize);
 			float tl = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
 			float bl = CalculateHeight(chunkX, chunkZ, x + 1, z, tileSize);
 			float br = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, tileSize);
 			float avg = (tr + tl + bl + br) / 4;
 
+			AddQuad(ground, chunkX, chunkZ, x, z, tileSize, groundIndex, new float[4]{ tr, tl, bl, br });
+			groundIndex += 4;
+
+			float waterHeight = minHeight;
+			AddQuad(water, chunkX, chunkZ, x, z, tileSize, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
+			waterIndex += 4;
+
+			/*
 			terrain[x][z + 1] = tr;
 			terrain[x][z] = tl;
 			terrain[x + 1][z] = bl;
 			terrain[x + 1][z + 1] = br;
-
-			if (avg > minHeight) {
-				AddQuad(ground, chunkX, chunkZ, x, z, tileSize, groundIndex, new float[4]{ terrain[x][z + 1],
-																					  terrain[x][z],
-																					  terrain[x + 1][z],
-																					  terrain[x + 1][z + 1] });
+			*/
+			/*
+			if (avg > minHeight - 2) {
+				AddQuad(ground, chunkX, chunkZ, x, z, tileSize, groundIndex, new float[4]{ tr, tl, bl, br });
 				groundIndex += 4;
+				/*
 				//Spawn trees
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
@@ -61,28 +69,34 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 					tree->PlaceAt(pos);
 					entities.push_back(tree);
 				}
-			}
-			else {
+				*/
+			//}
+			/*
+			else if (avg <= minHeight) {
 				float waterHeight = minHeight;
 				AddQuad(water, chunkX, chunkZ, x, z, tileSize, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
 				waterIndex += 4;
 			}
-
-
+			*/
+			/*
+			float waterHeight = minHeight;
+			AddQuad(water, chunkX, chunkZ, x, z, tileSize, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
+			waterIndex += 4;
+			*/
+			/*
 			bool spawnBird = std::rand() % chunkSize == 0;
 			if (spawnBird) {
 				XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
 				bird->PlaceAt(pos);
 				//entities.push_back(bird);
 			}
+			*/
 		}
-		// Ground is fine here
-		entities.push_back(ground);
-
 	}
 
 	// Ground is upside down here :/
 	//entities.insert(entities.begin(), ground);
+	entities.push_back(ground);
 	entities.push_back(water);
 
 	for (auto c : entities) {
@@ -134,8 +148,10 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, in
 /// <returns>Noise value at that given coordinate</returns>
 float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)
 {
-	float perlinX = (chunkX + (x * tileScale)) / chunkSize;
-	float perlinZ = (chunkZ + (z * tileScale)) / chunkSize;
+	//float perlinX = (chunkX + (x * tileScale)) / chunkSize;
+	//float perlinZ = (chunkZ + (z * tileScale)) / chunkSize;
+	float perlinX = ((chunkX + x) * tileScale) / chunkSize;
+	float perlinZ = ((chunkZ + z) * tileScale) / chunkSize;
 	//float noise = PerlinNoise::perlin(abs(perlinX), abs(perlinZ), 1);
 	float noise = PerlinRevised::perlin(perlinX, perlinZ);
 	float frequancy = 8;

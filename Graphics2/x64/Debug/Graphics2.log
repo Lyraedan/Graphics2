@@ -1,3 +1,13 @@
-﻿  SceneNodeTree.cpp
-F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
-  Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe
+﻿  SceneNodeChunk.cpp
+E:\dx11\DX11Git\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(41,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(41,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(42,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(42,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(43,54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(43,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(44,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(44,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(109,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+E:\dx11\DX11Git\Graphics2\SceneNodeChunk.cpp(110,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+  Graphics2.vcxproj -> E:\dx11\DX11Git\x64\Debug\Graphics2.exe

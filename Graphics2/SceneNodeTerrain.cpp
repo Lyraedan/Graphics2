@@ -4,20 +4,13 @@ bool SceneNodeTerrain::Initialise()
 {
 	//For demoing
 	if (!generateDynamically) {
-		/*
-		std::thread generator([&] {
-			GenerateChunkIfWeNeedTo();
-		});
-		*/
-		//generator.detach();
-		int numberOfChunks = 3;
+		int numberOfChunks = 5;
 		//if number of chunks = 3 -> Generate 3 x 3 chunks = 9 
 		for (int x = 0; x < numberOfChunks; x++) {
 			for (int z = 0; z < numberOfChunks; z++) {
 				GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}
-		//GenerateChunkAt(XMFLOAT3(0, 0, 0));
 	}
 	else {
 		//std::thread generator([&] {

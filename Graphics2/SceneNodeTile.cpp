@@ -19,12 +19,13 @@ void SceneNodeTile::SetupMesh()
 XMFLOAT3 SceneNodeTile::CalculateNormals(XMFLOAT3 poly)
 {
 	XMFLOAT3 normal = poly;
-	for (int i = 0; i < GetVertices(); i++) {
-		Vertex current = GetVertex(i);
-		Vertex next = GetVertex((i + 1) % GetVertices());
-		normal.x = normal.x + ((current.Position.y - next.Position.y) * (current.Position.z + next.Position.z));
-		normal.y = normal.y + ((current.Position.z - next.Position.z) * (current.Position.x + next.Position.z));
-		normal.z = normal.z + ((current.Position.x - next.Position.x) * (current.Position.y + next.Position.y));
+	for (int i = 0; i < GetVertices() - 1; i++) {
+		Vertex p0 = GetVertex(i);
+		Vertex p1 = GetVertex(i + 1);
+		normal.x += (p0.Position.y - p1.Position.y) * (p0.Position.z + p1.Position.z);
+		normal.y += (p0.Position.z - p1.Position.z) * (p0.Position.x + p1.Position.x);
+		normal.z += (p0.Position.x - p1.Position.x) * (p0.Position.y + p1.Position.y);
 	}
-	return normalise(normal);
+	XMFLOAT3 normalised = normalise(normal);
+	return normalised;
 }

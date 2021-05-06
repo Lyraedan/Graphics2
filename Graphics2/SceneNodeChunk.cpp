@@ -27,16 +27,17 @@ void SceneNodeChunk::Shutdown()
 }
 
 void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph) {
-	// Todo cleanup these equations
 	float chunkX = terrainOffset.x * chunkSize;
 	float chunkZ = terrainOffset.z * chunkSize;
-	SceneNodeTile* mesh = new SceneNodeTile(L"Tile");
+	SceneNodeTile* ground = new SceneNodeTile(L"Tile");
+	SceneNodeTile* water = new SceneNodeWater(L"Water");
 
 	//UpdateHeight(chunkX, chunkZ);
 	int scl = 2;
 	float minHeight = 1; // 10 | 0.005
 
-	int index = 0;
+	int groundIndex = 0;
+	int waterIndex = 0;
 	for (int z = 0; z < chunkSize - 1; z++) {
 		for (int x = 0; x < chunkSize - 1; x++) {
 
@@ -51,28 +52,31 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			terrain[x + 1][z] = bl;
 			terrain[x + 1][z + 1] = br;
 
-			//if (avg > minHeight) {
-				AddQuad(mesh, chunkX + x, chunkZ + z, scl, index, new float[4]{ terrain[x][z + 1],
-															  terrain[x][z],
-															  terrain[x + 1][z],
-															  terrain[x + 1][z + 1] });
-				entities.push_back(mesh);
+			if (avg > minHeight) {
+				AddQuad(ground, chunkX, chunkZ, x, z, scl, groundIndex, new float[4]{ terrain[x][z + 1],
+																					  terrain[x][z],
+																					  terrain[x + 1][z],
+																					  terrain[x + 1][z + 1] });
+				entities.push_back(ground);
 
-				index += 4;
+				groundIndex += 4;
 				//Spawn trees
-				// Trees suddenly causing a crash?
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
 					if (x >= 10 && z >= 10) {
 						SceneNodeTree* tree = new SceneNodeTree(L"Tree");
-						//sceneGraph->Add(tree);
-						//tree->Initialise();
 						XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
 						tree->PlaceAt(pos);
 						entities.push_back(tree);
 					}
 				}
-			//}
+			}
+			else {
+				float waterHeight = minHeight;
+				AddQuad(water, chunkX, chunkZ, x, z, scl, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
+				entities.push_back(water);
+				waterIndex += 4;
+			}
 
 			/*
 			if (terrain[x][z] < minHeight + 2) {
@@ -98,8 +102,10 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	}
 }
 
-void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, int x, int z, float scl, int index, float heights[4])
+void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, int x, int z, float scl, int index, float heights[4])
 {
+	x += chunkX;
+	z += chunkZ;
 	XMFLOAT3 topLeft = XMFLOAT3(x * scl, heights[0], (z + 1) * scl);
 	XMFLOAT3 bottomLeft = XMFLOAT3(x * scl, heights[1], z * scl);
 	XMFLOAT3 bottomRight = XMFLOAT3((x + 1) * scl, heights[2], z * scl);

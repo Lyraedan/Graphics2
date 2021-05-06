@@ -44,19 +44,17 @@ public:
 
 	const wchar_t* texture = L"";
 	void BuildRendererState(D3D11_CULL_MODE mode);
+	void BuildBlendState();
+	void SetupBlendState(float blendFactor[4], UINT sampleMask);
 
 	XMFLOAT4 ambientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
 	XMVECTOR lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 1.0f, 0.0f));
 	XMFLOAT4 lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	
-	void CalculateIndices(float width, float height);
-
 	int GetVertices(void);
 	int GetIndices(void);
 
 	Vertex GetVertex(int index);
-
-	XMFLOAT3 normalise(XMFLOAT3 vector);
 
 private:
 	void BuildGeometry();
@@ -86,4 +84,8 @@ private:
 
 	ComPtr<ID3D11RasterizerState>    _defaultRasteriserState;
 	ComPtr<ID3D11RasterizerState>    _noCullRasteriserState;
+	ComPtr<ID3D11BlendState>		 _blendState;
+
+	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	UINT sampleMask = 0xffffffff;
 };

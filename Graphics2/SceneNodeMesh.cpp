@@ -54,6 +54,8 @@ void SceneNodeMesh::Render()
 		_deviceContext->DrawIndexed(vertices.size() * 3, 0, 0);
 
 		_deviceContext->RSSetState(_defaultRasteriserState.Get());
+
+		_deviceContext->OMSetBlendState(_blendState.Get(), blendFactor, sampleMask);
 	}
 }
 
@@ -72,16 +74,6 @@ int SceneNodeMesh::GetIndices(void)
 SceneNodeMesh::Vertex SceneNodeMesh::GetVertex(int index)
 {
 	return vertices[index];
-}
-
-XMFLOAT3 SceneNodeMesh::normalise(XMFLOAT3 vector)
-{
-	XMFLOAT3 v = vector;
-	float len = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
-	v.x /= len;
-	v.y /= len;
-	v.z /= len;
-	return v;
 }
 
 void SceneNodeMesh::BuildGeometry() {
@@ -220,6 +212,24 @@ void SceneNodeMesh::BuildRendererState(D3D11_CULL_MODE mode)
 	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _defaultRasteriserState.GetAddressOf()));
 	rasteriserDesc.CullMode = D3D11_CULL_NONE;
 	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _noCullRasteriserState.GetAddressOf()));
+}
+
+void SceneNodeMesh::BuildBlendState() {
+	ID3D11BlendState* g_pBlendStateNoBlend = NULL;
+
+	D3D11_BLEND_DESC* BlendState;
+	ZeroMemory(&BlendState, sizeof(D3D11_BLEND_DESC));
+	BlendState->RenderTarget[0].BlendEnable = FALSE;
+	BlendState->RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	ThrowIfFailed(_device->CreateBlendState(BlendState, _blendState.GetAddressOf()));
+}
+
+void SceneNodeMesh::SetupBlendState(float blendFactor[4], UINT sampleMask)
+{
+	for (int i = 0; i < 4; i++) {
+		this->blendFactor[i] = blendFactor[i];
+	}
+	this->sampleMask = sampleMask;
 }
 
 void SceneNodeMesh::Shutdown()

@@ -114,10 +114,16 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, in
 	XMFLOAT3 topRight = XMFLOAT3((x + 1) * scl, heights[3], (z + 1) * scl);
 
 	// Normals
+	/*
 	XMFLOAT3 n1 = mesh->CalculateNormals(topLeft);
 	XMFLOAT3 n2 = mesh->CalculateNormals(bottomLeft);
 	XMFLOAT3 n3 = mesh->CalculateNormals(bottomRight);
 	XMFLOAT3 n4 = mesh->CalculateNormals(topRight);
+	*/
+	XMFLOAT3 n1 = CalculateNormal(topLeft, bottomLeft, bottomRight);
+	XMFLOAT3 n2 = n1;
+	XMFLOAT3 n3 = n1;
+	XMFLOAT3 n4 = CalculateNormal(topLeft, bottomRight, topRight);
 
 	// Textures
 	XMFLOAT2 uvs[] = {
@@ -148,12 +154,43 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, in
 /// <returns>Noise value at that given coordinate</returns>
 float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)
 {
-	//float perlinX = (chunkX + (x * tileScale)) / chunkSize;
-	//float perlinZ = (chunkZ + (z * tileScale)) / chunkSize;
 	float perlinX = ((chunkX + x) * tileScale) / chunkSize;
 	float perlinZ = ((chunkZ + z) * tileScale) / chunkSize;
-	//float noise = PerlinNoise::perlin(abs(perlinX), abs(perlinZ), 1);
+
 	float noise = PerlinRevised::perlin(perlinX, perlinZ);
 	float frequancy = 8;
 	return noise * frequancy;
 }
+
+XMFLOAT3 SceneNodeChunk::CalculateNormal(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3)
+{
+	XMFLOAT3 a = XMFLOAT3(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
+	XMFLOAT3 b = XMFLOAT3(p3.x - p1.x, p3.y - p1.y, p3.z - p1.z);
+
+
+	return Normalize(XMFLOAT3(
+		a.y * b.z - a.z * b.y, 
+		a.z * b.x - a.x * b.z, 
+		a.x * b.y - a.y * b.x));
+}
+
+XMFLOAT3 SceneNodeChunk::Normalize(XMFLOAT3 point)
+{
+	double length = sqrt(point.x * point.x + point.y * point.y + point.z * point.z);
+
+	return XMFLOAT3(
+		point.x / length,
+		point.y / length,
+		point.z / length);
+}
+
+/*
+* void vector3::normalize(){
+
+    double length = sqrt(x*x+y*y+z*z);
+
+    x = x/length;
+    y = y/length;
+    z = z/length;
+}
+*/

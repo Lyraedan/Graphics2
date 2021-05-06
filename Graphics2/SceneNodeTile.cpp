@@ -23,6 +23,7 @@ void SceneNodeTile::SetupMesh()
 XMFLOAT3 SceneNodeTile::CalculateNormals(XMFLOAT3 poly)
 {
 	XMFLOAT3 normal = poly;
+
 	for (int i = 0; i < GetVertices() - 1; i++) {
 		Vertex p0 = GetVertex(i);
 		Vertex p1 = GetVertex(i + 1);

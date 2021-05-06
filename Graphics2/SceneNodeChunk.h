@@ -36,6 +36,7 @@ public:
 
 private:
 	float CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale);
-
+	XMFLOAT3 CalculateNormal(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3);
+	XMFLOAT3 Normalize(XMFLOAT3 point);
 
 };

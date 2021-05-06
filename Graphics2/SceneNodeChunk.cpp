@@ -13,6 +13,7 @@ void SceneNodeChunk::Render()
 	for (int x = 0; x < chunkSize; x++) {
 		for (int z = 0; z < chunkSize; z++) {
 			if (position.y <= terrain[x][z]) {
+				// Old method for preventing the camera from going under the terrain
 				//DirectXFramework::GetDXFramework()->GetCamera()->SetCameraPosition(position.x, terrain[x][z] + 0.5f, position.z);
 			}
 		}
@@ -27,21 +28,19 @@ void SceneNodeChunk::Shutdown()
 }
 
 void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph) {
-	float chunkX = terrainOffset.x * chunkSize;
-	float chunkZ = terrainOffset.z * chunkSize;
+	float chunkX = (terrainOffset.x * chunkSize);
+	float chunkZ = (terrainOffset.z * chunkSize);
 
-	int scl = 2;
 	float minHeight = 1; // 10 | 0.005
 
 	int groundIndex = 0;
 	int waterIndex = 0;
 	for (int z = 0; z < chunkSize - 1; z++) {
 		for (int x = 0; x < chunkSize - 1; x++) {
-
-			float tr = CalculateHeight(chunkX, chunkZ, x, z + 1, scl);
-			float tl = CalculateHeight(chunkX, chunkZ, x, z, scl);
-			float bl = CalculateHeight(chunkX, chunkZ, x + 1, z, scl);
-			float br = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, scl);
+			float tr = CalculateHeight(chunkX, chunkZ, x, z + 1, tileSize);
+			float tl = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
+			float bl = CalculateHeight(chunkX, chunkZ, x + 1, z, tileSize);
+			float br = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, tileSize);
 			float avg = (tr + tl + bl + br) / 4;
 
 			terrain[x][z + 1] = tr;
@@ -50,7 +49,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			terrain[x + 1][z + 1] = br;
 
 			if (avg > minHeight) {
-				AddQuad(ground, chunkX, chunkZ, x, z, scl, groundIndex, new float[4]{ terrain[x][z + 1],
+				AddQuad(ground, chunkX, chunkZ, x, z, tileSize, groundIndex, new float[4]{ terrain[x][z + 1],
 																					  terrain[x][z],
 																					  terrain[x + 1][z],
 																					  terrain[x + 1][z + 1] });
@@ -58,15 +57,21 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				//Spawn trees
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
-					XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
+					XMFLOAT3 pos = XMFLOAT3(chunkX + (x * chunkSize), terrain[x][z] + 0.2f, chunkZ + (z * chunkSize));
 					tree->PlaceAt(pos);
 					entities.push_back(tree);
 				}
 			}
 			else {
 				float waterHeight = minHeight;
-				AddQuad(water, chunkX, chunkZ, x, z, scl, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
+				AddQuad(water, chunkX, chunkZ, x, z, tileSize, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
 				waterIndex += 4;
+			}
+
+
+			bool spawnBird = std::rand() % chunkSize == 0;
+			if (spawnBird) {
+
 			}
 		}
 		// Ground is fine here

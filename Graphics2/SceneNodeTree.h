@@ -19,7 +19,7 @@ public:
 	AABB bounds;
 
 private:
-	float scale = 1.0f;
+	float scale = 0.5f;
 	bool doFly = false;
 	float ytest = 0;
 };

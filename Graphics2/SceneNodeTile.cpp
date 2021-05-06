@@ -9,6 +9,10 @@ void SceneNodeTile::Shutdown()
 {
 }
 
+void SceneNodeTile::Tick(XMMATRIX& completeTransform)
+{
+}
+
 void SceneNodeTile::SetupMesh()
 {
 	BuildRendererState(D3D11_CULL_FRONT);

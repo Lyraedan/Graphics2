@@ -29,8 +29,9 @@ void SceneNodeChunk::Shutdown()
 void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph) {
 	float chunkX = terrainOffset.x * chunkSize;
 	float chunkZ = terrainOffset.z * chunkSize;
-	SceneNodeTile* ground = new SceneNodeTile(L"Tile");
+	SceneNodeTile* ground = new SceneNodeTile(L"Ground");
 	SceneNodeTile* water = new SceneNodeWater(L"Water");
+	SceneNodeTree* tree = new SceneNodeTree(L"Tree");
 
 	//UpdateHeight(chunkX, chunkZ);
 	int scl = 2;
@@ -61,12 +62,9 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				//Spawn trees
 				bool spawnTree = std::rand() % chunkSize == 0;
 				if (spawnTree) {
-					if (x >= 10 && z >= 10) {
-						SceneNodeTree* tree = new SceneNodeTree(L"Tree");
-						XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
-						tree->PlaceAt(pos);
-						entities.push_back(tree);
-					}
+					XMFLOAT3 pos = XMFLOAT3(chunkX + x, terrain[x][z] + 0.2f, chunkZ + z);
+					tree->PlaceAt(pos);
+					entities.push_back(tree);
 				}
 			}
 			else {
@@ -80,11 +78,8 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 		entities.push_back(water);
 	}
 
-
-	int done = 0;
 	for (auto c : entities) {
 		c->Initialise();
-		//sceneGraph->Add(c); // This is causing the crash
 	}
 }
 

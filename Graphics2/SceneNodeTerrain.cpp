@@ -114,7 +114,7 @@ float SceneNodeTerrain::ChunkX(void)
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
 	XMStoreFloat4(&position, cameraPosition);
-	return roundf(position.x / (1 * chunkSize));
+	return roundf(position.x / (2 * chunkSize));
 }
 
 float SceneNodeTerrain::ChunkZ(void)
@@ -122,5 +122,5 @@ float SceneNodeTerrain::ChunkZ(void)
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
 	XMStoreFloat4(&position, cameraPosition);
-	return roundf(position.z / (1 * chunkSize));
+	return roundf(position.z / (2 * chunkSize));
 }

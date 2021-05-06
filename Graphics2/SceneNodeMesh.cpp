@@ -216,12 +216,12 @@ void SceneNodeMesh::BuildRendererState(D3D11_CULL_MODE mode)
 	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _noCullRasteriserState.GetAddressOf()));
 }
 
-void SceneNodeMesh::BuildBlendState(BOOL enabled, UINT8 writeMask) {
-	D3D11_BLEND_DESC BlendState;
-	ZeroMemory(&BlendState, sizeof(D3D11_BLEND_DESC));
-	BlendState.RenderTarget[0].BlendEnable = enabled;
-	BlendState.RenderTarget[0].RenderTargetWriteMask = writeMask; //D3D11_COLOR_WRITE_ENABLE_ALL;
-	ThrowIfFailed(_device->CreateBlendState(&BlendState, _blendState.GetAddressOf()));
+void SceneNodeMesh::BuildBlendState(D3D11_BLEND_DESC desc) {
+	//D3D11_BLEND_DESC BlendState;
+	ZeroMemory(&desc, sizeof(D3D11_BLEND_DESC));
+	//BlendState.RenderTarget[0].BlendEnable = enabled;
+	//BlendState.RenderTarget[0].RenderTargetWriteMask = writeMask; //D3D11_COLOR_WRITE_ENABLE_ALL;
+	_device->CreateBlendState(&desc, _blendState.GetAddressOf());
 }
 
 void SceneNodeMesh::SetupBlendState(float blendFactor[4], UINT sampleMask)

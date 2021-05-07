@@ -26,11 +26,22 @@ void SceneNodeWater::Tick(XMMATRIX& completeTransform)
 void SceneNodeWater::SetupMesh()
 {
 	BuildRendererState(D3D11_CULL_FRONT);
-	D3D11_BLEND_DESC desc;
-	desc.RenderTarget[0].BlendEnable = TRUE;
-	desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	BuildBlendState(desc); //D3D11_COLOR_WRITE_ENABLE_ALL
+
+	/*
+	//Blending
 	SetupBlendState(new float[4]{ 0.0f, 0.0f, 0.0f, 0.0f }, 0xffffffff);
-	useBlending = false;
+	D3D11_RENDER_TARGET_BLEND_DESC desc;
+	desc.BlendEnable = TRUE;
+	desc.SrcBlend = D3D11_BLEND_ONE;
+	desc.DestBlend = D3D11_BLEND_ONE;
+	desc.BlendOp = D3D11_BLEND_OP_ADD;
+	desc.SrcBlendAlpha = D3D11_BLEND_ZERO;
+	desc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	desc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	desc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	BuildBlendState(desc);
+	useBlending = true;
+	*/
+
 	texture = L"water.bmp";
 }

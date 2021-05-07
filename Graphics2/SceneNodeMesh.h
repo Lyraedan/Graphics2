@@ -44,7 +44,7 @@ public:
 
 	const wchar_t* texture = L"";
 	void BuildRendererState(D3D11_CULL_MODE mode);
-	void BuildBlendState(D3D11_BLEND_DESC desc);
+	void BuildBlendState(D3D11_RENDER_TARGET_BLEND_DESC desc);
 	void SetupBlendState(float blendFactor[4], UINT sampleMask);
 
 	XMFLOAT4 ambientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);

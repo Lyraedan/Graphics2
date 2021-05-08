@@ -12,22 +12,14 @@ void SceneNodeChunk::Render()
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
 	XMStoreFloat4(&position, cameraPosition);
-	/*
-	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
-	XMFLOAT4 position;
-	XMStoreFloat4(&position, cameraPosition);
-	for (int x = 0; x < chunkSize; x++) {
-		for (int z = 0; z < chunkSize; z++) {
-			if (position.y <= terrain[x][z]) {
-				// Old method for preventing the camera from going under the terrain
-				//DirectXFramework::GetDXFramework()->GetCamera()->SetCameraPosition(position.x, terrain[x][z] + 0.5f, position.z);
-			}
-		}
-	}
-	*/
-
-	float distanceFromCamera = DistanceFrom(offset, XMFLOAT3(position.x, position.y, position.z));
-	ground->doRender = distanceFromCamera < chunkSize * renderDistance;
+	
+	float chunkX = position.x / (tileSize * chunkSize);
+	float chunkY = position.y / (tileSize * chunkSize);
+	float chunkZ = position.z / (tileSize * chunkSize);
+	float distanceFromCamera = DistanceFrom(offset, XMFLOAT3(chunkX, chunkY, chunkZ));
+	float viewDistance = chunkSize / renderDistance;
+	ground->doRender = distanceFromCamera < viewDistance;
+	water->doRender = distanceFromCamera < viewDistance;
 }
 
 void SceneNodeChunk::Shutdown()
@@ -119,18 +111,9 @@ float SceneNodeChunk::DistanceFrom(XMFLOAT3 src, XMFLOAT3 dest)
 {
 	return sqrt(pow(dest.x - src.x, 2) +
 				pow(dest.y - src.y, 2) +
-				pow(dest.z - src.z, 2) * 1.0f);
+				pow(dest.z - src.z, 2));
 }
 
-/// <summary>
-/// New heightmap calculation
-/// </summary>
-/// <param name="chunkX">Chunk offset X</param>
-/// <param name="chunkZ">Chunk offset Z</param>
-/// <param name="x">Tile index X</param>
-/// <param name="z">Tile index Z</param>
-/// <param name="tileScale">Tile size</param>
-/// <returns>Noise value at that given coordinate</returns>
 float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)
 {
 	float offset = 5000.0f;
@@ -145,8 +128,7 @@ float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float
 XMFLOAT3 SceneNodeChunk::CalculateNormal(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3)
 {
 	XMFLOAT3 a = XMFLOAT3(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
-	XMFLOAT3 b = XMFLOAT3(p3.x - p1.x, p3.y - p1.y, p3.z - p1.z);
-
+  	XMFLOAT3 b = XMFLOAT3(p3.x - p1.x, p3.y - p1.y, p3.z - p1.z);
 
 	return Normalize(XMFLOAT3(
 		a.y * b.z - a.z * b.y, 

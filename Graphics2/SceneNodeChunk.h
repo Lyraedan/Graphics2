@@ -36,10 +36,14 @@ public:
 
 	// Trees are glitchy but demonstrate collision - They fly away when touched by the camera
 	bool generateTrees = false;
+	bool hasBeenGenerated = false;
+	float renderDistance = 3;
+
+	float DistanceFrom(XMFLOAT3 src, XMFLOAT3 dest);
 
 private:
 	float CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale);
 	XMFLOAT3 CalculateNormal(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3);
 	XMFLOAT3 Normalize(XMFLOAT3 point);
-
+	XMFLOAT3 offset;
 };

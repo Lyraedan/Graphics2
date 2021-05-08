@@ -58,6 +58,7 @@ public:
 	bool useBlending = false;
 
 	Vertex GetVertex(int index);
+	bool doRender = true;
 
 private:
 	void BuildGeometry();
@@ -66,7 +67,6 @@ private:
 	void BuildShaders();
 	void BuildTexture();
 
-	bool doRender = true;
 	bool readyToBeRendered = false;
 
 	XMMATRIX worldTransformation;

@@ -17,7 +17,6 @@ public:
 	void PlaceAt(XMFLOAT3 pos);
 
 	AABB bounds;
-	bool active = false;
 	float scale = 0.5f;
 
 private:

@@ -7,19 +7,17 @@ bool SceneNodeTree::Initialise()
 
 void SceneNodeTree::Update(XMFLOAT4 camPosition)
 {
-	if (active) {
-		if (AABB::Intersects(DirectXFramework::GetDXFramework()->GetCamera()->bounds, bounds)) {
-			XMFLOAT3 prev = DirectXFramework::GetDXFramework()->GetCamera()->prevPosition;
-			DirectXFramework::GetDXFramework()->GetCamera()->SetCameraPosition(prev.x, prev.y, prev.z);
-			doFly = true;
-		}
+	if (AABB::Intersects(DirectXFramework::GetDXFramework()->GetCamera()->bounds, bounds)) {
+		XMFLOAT3 prev = DirectXFramework::GetDXFramework()->GetCamera()->prevPosition;
+		DirectXFramework::GetDXFramework()->GetCamera()->SetCameraPosition(prev.x, prev.y, prev.z);
+		doFly = true;
+	}
 
-		// Make the tree fly if the camera collides with it
-		if (doFly) {
-			ytest += 0.001f;
-			SetWorldTransform(XMMatrixScaling(0.5f, 0.5f, 0.5f) * XMMatrixTranslation(bounds.x, bounds.y + ytest, bounds.z));
-			bounds.SetPosition(bounds.x, bounds.y + ytest, bounds.z);
-		}
+	// Make the tree fly if the camera collides with it
+	if (doFly) {
+		ytest += 0.001f;
+		SetWorldTransform(XMMatrixScaling(0.5f, 0.5f, 0.5f) * XMMatrixTranslation(bounds.x, bounds.y + ytest, bounds.z));
+		bounds.SetPosition(bounds.x, bounds.y + ytest, bounds.z);
 	}
 }
 

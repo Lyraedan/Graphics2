@@ -13,6 +13,4 @@ public:
 	virtual void Shutdown() override;
 	virtual void Tick(XMMATRIX& completeTransform) override;
 	virtual void SetupMesh() override;
-
-	XMFLOAT3 CalculateNormals(XMFLOAT3 poly);
 };

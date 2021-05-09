@@ -28,7 +28,7 @@ public:
 	float tileSize = 2.0f;
 	int chunkSize = 16; //50
 
-	std::vector<SceneNodeMesh*> foilage;
+	std::vector<SceneNodeTree*> trees;
 	SceneNodeTile* ground = new SceneNodeTile(L"Ground");
 	SceneNodeTile* water = new SceneNodeWater(L"Water");
 

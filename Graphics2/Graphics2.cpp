@@ -23,12 +23,10 @@ void Graphics2::CreateSceneGraph()
 	terrain->SetSceneGraph(sceneGraph);
 	sceneGraph->Add(terrain);
 
-	// Plane
 	SceneNodePlane* plane = new SceneNodePlane(L"Plane");
 	sceneGraph->Add(plane);
 	plane->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 0, 0));
 
-	// Skybox
 	SceneNodeSkybox* sky = new SceneNodeSkybox(L"Skybox");
 	sceneGraph->Add(sky);
 

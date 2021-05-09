@@ -18,13 +18,14 @@ void SceneNodeChunk::Render()
 	float chunkZ = position.z / (tileSize * chunkSize);
 	float distanceFromCamera = DistanceFrom(offset, XMFLOAT3(chunkX, chunkY, chunkZ));
 	float viewDistance = chunkSize / renderDistance;
-	ground->doRender = distanceFromCamera < viewDistance;
-	water->doRender = distanceFromCamera < viewDistance;
-	if (foilage.size() > 0) {
-		for (auto f : foilage) {
-			f->doRender = distanceFromCamera < viewDistance;
+	bool doRender = distanceFromCamera < viewDistance;
+	ground->doRender = doRender;
+	water->doRender = doRender;
+		for (auto tree : trees) {
+			tree->doRender = doRender;
+			if (doRender)
+				tree->Update(position);
 		}
-	}
 }
 
 void SceneNodeChunk::Shutdown()
@@ -67,12 +68,12 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			if (avg > waterHeight) {
 				bool spawn = rand() % 1000 == 0;
 				if (spawn) {
-					SceneNodeTree* spawnedFoilage = new SceneNodeTree(L"Foilage");
-					float foilageX = chunkX + (x * spawnedFoilage->scale);
-					float foilageZ = chunkZ + (x * spawnedFoilage->scale);
+					SceneNodeTree* spawnedTree = new SceneNodeTree(L"Foilage");
+					float foilageX = chunkX + (x * spawnedTree->scale);
+					float foilageZ = chunkZ + (x * spawnedTree->scale);
 					float placementY = GetHeightOfTerrain(foilageX, foilageZ);
-					spawnedFoilage->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
-					foilage.push_back(spawnedFoilage);
+					spawnedTree->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
+					trees.push_back(spawnedTree);
 				}
 			}
 		}
@@ -84,9 +85,9 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	water->Initialise();
 	sceneGraph->Add(water);
 
-	for (auto f : foilage) {
-		f->Initialise();
-		sceneGraph->Add(f);
+	for (auto tree : trees) {
+		tree->Initialise();
+		sceneGraph->Add(tree);
 	}
 
 	sceneGraph->Add(this);

@@ -6,7 +6,5 @@ class Graphics2 : public DirectXFramework
 public:
 	void CreateSceneGraph();
 	void UpdateSceneGraph();
-
-	bool moving = false;
 };
 

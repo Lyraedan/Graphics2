@@ -26,7 +26,7 @@ void SceneNodeTree::SetupMesh() {
 	ambientColour = XMFLOAT4(1, 1, 1, 1);
 	lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	LoadModel("models/tree.obj", L"models/tree.png");
+	LoadModel("models/tree2.obj", L"models/tree2.png");
 	bounds.SetSize(scale * 12, scale * 24, scale * 12); // 6, 12, 6
 }
 

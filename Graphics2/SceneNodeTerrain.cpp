@@ -75,12 +75,6 @@ void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
 {
 	SceneNodeChunk* chunk = new SceneNodeChunk(L"Chunk");
 	chunk->GenerateTerrain(position, sceneGraph);
-	int entities = chunk->entities.size();
-	// Memory is being absolutely destroyed here
-	for (auto c : chunk->entities) {
-		sceneGraph->Add(c);
-	}
-	sceneGraph->Add(chunk);
 	chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
 	string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);
 	chunks.push_back({ id, position, chunk });

@@ -10,13 +10,14 @@ public:
 	SceneNodeTree(wstring name) : SceneNodeObjModel(name) {};
 
 	bool Initialise() override;
-	virtual void Tick(XMMATRIX& completeTransform) override;
+	void Update(XMFLOAT4 camPosition);
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
 
 	void PlaceAt(XMFLOAT3 pos);
 
 	AABB bounds;
+	bool active = false;
 
 private:
 	float scale = 0.5f;

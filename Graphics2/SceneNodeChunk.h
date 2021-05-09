@@ -28,14 +28,11 @@ public:
 	float tileSize = 2.0f;
 	int chunkSize = 16; //50
 
-	std::vector<SceneNode*> entities;
+	std::vector<SceneNodeMesh*> foilage;
 	SceneNodeTile* ground = new SceneNodeTile(L"Ground");
 	SceneNodeTile* water = new SceneNodeWater(L"Water");
-	SceneNodeTree* tree = new SceneNodeTree(L"Tree");
-	SceneNodeBird* bird = new SceneNodeBird(L"Bird");
 
 	// Trees are glitchy but demonstrate collision - They fly away when touched by the camera
-	bool generateTrees = false;
 	bool hasBeenGenerated = false;
 	float renderDistance = 3;
 
@@ -46,4 +43,6 @@ private:
 	XMFLOAT3 CalculateNormal(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3);
 	XMFLOAT3 Normalize(XMFLOAT3 point);
 	XMFLOAT3 offset;
+	SceneGraph* sceneGraph;
+	bool foilageAdded = false;
 };

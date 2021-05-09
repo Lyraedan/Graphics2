@@ -13,7 +13,6 @@ void Graphics2::CreateSceneGraph()
 {
 	SceneGraph* sceneGraph = GetSceneGraph();
 
-	//								0, -20, -500
 	GetCamera()->SetCameraPosition(0.0f, 30.0f, 0.0f);
 
 	// Apply a seed to the generator
@@ -22,23 +21,7 @@ void Graphics2::CreateSceneGraph()
 
 	SceneNodeTerrain* terrain = new SceneNodeTerrain(L"Terrain");
 	terrain->SetSceneGraph(sceneGraph);
-	//terrain->GenerateTerrain(XMFLOAT3(0, 0, 0));
 	sceneGraph->Add(terrain);
-
-	// Place other objects
-	/*
-	shared_ptr<SceneNodePhysicsCube> cube = make_shared<SceneNodePhysicsCube>(L"PhysicsCube");
-	cube->SetHeightMap(terrain->terrain);
-	cube->aabb.SetSize(5, 5, 5);
-	cube->setPosition(0, 30, 0);
-	sceneGraph->Add(cube);
-	cube->SetWorldTransform(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(0, 30, 0));
-	*/
-
-	// Static Terrain
-	//SceneNodeStaticTerrain* staticTerrain = new SceneNodeStaticTerrain(L"StaticTerrain");
-	//sceneGraph->Add(staticTerrain);
-	//staticTerrain->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 0, 0));
 
 	// Plane
 	SceneNodePlane* plane = new SceneNodePlane(L"Plane");

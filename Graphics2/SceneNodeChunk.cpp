@@ -12,7 +12,7 @@ void SceneNodeChunk::Render()
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
 	XMStoreFloat4(&position, cameraPosition);
-	
+
 	float chunkX = position.x / (tileSize * chunkSize);
 	float chunkY = position.y / (tileSize * chunkSize);
 	float chunkZ = position.z / (tileSize * chunkSize);
@@ -20,6 +20,11 @@ void SceneNodeChunk::Render()
 	float viewDistance = chunkSize / renderDistance;
 	ground->doRender = distanceFromCamera < viewDistance;
 	water->doRender = distanceFromCamera < viewDistance;
+	if (foilage.size() > 0) {
+		for (auto f : foilage) {
+			
+		}
+	}
 }
 
 void SceneNodeChunk::Shutdown()
@@ -27,10 +32,15 @@ void SceneNodeChunk::Shutdown()
 	//delete ground;
 	//delete water;
 	//delete tree;
+	//sceneGraph->Remove(ground);
+	//sceneGraph->Remove(water);
+	//sceneGraph->Remove(this);
 }
 
 void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph) {
 	this->offset = terrainOffset;
+	this->sceneGraph = sceneGraph;
+
 	float chunkX = (terrainOffset.x * chunkSize);
 	float chunkZ = (terrainOffset.z * chunkSize);
 
@@ -56,21 +66,27 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 
 			if (avg > waterHeight) {
 				bool spawn = rand() % 1000 == 0;
-				if (spawn && generateTrees) {
-					SceneNodeTree* test = new SceneNodeTree(L"Test");
-					test->PlaceAt(XMFLOAT3(chunkX + x, avg, chunkZ + z));
-					sceneGraph->Add(test);
+				if (spawn) {
+					SceneNodeTree* spawnedFoilage = new SceneNodeTree(L"Foilage");
+					spawnedFoilage->PlaceAt(XMFLOAT3(chunkX + x, avg, chunkZ + z));
+					foilage.push_back(spawnedFoilage);
 				}
 			}
 		}
+	} 
+
+	ground->Initialise();
+	sceneGraph->Add(ground);
+
+	water->Initialise();
+	sceneGraph->Add(water);
+
+	for (auto f : foilage) {
+		f->Initialise();
+		sceneGraph->Add(f);
 	}
 
-	entities.push_back(ground);
-	entities.push_back(water);
-
-	for (auto c : entities) {
-		c->Initialise();
-	}
+	sceneGraph->Add(this);
 	hasBeenGenerated = true;
 }
 

@@ -68,7 +68,10 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				bool spawn = rand() % 1000 == 0;
 				if (spawn) {
 					SceneNodeTree* spawnedFoilage = new SceneNodeTree(L"Foilage");
-					spawnedFoilage->PlaceAt(XMFLOAT3(chunkX + x, avg, chunkZ + z));
+					float foilageX = chunkX + (x * tileSize);
+					float foilageZ = chunkZ + (z * tileSize);
+					float placementY = GetHeightOfTerrain(foilageX, foilageZ);
+					spawnedFoilage->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
 					foilage.push_back(spawnedFoilage);
 				}
 			}
@@ -128,6 +131,51 @@ float SceneNodeChunk::DistanceFrom(XMFLOAT3 src, XMFLOAT3 dest)
 	return sqrt(pow(dest.x - src.x, 2) +
 				pow(dest.y - src.y, 2) +
 				pow(dest.z - src.z, 2));
+}
+
+float SceneNodeChunk::BarryCentric(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3, XMFLOAT2 pos)
+{
+	float det = (p2.z - p3.z) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.z - p3.z);
+	float l1 = ((p2.z - p3.z) * (pos.x - p3.x) + (p3.x - p2.x) * (pos.y - p3.z)) / det;
+	float l2 = ((p3.z - p1.z) * (pos.x - p3.x) + (p1.x - p3.x) * (pos.y - p3.z)) / det;
+	float l3 = 1.0f - l1 - l2;
+	return l1 * p1.y + l2 * p2.y + l3 * p3.y;
+}
+
+float SceneNodeChunk::GetHeightOfTerrain(float x, float z)
+{
+	float result;
+	float chunkX = (offset.x * chunkSize) + x;
+	float chunkZ = (offset.z * chunkSize) + z;
+	float gridSquares = chunkSize / tileSize * chunkSize;
+	int gridX = floor(chunkX / gridSquares);
+	int gridZ = floor(chunkZ / gridSquares);
+	if (gridX >= chunkSize || gridZ >= chunkSize || gridX < 0 || gridZ < 0)
+		return 0.0f;
+
+	// These have to be ints? why?
+	float xCoord = (int) chunkX % (int) gridSquares;
+	float zCoord = (int) chunkZ % (int) gridSquares;
+
+	// Heights
+	float tr = CalculateHeight(chunkX, chunkZ, gridX, gridZ + 1, tileSize);
+	float tl = CalculateHeight(chunkX, chunkZ, gridX, gridZ, tileSize);
+	float bl = CalculateHeight(chunkX, chunkZ, gridX + 1, gridZ, tileSize);
+	float br = CalculateHeight(chunkX, chunkZ, gridX + 1, gridZ + 1, tileSize);
+
+	if (xCoord <= 1.0f - zCoord) {
+		result = BarryCentric(XMFLOAT3(0.0f, tl, 1.0f),
+							  XMFLOAT3(1.0f, bl, 1.0f),
+							  XMFLOAT3(0.0f, tr, 1.0f),
+							  XMFLOAT2(xCoord, zCoord));
+	}
+	else {
+		result = BarryCentric(XMFLOAT3(1.0f, bl, 0.0f),
+							  XMFLOAT3(1.0f, br, 1.0f),
+							  XMFLOAT3(0.0f, tr, 1.0f),
+							  XMFLOAT2(xCoord, zCoord));
+	}
+;	return result;
 }
 
 float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)

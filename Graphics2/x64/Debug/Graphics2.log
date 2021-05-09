@@ -1,6 +1,4 @@
-﻿  Graphics2.cpp
-F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
-  SceneNodeChunk.cpp
+﻿  SceneNodeChunk.cpp
 F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(54,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(54,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -10,15 +8,22 @@ F:\Graphics2\Graphics2\SceneNodeChunk.cpp(56,54): warning C4244: 'argument': con
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(56,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(57,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(57,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(95,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(96,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(128,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(162,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(161,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(160,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  SceneNodeTerrain.cpp
-F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(98,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(99,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(131,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(151,12): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(152,12): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(157,15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(158,15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(161,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(161,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(162,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(162,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(163,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(163,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(164,62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(164,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(210,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(209,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(208,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

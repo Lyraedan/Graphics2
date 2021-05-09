@@ -38,6 +38,8 @@ public:
 
 	float DistanceFrom(XMFLOAT3 src, XMFLOAT3 dest);
 
+	float BarryCentric(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3, XMFLOAT2 pos);
+	float GetHeightOfTerrain(float x, float z);
 private:
 	float CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale);
 	XMFLOAT3 CalculateNormal(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3);

@@ -53,10 +53,10 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	for (int z = 0; z <= chunkSize - 1; z++) {
 		for (int x = 0; x <= chunkSize - 1; x++) {
 
-			float tr = CalculateHeight(chunkX, chunkZ, x, z + 1, tileSize);
+			float tr = CalculateHeight(chunkX, chunkZ, x, z + 1.0f, tileSize);
 			float tl = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
-			float bl = CalculateHeight(chunkX, chunkZ, x + 1, z, tileSize);
-			float br = CalculateHeight(chunkX, chunkZ, x + 1, z + 1, tileSize);
+			float bl = CalculateHeight(chunkX, chunkZ, x + 1.0f, z, tileSize);
+			float br = CalculateHeight(chunkX, chunkZ, x + 1.0f, z + 1.0f, tileSize);
 			float avg = (tr + tl + bl + br) / 4;
 
 			AddQuad(ground, chunkX, chunkZ, x, z, tileSize, groundIndex, new float[4]{ tr, tl, bl, br });
@@ -66,14 +66,14 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			AddQuad(water, chunkX, chunkZ, x, z, tileSize, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
 			waterIndex += 4;
 
-			if (avg > waterHeight) {
+			if (avg > minHeight) {
 				bool spawn = rand() % 1000 == 0;
 				if (spawn) {
 					SceneNodeTree* spawnedTree = new SceneNodeTree(L"Foilage");
-					float foilageX = chunkX + (x * spawnedTree->scale);
-					float foilageZ = chunkZ + (z * spawnedTree->scale);
-					//float placementY = GetHeightOfTerrain(foilageX, foilageZ);
-					spawnedTree->PlaceAt(XMFLOAT3(foilageX, tl, foilageZ));
+					float foilageX = (chunkX + x) * tileSize;
+					float foilageZ = (chunkZ + z) * tileSize;
+					float placementY = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
+					spawnedTree->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
 					trees.push_back(spawnedTree);
 				}
 			}
@@ -84,7 +84,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	sceneGraph->Add(ground);
 
 	water->Initialise();
-	sceneGraph->Add(water);
+	//sceneGraph->Add(water);
 
 	for (auto tree : trees) {
 		tree->Initialise();

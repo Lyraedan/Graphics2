@@ -19,7 +19,5 @@ public:
 			   a.z < b.z + b.length &&
 			   a.z + a.length > b.z;
 	}
-
-
 };
 

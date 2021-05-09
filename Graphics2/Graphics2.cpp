@@ -29,7 +29,6 @@ void Graphics2::CreateSceneGraph()
 
 	SceneNodeSkybox* sky = new SceneNodeSkybox(L"Skybox");
 	sceneGraph->Add(sky);
-
 }
 
 void Graphics2::UpdateSceneGraph()

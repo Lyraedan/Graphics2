@@ -18,9 +18,9 @@ public:
 
 	AABB bounds;
 	bool active = false;
+	float scale = 0.5f;
 
 private:
-	float scale = 0.5f;
 	bool doFly = false;
 	float ytest = 0;
 };

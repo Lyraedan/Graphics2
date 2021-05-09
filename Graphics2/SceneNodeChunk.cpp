@@ -22,7 +22,7 @@ void SceneNodeChunk::Render()
 	water->doRender = distanceFromCamera < viewDistance;
 	if (foilage.size() > 0) {
 		for (auto f : foilage) {
-			
+			f->doRender = distanceFromCamera < viewDistance;
 		}
 	}
 }
@@ -68,8 +68,8 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				bool spawn = rand() % 1000 == 0;
 				if (spawn) {
 					SceneNodeTree* spawnedFoilage = new SceneNodeTree(L"Foilage");
-					float foilageX = chunkX + (x * tileSize);
-					float foilageZ = chunkZ + (z * tileSize);
+					float foilageX = chunkX + (x * spawnedFoilage->scale);
+					float foilageZ = chunkZ + (x * spawnedFoilage->scale);
 					float placementY = GetHeightOfTerrain(foilageX, foilageZ);
 					spawnedFoilage->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
 					foilage.push_back(spawnedFoilage);
@@ -145,17 +145,12 @@ float SceneNodeChunk::BarryCentric(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3, XMFLOA
 float SceneNodeChunk::GetHeightOfTerrain(float x, float z)
 {
 	float result;
-	float chunkX = (offset.x * chunkSize) + x;
-	float chunkZ = (offset.z * chunkSize) + z;
-	float gridSquares = chunkSize / tileSize * chunkSize;
-	int gridX = floor(chunkX / gridSquares);
-	int gridZ = floor(chunkZ / gridSquares);
-	if (gridX >= chunkSize || gridZ >= chunkSize || gridX < 0 || gridZ < 0)
-		return 0.0f;
-
-	// These have to be ints? why?
-	float xCoord = (int) chunkX % (int) gridSquares;
-	float zCoord = (int) chunkZ % (int) gridSquares;
+	float chunkX = (offset.x * chunkSize);
+	float chunkZ = (offset.z * chunkSize);
+	int gridX = roundf(x / (tileSize * chunkSize));
+	int gridZ = roundf(z / (tileSize * chunkSize));
+	gridX %= chunkSize;
+	gridZ %= chunkSize;
 
 	// Heights
 	float tr = CalculateHeight(chunkX, chunkZ, gridX, gridZ + 1, tileSize);
@@ -163,7 +158,10 @@ float SceneNodeChunk::GetHeightOfTerrain(float x, float z)
 	float bl = CalculateHeight(chunkX, chunkZ, gridX + 1, gridZ, tileSize);
 	float br = CalculateHeight(chunkX, chunkZ, gridX + 1, gridZ + 1, tileSize);
 
-	if (xCoord <= 1.0f - zCoord) {
+	float xCoord = roundf(x / (tileSize * chunkSize));
+	float zCoord = roundf(z / (tileSize * chunkSize));
+
+	if (gridX <= 1.0f - gridZ) {
 		result = BarryCentric(XMFLOAT3(0.0f, tl, 1.0f),
 							  XMFLOAT3(1.0f, bl, 1.0f),
 							  XMFLOAT3(0.0f, tr, 1.0f),
@@ -175,7 +173,7 @@ float SceneNodeChunk::GetHeightOfTerrain(float x, float z)
 							  XMFLOAT3(0.0f, tr, 1.0f),
 							  XMFLOAT2(xCoord, zCoord));
 	}
-;	return result;
+	return result;
 }
 
 float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)

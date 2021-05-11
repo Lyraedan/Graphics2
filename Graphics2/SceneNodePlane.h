@@ -13,4 +13,9 @@ public:
 	virtual void Tick(XMMATRIX& completeTransform) override;
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
+
+private:
+	float scale = 1.0f;
+	float rotationY;
+	float xPos, zPos;
 };

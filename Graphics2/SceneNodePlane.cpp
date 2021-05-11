@@ -8,7 +8,7 @@ bool SceneNodePlane::Initialise()
 void SceneNodePlane::Tick(XMMATRIX& completeTransform)
 {
 	// TODO Clamp plane infront of camera
-	SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 50, 0));
+	//SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(0, 50, 0));
 	/*
 	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
 	XMFLOAT4 position;
@@ -28,6 +28,17 @@ void SceneNodePlane::Tick(XMMATRIX& completeTransform)
 		XMMatrixRotationAxis(XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), pitch * 1.0f * XM_PI / 180.0f)
 	);
 	*/
+
+	SetWorldTransform(
+		// Scale
+		XMMatrixScaling(scale, scale, scale) *
+		// Position
+		XMMatrixTranslation(xPos, 50, zPos) *
+		// Rotation
+		XMMatrixRotationAxis(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f), rotationY * 0.1f * XM_PI / 180.0f)
+	);
+	rotationY += 0.1f;
+	zPos++;
 
 }
 

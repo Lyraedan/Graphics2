@@ -22,7 +22,7 @@ void SceneNodeTree::Update(XMFLOAT4 camPosition)
 }
 
 void SceneNodeTree::SetupMesh() {
-	BuildRendererState(D3D11_CULL_BACK);
+	BuildRendererState(D3D11_CULL_NONE);
 	ambientColour = XMFLOAT4(1, 1, 1, 1);
 	lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);

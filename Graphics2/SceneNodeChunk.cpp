@@ -22,11 +22,11 @@ void SceneNodeChunk::Render()
 
 	ground->doRender = doRender;
 	water->doRender = doRender;
-		for (auto tree : trees) {
-			tree->doRender = doRender;
-			if (doRender)
-				tree->Update(position);
-		}
+	for (auto tree : trees) {
+		tree->doRender = doRender;
+		if (doRender)
+			tree->Update(position);
+	}
 }
 
 void SceneNodeChunk::Shutdown()
@@ -67,7 +67,7 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			waterIndex += 4;
 
 			if (avg > minHeight) {
-				bool spawn = rand() % 1000 == 0;
+				bool spawn = rand() % 500 == 0;
 				if (spawn) {
 					SceneNodeTree* spawnedTree = new SceneNodeTree(L"Foilage");
 					float foilageX = (chunkX + x) * tileSize;
@@ -78,17 +78,17 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 				}
 			}
 		}
-	} 
+	}
 
 	ground->Initialise();
 	sceneGraph->Add(ground);
 
 	water->Initialise();
-	//sceneGraph->Add(water);
+	sceneGraph->Add(water);
 
 	for (auto tree : trees) {
 		tree->Initialise();
-		sceneGraph->Add(tree);
+		sceneGraph->AddFront(tree);
 	}
 
 	sceneGraph->Add(this);
@@ -131,8 +131,8 @@ void SceneNodeChunk::AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, in
 float SceneNodeChunk::DistanceFrom(XMFLOAT3 src, XMFLOAT3 dest)
 {
 	return sqrt(pow(dest.x - src.x, 2) +
-				pow(dest.y - src.y, 2) +
-				pow(dest.z - src.z, 2));
+		pow(dest.y - src.y, 2) +
+		pow(dest.z - src.z, 2));
 }
 
 float SceneNodeChunk::BarryCentric(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3, XMFLOAT2 pos)
@@ -142,40 +142,6 @@ float SceneNodeChunk::BarryCentric(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3, XMFLOA
 	float l2 = ((p3.z - p1.z) * (pos.x - p3.x) + (p1.x - p3.x) * (pos.y - p3.z)) / det;
 	float l3 = 1.0f - l1 - l2;
 	return l1 * p1.y + l2 * p2.y + l3 * p3.y;
-}
-
-float SceneNodeChunk::GetHeightOfTerrain(float x, float z)
-{
-	float result;
-	float chunkX = (offset.x * chunkSize);
-	float chunkZ = (offset.z * chunkSize);
-	int gridX = roundf(x / (tileSize * chunkSize));
-	int gridZ = roundf(z / (tileSize * chunkSize));
-	gridX %= chunkSize;
-	gridZ %= chunkSize;
-
-	// Heights
-	float tr = CalculateHeight(chunkX, chunkZ, gridX, gridZ + 1, tileSize);
-	float tl = CalculateHeight(chunkX, chunkZ, gridX, gridZ, tileSize);
-	float bl = CalculateHeight(chunkX, chunkZ, gridX + 1, gridZ, tileSize);
-	float br = CalculateHeight(chunkX, chunkZ, gridX + 1, gridZ + 1, tileSize);
-
-	float xCoord = roundf(x / (tileSize * chunkSize));
-	float zCoord = roundf(z / (tileSize * chunkSize));
-
-	if (gridX <= 1.0f - gridZ) {
-		result = BarryCentric(XMFLOAT3(0.0f, tl, 1.0f),
-							  XMFLOAT3(1.0f, bl, 1.0f),
-							  XMFLOAT3(0.0f, tr, 1.0f),
-							  XMFLOAT2(xCoord, zCoord));
-	}
-	else {
-		result = BarryCentric(XMFLOAT3(1.0f, bl, 0.0f),
-							  XMFLOAT3(1.0f, br, 1.0f),
-							  XMFLOAT3(0.0f, tr, 1.0f),
-							  XMFLOAT2(xCoord, zCoord));
-	}
-	return result;
 }
 
 float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float z, float tileScale)
@@ -192,11 +158,11 @@ float SceneNodeChunk::CalculateHeight(float chunkX, float chunkZ, float x, float
 XMFLOAT3 SceneNodeChunk::CalculateNormal(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3)
 {
 	XMFLOAT3 a = XMFLOAT3(p2.x - p1.x, p2.y - p1.y, p2.z - p1.z);
-  	XMFLOAT3 b = XMFLOAT3(p3.x - p1.x, p3.y - p1.y, p3.z - p1.z);
+	XMFLOAT3 b = XMFLOAT3(p3.x - p1.x, p3.y - p1.y, p3.z - p1.z);
 
 	return Normalize(XMFLOAT3(
-		a.y * b.z - a.z * b.y, 
-		a.z * b.x - a.x * b.z, 
+		a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
 		a.x * b.y - a.y * b.x));
 }
 

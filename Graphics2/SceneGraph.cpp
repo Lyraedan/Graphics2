@@ -36,6 +36,21 @@ void SceneGraph::Add(SceneNode* node) {
 	_children.push_back(node);
 }
 
+void SceneGraph::AddFront(SceneNode* node) {
+	_children.push_front(node);
+}
+
+void SceneGraph::Insert(int index, SceneNode* node)
+{
+	// seems laggy
+	_children.insert(_children.begin(), index, node);
+}
+
+int SceneGraph::Size()
+{
+	return _children.size();
+}
+
 void SceneGraph::Remove(SceneNode* node) {
 	_children.remove(node);
 }

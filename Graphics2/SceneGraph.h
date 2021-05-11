@@ -17,6 +17,9 @@ public:
 	virtual void Shutdown(void);
 
 	void Add(SceneNode* node);
+	void AddFront(SceneNode* node);
+	void Insert(int index, SceneNode* node);
+	int Size();
 	void Remove(SceneNode* node);
 	SceneNode* Find(wstring name);
 	

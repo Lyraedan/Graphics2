@@ -1,9 +1,7 @@
 #include "Graphics2.h"
 #include "SceneNodeTerrain.h"
-#include "SceneNodePhysicsCube.h"
 #include "SceneNodeSkybox.h"
 #include "SceneNodePlane.h"
-#include "SceneNodeStaticTerrain.h"
 #include <stdlib.h>
 #include <time.h>
 

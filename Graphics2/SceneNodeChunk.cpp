@@ -23,10 +23,10 @@ void SceneNodeChunk::Render()
 
 	ground->doRender = doRender;
 	water->doRender = doRender;
-	for (auto tree : trees) {
-		tree->doRender = doRender;
+	for (auto entity : entities) {
+		entity->doRender = doRender;
 		if (doRender)
-			tree->Update(position);
+			entity->Update(position);
 	}
 }
 
@@ -65,15 +65,38 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			AddQuad(water, chunkX, chunkZ, x, z, tileSize, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
 			waterIndex += 4;
 
-			if (avg > minHeight) {
-				bool spawn = rand() % 500 == 0;
+			if (avg > waterHeight) {
+				/*
+					The lower this value is the more likely trees are to spawn
+					Note - The lower spawn rate you use risks slowing down generation performance
+				*/
+				int spawnRate = 500; // Default value: 500
+				bool spawn = rand() % spawnRate == 0;
 				if (spawn) {
 					SceneNodeTree* spawnedTree = new SceneNodeTree(L"Foilage");
 					float foilageX = (chunkX + x) * tileSize;
 					float foilageZ = (chunkZ + z) * tileSize;
 					float placementY = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
+					spawnedTree->scale = 0.5f;
 					spawnedTree->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
-					trees.push_back(spawnedTree);
+					entities.push_back(spawnedTree);
+				}
+			}
+			else {
+				/*
+					The lower this value is the more likely fish are to spawn
+					Note - The lower spawn rate you use risks slowing down generation performance
+				*/
+				int spawnRate = 750; // Default value: 500
+				bool spawn = rand() % spawnRate == 0;
+				if (spawn) {
+					SceneNodeFish* spawnedFish = new SceneNodeFish(L"Fish");
+					float placeX = (chunkX + x) * tileSize;
+					float placeZ = (chunkZ + z) * tileSize;
+					float placementY = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
+					spawnedFish->scale = 0.005f;
+					spawnedFish->PlaceAt(XMFLOAT3(placeX, placementY, placeZ));
+					entities.push_back(spawnedFish);
 				}
 			}
 		}
@@ -85,9 +108,9 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	water->Initialise();
 	sceneGraph->Add(water);
 
-	for (auto tree : trees) {
-		tree->Initialise();
-		sceneGraph->AddFront(tree);
+	for (auto entity : entities) {
+		entity->Initialise();
+		sceneGraph->AddFront(entity);
 	}
 
 	sceneGraph->Add(this);
@@ -144,8 +167,8 @@ void SceneNodeChunk::LevelCamera()
 	float chunkY = position.y / (tileSize * chunkSize);
 	float chunkZ = position.z / (tileSize * chunkSize);
 
-	float tileX = roundf(position.x);
-	float tileZ = roundf(position.z);
+	float tileX = position.x;
+	float tileZ = position.z;
 
 	float eyeHeight = CalculateHeight(chunkX, chunkZ, tileX, tileZ, tileSize);
 	float waterHeight = minHeight - 2;

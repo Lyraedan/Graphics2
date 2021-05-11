@@ -44,7 +44,7 @@ public:
 
 	const wchar_t* texture = L"";
 	void BuildRendererState(D3D11_CULL_MODE mode);
-	void BuildBlendState(D3D11_RENDER_TARGET_BLEND_DESC desc);
+	void BuildBlendState();
 	void SetupBlendState(float blendFactor[4], UINT sampleMask);
 
 	XMFLOAT4 ambientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
@@ -89,6 +89,6 @@ private:
 	ComPtr<ID3D11RasterizerState>    _noCullRasteriserState;
 	ComPtr<ID3D11BlendState>		 _blendState;
 
-	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	float blendFactor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	UINT sampleMask = 0xffffffff;
 };

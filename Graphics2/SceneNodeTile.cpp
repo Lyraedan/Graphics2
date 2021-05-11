@@ -16,5 +16,5 @@ void SceneNodeTile::Tick(XMMATRIX& completeTransform)
 void SceneNodeTile::SetupMesh()
 {
 	BuildRendererState(D3D11_CULL_FRONT);
-	texture = L"grass.bmp";
+	texture = L"textures/grass.bmp";
 }

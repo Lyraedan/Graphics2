@@ -36,7 +36,7 @@ void SceneNodePlane::SetupMesh() {
 	ambientColour = XMFLOAT4(1, 1, 1, 1);
 	lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	LoadModel("models/plane.obj", L"models/plane.bmp");
+	LoadModel("models/plane.obj", L"textures/plane.bmp");
 }
 
 void SceneNodePlane::Shutdown()

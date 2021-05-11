@@ -59,7 +59,7 @@ void SceneNodeTerrain::Render()
 	}
 
 	/*
-	if (GetAsyncKeyState(VK_BACK) < 0)
+	if (GetAsyncKeyState(VK_LSHIFT) < 0)
 		useFreecam = !useFreecam;
 	*/
 	useFreecam = GetAsyncKeyState(VK_LSHIFT) < 0;

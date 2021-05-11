@@ -2,7 +2,6 @@
 
 #include "SceneNode.h"
 #include "Graphics2.h"
-#include "PerlinNoise.h"
 #include "SceneNodeWater.h"
 #include "SceneNodeChunk.h"
 #include <math.h>

@@ -2,12 +2,11 @@
 
 #include "SceneNodeMesh.h"
 #include "Graphics2.h"
-#include "PerlinNoise.h"
 #include "PerlinRevised.h"
 #include "SceneNodeTile.h"
 #include "SceneNodeWater.h"
 #include "SceneNodeTree.h"
-#include "SceneNodeBird.h"
+#include "SceneNodeFish.h"
 #include <math.h>
 
 class SceneNodeChunk : public SceneNodeMesh
@@ -28,7 +27,7 @@ public:
 	float tileSize = 2.0f;
 	int chunkSize = 16; //50
 
-	std::vector<SceneNodeTree*> trees;
+	std::vector<SceneNodeEntity*> entities;
 	SceneNodeTile* ground = new SceneNodeTile(L"Ground");
 	SceneNodeTile* water = new SceneNodeWater(L"Water");
 

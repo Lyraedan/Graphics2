@@ -10,7 +10,7 @@ public:
 	SceneNodeTree(wstring name) : SceneNodeEntity(name) {};
 
 	bool Initialise() override;
-	void Update(XMFLOAT4 camPosition);
+	virtual void Update(XMFLOAT4 camPosition) override;
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
 

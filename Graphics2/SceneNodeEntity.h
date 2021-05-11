@@ -10,7 +10,7 @@ public:
 	SceneNodeEntity(wstring name) : SceneNodeObjModel(name) {};
 
 	bool Initialise() override;
-	void Update(XMFLOAT4 camPosition);
+	virtual void Update(XMFLOAT4 camPosition);
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
 

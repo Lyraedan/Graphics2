@@ -62,7 +62,7 @@ void SceneNodeTerrain::Render()
 	if (GetAsyncKeyState(VK_LSHIFT) < 0)
 		useFreecam = !useFreecam;
 	*/
-	useFreecam = GetAsyncKeyState(VK_LSHIFT) < 0;
+	//useFreecam = GetAsyncKeyState(VK_LSHIFT) < 0;
 
 	if(!useFreecam)
 		GetChunkPlayerIsIn().data->LevelCamera();

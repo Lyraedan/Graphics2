@@ -91,6 +91,7 @@ XMVECTOR Camera::GetCameraPosition(void)
 void Camera::SetCameraPosition(float x, float y, float z)
 {
 	_cameraPosition = XMFLOAT4(x, y, z, 0.0f);
+	bounds.SetPosition(x, y, z);
 }
 
 void Camera::Update(void)

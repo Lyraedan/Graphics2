@@ -1,3 +1,30 @@
-﻿  SceneNodePlane.cpp
+﻿  Graphics2.cpp
 F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+  SceneNodeChunk.cpp
+F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(55,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(56,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(56,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(57,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(79,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(79,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(96,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(96,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(122,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(123,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(155,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(220,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(219,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(218,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  SceneNodeEntity.cpp
+F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+  SceneNodeFish.cpp
+F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+  SceneNodeTerrain.cpp
+F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  SceneNodeTree.cpp
+F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+  Generating Code...
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

@@ -167,12 +167,12 @@ void SceneNodeChunk::LevelCamera()
 	float chunkY = position.y / (tileSize * chunkSize);
 	float chunkZ = position.z / (tileSize * chunkSize);
 
-	float tileX = position.x;
-	float tileZ = position.z;
+	float tileX = (float)((int)round(position.x / tileSize) * tileSize);
+	float tileZ = (float)((int)round(position.z / tileSize) * tileSize);
 
-	float eyeHeight = CalculateHeight(chunkX, chunkZ, tileX, tileZ, tileSize);
+	float eyeHeight = CalculateHeight(chunkX, chunkZ, tileX - chunkX, tileZ - chunkZ, tileSize);
 	float waterHeight = minHeight - 2;
-	float heightOffset = 0.5f;
+	float heightOffset = 2.0f;
 	
 	if (eyeHeight < waterHeight) eyeHeight = waterHeight + heightOffset;
 

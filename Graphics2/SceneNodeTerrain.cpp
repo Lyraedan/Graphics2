@@ -21,42 +21,51 @@ bool SceneNodeTerrain::Initialise()
 void SceneNodeTerrain::Render()
 {
 
-	if (GetAsyncKeyState(VK_UP) < 0) {
+	//W
+	if (GetAsyncKeyState(0x57) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(1);
 		if (generateDynamically)
 			GenerateChunkIfWeNeedTo();
-	}
-	else if (GetAsyncKeyState(VK_DOWN) < 0) {
+	} // S
+	else if (GetAsyncKeyState(0x53) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(-1);
 		if (generateDynamically)
 			GenerateChunkIfWeNeedTo();
 	}
 
-	if (GetAsyncKeyState(VK_LEFT) < 0) {
+	//A 
+	if (GetAsyncKeyState(0x41) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(-1);
 		if (generateDynamically)
 			GenerateChunkIfWeNeedTo();
-	}
-	else if (GetAsyncKeyState(VK_RIGHT) < 0) {
+	} // D
+	else if (GetAsyncKeyState(0x44) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(1);
 		if (generateDynamically)
 			GenerateChunkIfWeNeedTo();
 	}
-	if (GetAsyncKeyState(VK_NUMPAD8) < 0) {
+	if (GetAsyncKeyState(VK_UP) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetPitch(1);
 	}
-	else if (GetAsyncKeyState(VK_NUMPAD2) < 0) {
+	else if (GetAsyncKeyState(VK_DOWN) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetPitch(-1);
 	}
 
-	if (GetAsyncKeyState(VK_NUMPAD4) < 0) {
+	if (GetAsyncKeyState(VK_LEFT) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetYaw(-1);
 	}
-	else if (GetAsyncKeyState(VK_NUMPAD6) < 0) {
+	else if (GetAsyncKeyState(VK_RIGHT) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetYaw(1);
 	}
 
-	GetChunkPlayerIsIn().data->LevelCamera();
+	/*
+	if (GetAsyncKeyState(VK_BACK) < 0)
+		useFreecam = !useFreecam;
+	*/
+	useFreecam = GetAsyncKeyState(VK_LSHIFT) < 0;
+
+	if(!useFreecam)
+		GetChunkPlayerIsIn().data->LevelCamera();
 }
 
 void SceneNodeTerrain::Shutdown()

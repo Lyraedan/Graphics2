@@ -37,6 +37,7 @@ public:
 	float viewSize = 3;
 	// Enable or disable infinite terrain
 	bool generateDynamically = true;
+	bool useFreecam = true;
 
 private:
 	// making this & breaks the constructor

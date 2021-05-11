@@ -1,6 +1,4 @@
-﻿  Graphics2.cpp
-F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
-  SceneNodeChunk.cpp
+﻿  SceneNodeChunk.cpp
 F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(55,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(56,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
@@ -11,12 +9,7 @@ F:\Graphics2\Graphics2\SceneNodeChunk.cpp(74,57): warning C4244: 'argument': con
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(99,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(100,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
 F:\Graphics2\Graphics2\SceneNodeChunk.cpp(132,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(191,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(190,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeChunk.cpp(189,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  SceneNodeTerrain.cpp
-F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-F:\Graphics2\Graphics2\SceneNodeTerrain.cpp(11,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(197,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(196,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(195,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe

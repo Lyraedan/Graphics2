@@ -143,12 +143,15 @@ void SceneNodeChunk::LevelCamera()
 	float chunkX = position.x / (tileSize * chunkSize);
 	float chunkY = position.y / (tileSize * chunkSize);
 	float chunkZ = position.z / (tileSize * chunkSize);
-	float eyeHeight = CalculateHeight(chunkX, chunkZ, position.x, position.z, tileSize);
+
+	float tileX = roundf(chunkX);
+	float tileZ = roundf(chunkZ);
+
+	float eyeHeight = CalculateHeight(chunkX, chunkZ, tileX, tileZ, tileSize);
 	float waterHeight = minHeight - 2;
 	float heightOffset = 0.5f;
 	
-	if (eyeHeight < waterHeight) 
-		eyeHeight = waterHeight + heightOffset;
+	if (eyeHeight < waterHeight) eyeHeight = waterHeight + heightOffset;
 
 	DirectXFramework::GetDXFramework()->GetCamera()->SetCameraPosition(position.x, eyeHeight + heightOffset, position.z);
 }

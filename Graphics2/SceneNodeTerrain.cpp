@@ -55,6 +55,8 @@ void SceneNodeTerrain::Render()
 	else if (GetAsyncKeyState(VK_NUMPAD6) < 0) {
 		DirectXFramework::GetDXFramework()->GetCamera()->SetYaw(1);
 	}
+
+	GetChunkPlayerIsIn().data->LevelCamera();
 }
 
 void SceneNodeTerrain::Shutdown()
@@ -122,4 +124,20 @@ float SceneNodeTerrain::ChunkZ(void)
 	XMStoreFloat4(&position, cameraPosition);
 	// Equation = round ( cam z / (tile scale * chunk size)
 	return roundf(position.z / (2 * chunkSize));
+}
+
+SceneNodeTerrain::Chunk SceneNodeTerrain::GetChunkPlayerIsIn()
+{
+	float camX = ChunkX();
+	float camZ = ChunkZ();
+	if (ChunkExistsAt(XMFLOAT3(camX, 0, camZ))) {
+		string id = "chunk_" + std::to_string(camX) + "_" + std::to_string(camZ);
+		for (Chunk chunk : chunks) {
+			if (chunk.id.compare(id) == 0) {
+				return chunk;
+			}
+		}
+	}
+	//Default to first chunk
+	return chunks[0];
 }

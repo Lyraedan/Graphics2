@@ -16,6 +16,7 @@ void SceneNodeChunk::Render()
 	float chunkX = position.x / (tileSize * chunkSize);
 	float chunkY = position.y / (tileSize * chunkSize);
 	float chunkZ = position.z / (tileSize * chunkSize);
+
 	float distanceFromCamera = DistanceFrom(offset, XMFLOAT3(chunkX, chunkY, chunkZ));
 	float viewDistance = chunkSize / renderDistance;
 	bool doRender = distanceFromCamera < viewDistance;
@@ -45,8 +46,6 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 
 	float chunkX = (terrainOffset.x * chunkSize);
 	float chunkZ = (terrainOffset.z * chunkSize);
-
-	float minHeight = 1; // 10 | 0.005
 
 	int groundIndex = 0;
 	int waterIndex = 0;
@@ -133,6 +132,25 @@ float SceneNodeChunk::DistanceFrom(XMFLOAT3 src, XMFLOAT3 dest)
 	return sqrt(pow(dest.x - src.x, 2) +
 		pow(dest.y - src.y, 2) +
 		pow(dest.z - src.z, 2));
+}
+
+void SceneNodeChunk::LevelCamera()
+{
+	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
+	XMFLOAT4 position;
+	XMStoreFloat4(&position, cameraPosition);
+
+	float chunkX = position.x / (tileSize * chunkSize);
+	float chunkY = position.y / (tileSize * chunkSize);
+	float chunkZ = position.z / (tileSize * chunkSize);
+	float eyeHeight = CalculateHeight(chunkX, chunkZ, position.x, position.z, tileSize);
+	float waterHeight = minHeight - 2;
+	float heightOffset = 0.5f;
+	
+	if (eyeHeight < waterHeight) 
+		eyeHeight = waterHeight + heightOffset;
+
+	DirectXFramework::GetDXFramework()->GetCamera()->SetCameraPosition(position.x, eyeHeight + heightOffset, position.z);
 }
 
 float SceneNodeChunk::BarryCentric(XMFLOAT3 p1, XMFLOAT3 p2, XMFLOAT3 p3, XMFLOAT2 pos)

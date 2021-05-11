@@ -31,6 +31,7 @@ public:
 	bool ChunkExistsAt(XMFLOAT3 position);
 	float ChunkX(void);
 	float ChunkZ(void);
+	Chunk GetChunkPlayerIsIn();
 
 	int chunkSize = 16; //50
 	float viewSize = 3;

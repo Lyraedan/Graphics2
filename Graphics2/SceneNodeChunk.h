@@ -38,6 +38,8 @@ public:
 
 	float DistanceFrom(XMFLOAT3 src, XMFLOAT3 dest);
 
+	void LevelCamera();
+
 	/// <summary>
 	/// Made Obsolete by CalculateHeight - Left in incase we decide to use it elsewhere
 	/// </summary>
@@ -49,4 +51,5 @@ private:
 	XMFLOAT3 offset;
 	SceneGraph* sceneGraph;
 	bool foilageAdded = false;
+	float minHeight = 1; // 10 | 0.005
 };

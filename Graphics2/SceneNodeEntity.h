@@ -1,9 +1,9 @@
-#pragma once
-
-#include "SceneNodeObjModel.h"
 /*
 	Author: Luke Rapkin
 */
+#pragma once
+
+#include "SceneNodeObjModel.h"
 #include "Graphics2.h"
 
 class SceneNodeEntity : public SceneNodeObjModel

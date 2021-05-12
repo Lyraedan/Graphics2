@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeWater.h"
 
 bool SceneNodeWater::Initialise()

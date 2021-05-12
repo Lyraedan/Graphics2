@@ -1,6 +1,9 @@
 #pragma once
 
 #include "SceneNodeObjModel.h"
+/*
+	Author: Luke Rapkin
+*/
 #include "Graphics2.h"
 
 class SceneNodeEntity : public SceneNodeObjModel

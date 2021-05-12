@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeObjModel.h"
 
 bool SceneNodeObjModel::Initialise()

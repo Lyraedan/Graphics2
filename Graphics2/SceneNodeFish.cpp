@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeFish.h"
 
 bool SceneNodeFish::Initialise()

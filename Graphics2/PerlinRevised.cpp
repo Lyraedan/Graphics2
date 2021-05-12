@@ -1,3 +1,6 @@
+/*
+    Author: Luke Rapkin
+*/
 #include "PerlinRevised.h"
 
 float PerlinRevised::interpolate(float a0, float a1, float w)

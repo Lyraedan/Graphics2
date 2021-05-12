@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeTerrain.h"
 
 bool SceneNodeTerrain::Initialise()

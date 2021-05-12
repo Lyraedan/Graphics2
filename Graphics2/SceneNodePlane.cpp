@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodePlane.h"
 
 bool SceneNodePlane::Initialise()

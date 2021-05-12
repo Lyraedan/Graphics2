@@ -7,6 +7,9 @@
 #include "SceneNodeWater.h"
 #include "SceneNodeTree.h"
 #include "SceneNodeFish.h"
+/*
+	Author: Luke Rapkin
+*/
 #include <math.h>
 
 class SceneNodeChunk : public SceneNodeMesh

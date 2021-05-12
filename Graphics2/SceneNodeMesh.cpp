@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeMesh.h"
 
 bool SceneNodeMesh::Initialise()

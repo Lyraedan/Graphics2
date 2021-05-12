@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeChunk.h"
 
 bool SceneNodeChunk::Initialise()

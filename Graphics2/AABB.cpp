@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "AABB.h"
 
 void AABB::SetPosition(float x, float y, float z)

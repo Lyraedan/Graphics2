@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeTile.h"
 
 bool SceneNodeTile::Initialise()

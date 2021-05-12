@@ -1,4 +1,6 @@
-
+/*
+	Author: Luke Rapkin
+*/
 class AABB
 {
 public:	

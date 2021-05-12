@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeTree.h"
 
 bool SceneNodeTree::Initialise()

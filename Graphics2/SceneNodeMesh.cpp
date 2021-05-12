@@ -201,7 +201,7 @@ void SceneNodeMesh::AddIndice(UINT p1, UINT p2, UINT p3)
 void SceneNodeMesh::BuildRendererState(D3D11_CULL_MODE mode)
 {
 	D3D11_RASTERIZER_DESC rasteriserDesc;
-	rasteriserDesc.FillMode = D3D11_FILL_SOLID;
+	rasteriserDesc.FillMode = wireframeMode ? D3D11_FILL_WIREFRAME : D3D11_FILL_SOLID;
 	rasteriserDesc.CullMode = mode;
 	rasteriserDesc.FrontCounterClockwise = true;
 	rasteriserDesc.DepthBias = 0;

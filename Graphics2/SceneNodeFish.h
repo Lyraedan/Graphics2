@@ -10,7 +10,7 @@ public:
 	SceneNodeFish(wstring name) : SceneNodeEntity(name) {};
 
 	bool Initialise() override;
-	virtual void Tick(XMMATRIX& completeTransform) override;
+	virtual void Update(XMFLOAT4 camPosition) override;
 	virtual void SetupMesh() override;
 	virtual void Shutdown() override;
 

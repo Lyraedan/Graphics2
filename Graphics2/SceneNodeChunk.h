@@ -20,7 +20,6 @@ public:
 	virtual void Shutdown() override;
 
 	void GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGraph);
-	float terrain[16][16];
 
 	void AddQuad(SceneNodeTile* mesh, float chunkX, float chunkZ, int x, int z, float scl, int index, float heights[4]);
 
@@ -49,6 +48,10 @@ private:
 	XMFLOAT3 Normalize(XMFLOAT3 point);
 	XMFLOAT3 offset;
 	SceneGraph* sceneGraph;
-	bool foilageAdded = false;
+
+	// Spawn fish and trees, Setting this to false makes the chunks generate and the max speed
+	bool spawnEntities = true;
+	bool spawnFish = true;
+	bool spawnTrees = true;
 	float minHeight = 1; // 10 | 0.005
 };

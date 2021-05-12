@@ -9,8 +9,6 @@ public:
 
 	void SetSize(float width, float height, float length);
 
-	bool doDraw = true;
-
 	static bool Intersects(AABB a, AABB b) {
 		return a.x < b.x + b.width &&
 			   a.x + a.width > b.x &&

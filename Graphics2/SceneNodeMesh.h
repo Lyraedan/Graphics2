@@ -91,4 +91,5 @@ private:
 
 	float blendFactor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	UINT sampleMask = 0xffffffff;
+	bool wireframeMode = false;
 };

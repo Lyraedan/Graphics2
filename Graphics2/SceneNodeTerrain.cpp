@@ -58,10 +58,6 @@ void SceneNodeTerrain::Render()
 		DirectXFramework::GetDXFramework()->GetCamera()->SetYaw(1);
 	}
 
-	/*
-	if (GetAsyncKeyState(VK_LSHIFT) < 0)
-		useFreecam = !useFreecam;
-	*/
 	//useFreecam = GetAsyncKeyState(VK_LSHIFT) < 0;
 
 	if(!useFreecam)

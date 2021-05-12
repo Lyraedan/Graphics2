@@ -5,7 +5,7 @@ bool SceneNodeFish::Initialise()
 	return SceneNodeMesh::Initialise();
 }
 
-void SceneNodeFish::Tick(XMMATRIX& completeTransform)
+void SceneNodeFish::Update(XMFLOAT4 camPosition)
 {
 	SetWorldTransform(
 		// Scale

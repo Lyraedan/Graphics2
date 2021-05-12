@@ -51,11 +51,13 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 	int waterIndex = 0;
 	for (int z = 0; z <= chunkSize - 1; z++) {
 		for (int x = 0; x <= chunkSize - 1; x++) {
-
+			//Top
 			float tr = CalculateHeight(chunkX, chunkZ, x, z + 1.0f, tileSize);
 			float tl = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
+			//Bottom
 			float bl = CalculateHeight(chunkX, chunkZ, x + 1.0f, z, tileSize);
 			float br = CalculateHeight(chunkX, chunkZ, x + 1.0f, z + 1.0f, tileSize);
+
 			float avg = (tr + tl + bl + br) / 4;
 
 			AddQuad(ground, chunkX, chunkZ, x, z, tileSize, groundIndex, new float[4]{ tr, tl, bl, br });
@@ -65,38 +67,40 @@ void SceneNodeChunk::GenerateTerrain(XMFLOAT3 terrainOffset, SceneGraph* sceneGr
 			AddQuad(water, chunkX, chunkZ, x, z, tileSize, waterIndex, new float[4]{ waterHeight, waterHeight, waterHeight, waterHeight });
 			waterIndex += 4;
 
-			if (avg > waterHeight) {
-				/*
-					The lower this value is the more likely trees are to spawn
-					Note - The lower spawn rate you use risks slowing down generation performance
-				*/
-				int spawnRate = 500; // Default value: 500
-				bool spawn = rand() % spawnRate == 0;
-				if (spawn) {
-					SceneNodeTree* spawnedTree = new SceneNodeTree(L"Foilage");
-					float foilageX = (chunkX + x) * tileSize;
-					float foilageZ = (chunkZ + z) * tileSize;
-					float placementY = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
-					spawnedTree->scale = 0.5f;
-					spawnedTree->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
-					entities.push_back(spawnedTree);
+			if (spawnEntities) {
+				if (avg > waterHeight) {
+					/*
+						The lower this value is the more likely trees are to spawn
+						Note - The lower spawn rate you use risks slowing down generation performance
+					*/
+					int spawnRate = 500; // Default value: 500
+					bool spawn = rand() % spawnRate == 0;
+					if (spawn && spawnTrees) {
+						SceneNodeTree* spawnedTree = new SceneNodeTree(L"Foilage");
+						float foilageX = (chunkX + x) * tileSize;
+						float foilageZ = (chunkZ + z) * tileSize;
+						float placementY = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
+						spawnedTree->scale = 0.5f;
+						spawnedTree->PlaceAt(XMFLOAT3(foilageX, placementY, foilageZ));
+						entities.push_back(spawnedTree);
+					}
 				}
-			}
-			else {
-				/*
-					The lower this value is the more likely fish are to spawn
-					Note - The lower spawn rate you use risks slowing down generation performance
-				*/
-				int spawnRate = 750; // Default value: 500
-				bool spawn = rand() % spawnRate == 0;
-				if (spawn) {
-					SceneNodeFish* spawnedFish = new SceneNodeFish(L"Fish");
-					float placeX = (chunkX + x) * tileSize;
-					float placeZ = (chunkZ + z) * tileSize;
-					float placementY = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
-					spawnedFish->scale = 0.005f;
-					spawnedFish->PlaceAt(XMFLOAT3(placeX, placementY, placeZ));
-					entities.push_back(spawnedFish);
+				else {
+					/*
+						The lower this value is the more likely fish are to spawn
+						Note - The lower spawn rate you use risks slowing down generation performance
+					*/
+					int spawnRate = 750; // Default value: 750
+					bool spawn = rand() % spawnRate == 0;
+					if (spawn && spawnFish) {
+						SceneNodeFish* spawnedFish = new SceneNodeFish(L"Fish");
+						float placeX = (chunkX + x) * tileSize;
+						float placeZ = (chunkZ + z) * tileSize;
+						float placementY = CalculateHeight(chunkX, chunkZ, x, z, tileSize);
+						spawnedFish->scale = 0.005f;
+						spawnedFish->PlaceAt(XMFLOAT3(placeX, placementY, placeZ));
+						entities.push_back(spawnedFish);
+					}
 				}
 			}
 		}

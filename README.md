@@ -8,3 +8,5 @@ Contains infinite terrain, optimized to a fine point for efficiancy, also contai
 W,A,S,D to move
 
 Arrow keys to look around
+
+Achieved: 80%

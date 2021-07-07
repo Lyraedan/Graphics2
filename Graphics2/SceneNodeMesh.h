@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #pragma once
 
 #include "SceneNode.h"
@@ -7,6 +10,7 @@
 
 class SceneNodeMesh : public SceneNode
 {
+public:
 	struct Vertex
 	{
 		XMFLOAT3 Position;
@@ -30,7 +34,6 @@ class SceneNodeMesh : public SceneNode
 		UINT p3;
 	};
 
-public:
 	SceneNodeMesh(wstring name) : SceneNode(name) {};
 
 	bool Initialise() override;
@@ -44,6 +47,21 @@ public:
 
 	const wchar_t* texture = L"";
 	void BuildRendererState(D3D11_CULL_MODE mode);
+	void BuildBlendState();
+	void SetupBlendState(float blendFactor[4], UINT sampleMask);
+
+	XMFLOAT4 ambientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+	XMVECTOR lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 1.0f, 0.0f));
+	XMFLOAT4 lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	
+	int GetVertices(void);
+	int GetIndices(void);
+
+	bool useCulling = true;
+	bool useBlending = false;
+
+	Vertex GetVertex(int index);
+	bool doRender = true;
 
 private:
 	void BuildGeometry();
@@ -51,6 +69,8 @@ private:
 	void BuildVertexLayout();
 	void BuildShaders();
 	void BuildTexture();
+
+	bool readyToBeRendered = false;
 
 	XMMATRIX worldTransformation;
 	std::vector<Vertex> vertices = std::vector<Vertex>();
@@ -70,4 +90,9 @@ private:
 
 	ComPtr<ID3D11RasterizerState>    _defaultRasteriserState;
 	ComPtr<ID3D11RasterizerState>    _noCullRasteriserState;
+	ComPtr<ID3D11BlendState>		 _blendState;
+
+	float blendFactor[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	UINT sampleMask = 0xffffffff;
+	bool wireframeMode = false;
 };

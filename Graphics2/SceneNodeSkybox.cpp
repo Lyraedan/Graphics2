@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeSkybox.h"
 
 bool SceneNodeSkybox::Initialise()
@@ -16,7 +19,10 @@ void SceneNodeSkybox::Tick(XMMATRIX& completeTransform)
 
 void SceneNodeSkybox::SetupMesh() {
 	BuildRendererState(D3D11_CULL_FRONT);
-	LoadModel("models/skybox.obj", L"models/skybox.png");
+	ambientColour = XMFLOAT4(1, 1, 1, 1);
+	lightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+	lightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	LoadModel("models/skybox.obj", L"textures/skybox.png");
 }
 
 void SceneNodeSkybox::Shutdown()

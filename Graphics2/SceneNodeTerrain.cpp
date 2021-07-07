@@ -1,75 +1,151 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeTerrain.h"
-#include "SceneNodeWater.h"
-#include "SceneNodeChunk.h"
 
 bool SceneNodeTerrain::Initialise()
 {
-    return true;
+	//For demoing
+	if (!generateDynamically) {
+		int numberOfChunks = 5;
+		//if number of chunks = 3 -> Generate 3 x 3 chunks = 9 
+		for (int x = 0; x < numberOfChunks; x++) {
+			for (int z = 0; z < numberOfChunks; z++) {
+				GenerateChunkAt(XMFLOAT3(x, 0, z));
+			}
+		}
+	}
+	else {
+		GenerateChunkIfWeNeedTo();
+	}
+	return true;
 }
 
 void SceneNodeTerrain::Render()
 {
 
+	//W
+	if (GetAsyncKeyState(0x57) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(1);
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
+	} // S
+	else if (GetAsyncKeyState(0x53) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetForwardBack(-1);
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
+	}
+
+	//A 
+	if (GetAsyncKeyState(0x41) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(-1);
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
+	} // D
+	else if (GetAsyncKeyState(0x44) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetLeftRight(1);
+		if (generateDynamically)
+			GenerateChunkIfWeNeedTo();
+	}
+	if (GetAsyncKeyState(VK_UP) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetPitch(1);
+	}
+	else if (GetAsyncKeyState(VK_DOWN) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetPitch(-1);
+	}
+
+	if (GetAsyncKeyState(VK_LEFT) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetYaw(-1);
+	}
+	else if (GetAsyncKeyState(VK_RIGHT) < 0) {
+		DirectXFramework::GetDXFramework()->GetCamera()->SetYaw(1);
+	}
+
+	//useFreecam = GetAsyncKeyState(VK_LSHIFT) < 0;
+
+	if(!useFreecam)
+		GetChunkPlayerIsIn().data->LevelCamera();
 }
 
 void SceneNodeTerrain::Shutdown()
 {
+	/*
+	for (auto c : chunks) {
+		delete c.data;
+	}
+	*/
 }
 
-void SceneNodeTerrain::GenerateTerrain(XMFLOAT3 terrainOffset) {
-	UpdateHeight(terrainOffset.x, terrainOffset.z);
-	int minHeight = 10;
-	for (int z = 0; z < chunkSize - 1; z++) {
-		for (int x = 0; x < chunkSize - 1; x++) {
+void SceneNodeTerrain::SetSceneGraph(SceneGraph* ptr)
+{
+	this->sceneGraph = ptr;
+}
 
-			if (terrain[x][z] > minHeight) {
-				//Todo swap to a single mesh instead of a bunch of tiles
-				shared_ptr<SceneNodeChunk> mesh = make_shared<SceneNodeChunk>(L"Chunk");
-				int scl = 1;
-				mesh->AddVertex(XMFLOAT3(-scl + x, terrain[x][z], -scl + z), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(-scl + x, terrain[x][z + 1], scl + z), XMFLOAT3(0.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, terrain[x + 1][z], -scl + z), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, terrain[x + 1][z + 1], scl + z), XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
+void SceneNodeTerrain::GenerateChunkAt(XMFLOAT3 position)
+{
+	SceneNodeChunk* chunk = new SceneNodeChunk(L"Chunk");
+	chunk->GenerateTerrain(position, sceneGraph);
+	chunk->SetWorldTransform(XMMatrixScaling(1, 1, 1) * XMMatrixTranslation(position.x * chunkSize, position.y, position.z * chunkSize));
+	string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);
+	chunks.push_back({ id, position, chunk });
+}
 
-				sceneGraph->Add(mesh);
-				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(terrainOffset.x + -chunkSize + x * scl, terrainOffset.y, terrainOffset.z + -chunkSize + z * scl));
-			}
-			if (terrain[x][z] < minHeight + 2) {
-				int scl = 1;
-				float waterHeight = minHeight + 2;
-				shared_ptr<SceneNodeWater> mesh = make_shared<SceneNodeWater>(L"Water");
-				mesh->AddVertex(XMFLOAT3(-scl + x, 0, -scl + z), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(-scl + x, 0, scl + z), XMFLOAT3(0.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, 0, -scl + z), XMFLOAT3(1.0f, 1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f));
-				mesh->AddVertex(XMFLOAT3(scl + x, 0, scl + z), XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT2(1.0f, 1.0f));
+void SceneNodeTerrain::GenerateChunkIfWeNeedTo()
+{
+	float camX = ChunkX();
+	float camZ = ChunkZ();
 
-				sceneGraph->Add(mesh);
-				mesh->SetWorldTransform(XMMatrixScaling(scl, scl, scl) * XMMatrixTranslation(terrainOffset.x + -chunkSize + x * scl, terrainOffset.y + waterHeight, terrainOffset.z + -chunkSize + z * scl));
+	for (float x = camX - viewSize; x <= camX + viewSize; x++) {
+		for (float z = camZ - viewSize; z <= camZ + viewSize; z++) {
+			if (!ChunkExistsAt(XMFLOAT3(x, 0, z))) {
+				GenerateChunkAt(XMFLOAT3(x, 0, z));
 			}
 		}
 	}
 }
 
-/// <summary>
-/// Generate a height map using perlin noise
-/// </summary>
-/// <param name="xOffset">- Our sampling X offset</param>
-/// <param name="zOffset">- Our sampling Z offset</param>
-void SceneNodeTerrain::UpdateHeight(float xOffset, float zOffset)
+// This is the issue
+bool SceneNodeTerrain::ChunkExistsAt(XMFLOAT3 position)
 {
-	for (int x = 0; x < chunkSize; x++) {
-		for (int z = 0; z < chunkSize; z++) {
-			float noise = PerlinNoise::perlin(xOffset, zOffset, xOffset / zOffset); // xOffset / zOffset
-			float frequancy = 25.0;
-			terrain[x][z] = (noise * frequancy);
-			zOffset += 1.0 / chunkSize;
+	string id = "chunk_" + std::to_string(position.x) + "_" + std::to_string(position.z);
+	for (Chunk chunk : chunks) {
+		if (chunk.id.compare(id) == 0) {
+			return true;
 		}
-		xOffset += 1.0 / chunkSize;
 	}
+	return false;
 }
 
-
-void SceneNodeTerrain::SetSceneGraph(SceneGraphPointer ptr)
+float SceneNodeTerrain::ChunkX(void)
 {
-    this->sceneGraph = ptr;
+	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
+	XMFLOAT4 position;
+	XMStoreFloat4(&position, cameraPosition);
+	// Equation = round ( cam x / (tile scale * chunk size)
+	return roundf(position.x / (2 * chunkSize));
+}
+
+float SceneNodeTerrain::ChunkZ(void)
+{
+	XMVECTOR cameraPosition = DirectXFramework::GetDXFramework()->GetCamera()->GetCameraPosition();
+	XMFLOAT4 position;
+	XMStoreFloat4(&position, cameraPosition);
+	// Equation = round ( cam z / (tile scale * chunk size)
+	return roundf(position.z / (2 * chunkSize));
+}
+
+SceneNodeTerrain::Chunk SceneNodeTerrain::GetChunkPlayerIsIn()
+{
+	float camX = ChunkX();
+	float camZ = ChunkZ();
+	if (ChunkExistsAt(XMFLOAT3(camX, 0, camZ))) {
+		string id = "chunk_" + std::to_string(camX) + "_" + std::to_string(camZ);
+		for (Chunk chunk : chunks) {
+			if (chunk.id.compare(id) == 0) {
+				return chunk;
+			}
+		}
+	}
+	//Default to first chunk
+	return chunks[0];
 }

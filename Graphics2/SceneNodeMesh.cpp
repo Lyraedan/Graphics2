@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #include "SceneNodeMesh.h"
 
 bool SceneNodeMesh::Initialise()
@@ -13,6 +16,7 @@ bool SceneNodeMesh::Initialise()
 	BuildVertexLayout();
 	BuildConstantBuffer();
 	BuildTexture();
+	readyToBeRendered = true;
 	return true;
 }
 
@@ -22,37 +26,60 @@ void SceneNodeMesh::Tick(XMMATRIX& completeTransform) { }
 
 void SceneNodeMesh::Render()
 {
-	XMMATRIX view = DirectXFramework::GetDXFramework()->GetCamera()->GetViewMatrix();
-	XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
-	XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
+	if (!readyToBeRendered) return;
 
-	Tick(comp);
+	if (doRender) {
+		XMMATRIX view = DirectXFramework::GetDXFramework()->GetCamera()->GetViewMatrix();
+		XMMATRIX proj = DirectXFramework::GetDXFramework()->GetProjectionTransformation();
+		XMMATRIX comp = XMLoadFloat4x4(&_combinedWorldTransformation) * view * proj;
 
-	CBUFFER cBuffer;
-	cBuffer.CompleteTransformation = comp;
-	cBuffer.WorldTransformation = XMLoadFloat4x4(&_worldTransformation);
-	cBuffer.AmbientColour = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-	cBuffer.LightVector = XMVector4Normalize(XMVectorSet(0.0f, 1.0f, 1.0f, 0.0f));
-	cBuffer.LightColour = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+		Tick(comp);
 
-	_deviceContext->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
-	_deviceContext->UpdateSubresource(constantBuffer.Get(), 0, 0, &cBuffer, 0, 0);
+		CBUFFER cBuffer;
+		cBuffer.CompleteTransformation = comp;
+		cBuffer.WorldTransformation = XMLoadFloat4x4(&_worldTransformation);
+		cBuffer.AmbientColour = ambientColour;
+		cBuffer.LightVector = lightVector;
+		cBuffer.LightColour = lightColour;
 
-	// Set the texture to be used by the pixel shader
-	_deviceContext->PSSetShaderResources(0, 1, _texture.GetAddressOf());
+		_deviceContext->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
+		_deviceContext->UpdateSubresource(constantBuffer.Get(), 0, 0, &cBuffer, 0, 0);
+
+		// Set the texture to be used by the pixel shader
+		_deviceContext->PSSetShaderResources(0, 1, _texture.GetAddressOf());
 
 
-	UINT stride = sizeof(Vertex);
-	UINT offset = 0;
-	_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
-	_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	_deviceContext->DrawIndexed(vertices.size() * 2, 0, 0);
+		UINT stride = sizeof(Vertex);
+		UINT offset = 0;
+		_deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+		_deviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		_deviceContext->DrawIndexed(vertices.size() * 3, 0, 0);
 
-	_deviceContext->RSSetState(_defaultRasteriserState.Get());
+		if(useCulling)
+			_deviceContext->RSSetState(_defaultRasteriserState.Get());
+
+		if(useBlending)
+			_deviceContext->OMSetBlendState(_blendState.Get(), blendFactor, sampleMask);
+	}
 }
 
 void SceneNodeMesh::SetupMesh() { }
+
+int SceneNodeMesh::GetVertices(void)
+{
+	return vertices.size();
+}
+
+int SceneNodeMesh::GetIndices(void)
+{
+	return indices.size();
+}
+
+SceneNodeMesh::Vertex SceneNodeMesh::GetVertex(int index)
+{
+	return vertices[index];
+}
 
 void SceneNodeMesh::BuildGeometry() {
 	D3D11_BUFFER_DESC vbd;
@@ -177,7 +204,7 @@ void SceneNodeMesh::AddIndice(UINT p1, UINT p2, UINT p3)
 void SceneNodeMesh::BuildRendererState(D3D11_CULL_MODE mode)
 {
 	D3D11_RASTERIZER_DESC rasteriserDesc;
-	rasteriserDesc.FillMode = D3D11_FILL_SOLID;
+	rasteriserDesc.FillMode = wireframeMode ? D3D11_FILL_WIREFRAME : D3D11_FILL_SOLID;
 	rasteriserDesc.CullMode = mode;
 	rasteriserDesc.FrontCounterClockwise = true;
 	rasteriserDesc.DepthBias = 0;
@@ -190,6 +217,32 @@ void SceneNodeMesh::BuildRendererState(D3D11_CULL_MODE mode)
 	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _defaultRasteriserState.GetAddressOf()));
 	rasteriserDesc.CullMode = D3D11_CULL_NONE;
 	ThrowIfFailed(_device->CreateRasterizerState(&rasteriserDesc, _noCullRasteriserState.GetAddressOf()));
+}
+
+void SceneNodeMesh::BuildBlendState() {
+	D3D11_BLEND_DESC BlendState;
+	ZeroMemory(&BlendState, sizeof(D3D11_BLEND_DESC));
+	D3D11_RENDER_TARGET_BLEND_DESC desc;
+	ZeroMemory(&desc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
+
+	desc.BlendEnable = TRUE;
+	desc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	desc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	desc.BlendOp = D3D11_BLEND_OP_ADD;
+	desc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	desc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	desc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	desc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	BlendState.RenderTarget[0] = desc;
+	ThrowIfFailed(_device->CreateBlendState(&BlendState, _blendState.GetAddressOf()));
+}
+
+void SceneNodeMesh::SetupBlendState(float blendFactor[4], UINT sampleMask)
+{
+	for (int i = 0; i < 4; i++) {
+		this->blendFactor[i] = blendFactor[i];
+	}
+	this->sampleMask = sampleMask;
 }
 
 void SceneNodeMesh::Shutdown()

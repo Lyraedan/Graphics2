@@ -22,7 +22,7 @@ public:
 
 	static DirectXFramework* GetDXFramework();
 
-	inline SceneGraphPointer			GetSceneGraph() { return _sceneGraph; }
+	inline SceneGraph*			GetSceneGraph() { return _sceneGraph; }
 	inline ComPtr<ID3D11Device>			GetDevice() { return _device; }
 	inline ComPtr<ID3D11DeviceContext>	GetDeviceContext() { return _deviceContext; }
 
@@ -51,7 +51,7 @@ private:
 
 	XMFLOAT4X4							_projectionTransformation;
 
-	SceneGraphPointer					_sceneGraph;
+	SceneGraph*					_sceneGraph;
 
 	float							    _backgroundColour[4];
 

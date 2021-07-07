@@ -1,26 +1,50 @@
+/*
+	Author: Luke Rapkin
+*/
 #pragma once
 
 #include "SceneNode.h"
 #include "Graphics2.h"
-#include "PerlinNoise.h"
+#include "SceneNodeWater.h"
+#include "SceneNodeChunk.h"
+#include <math.h>
+#include <thread>
 
 class SceneNodeTerrain : public SceneNode
 {
 public:
+	struct Chunk {
+		string id;
+		XMFLOAT3 position;
+		SceneNodeChunk* data;
+	};
+
 	SceneNodeTerrain(wstring name) : SceneNode(name) {};
 
 	bool Initialise() override;
 	virtual void Render() override;
 	virtual void Shutdown() override;
 
-	void GenerateTerrain(XMFLOAT3 terrainOffset);
-	void UpdateHeight(float xOffset, float zOffset);
-	void SetSceneGraph(SceneGraphPointer ptr);
+	void SetSceneGraph(SceneGraph* ptr);
 
-	int chunkSize = 50; //50
-	float terrain[50][50];
+	void GenerateChunkAt(XMFLOAT3 position);
+	void GenerateChunkIfWeNeedTo();
+
+	bool ChunkExistsAt(XMFLOAT3 position);
+	float ChunkX(void);
+	float ChunkZ(void);
+	Chunk GetChunkPlayerIsIn();
+
+	int chunkSize = 16; //50
+	float viewSize = 3;
+	// Enable or disable infinite terrain
+	bool generateDynamically = true;
+	bool useFreecam = true;
 
 private:
 	// making this & breaks the constructor
-	SceneGraphPointer sceneGraph;
+	SceneGraph* sceneGraph;
+	std::vector<Chunk> chunks;
+	std::vector<SceneNodeChunk*> chunkPtrs;
+	std::thread chunkThread;
 };

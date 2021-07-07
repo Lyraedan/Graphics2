@@ -1,3 +1,6 @@
+/*
+	Author: Luke Rapkin
+*/
 #pragma once
 #include "Graphics2.h"
 #include <iostream>

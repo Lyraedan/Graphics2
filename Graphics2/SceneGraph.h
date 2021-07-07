@@ -16,11 +16,14 @@ public:
 	virtual void Render(void);
 	virtual void Shutdown(void);
 
-	void Add(SceneNodePointer node);
-	void Remove(SceneNodePointer node);
-	SceneNodePointer Find(wstring name);
+	void Add(SceneNode* node);
+	void AddFront(SceneNode* node);
+	void Insert(int index, SceneNode* node);
+	int Size();
+	void Remove(SceneNode* node);
+	SceneNode* Find(wstring name);
 	
-	std::list<SceneNodePointer> _children;
+	std::list<SceneNode*> _children;
 
 //private:
 
@@ -29,4 +32,4 @@ public:
 
 };
 
-typedef shared_ptr<SceneGraph>			 SceneGraphPointer;
+//typedef shared_ptr<SceneGraph>			 SceneGraphPointer;

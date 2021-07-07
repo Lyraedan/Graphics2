@@ -41,35 +41,35 @@ void ObjLoader::LoadModel(string f)
 		else if (str.rfind("f ", 0) == 0) {
 			vector<string> sl = split(str, ' ');
 
-			int j = 1;
-			vector<int> intArr;
+			int index = 1;
+			vector<int> indiceArray;
 			Face face;
 			// Vertexs, UV, Normals
-			while (j < sl.size() && sl[j].size() > 0) {
-				XMFLOAT3 temp = XMFLOAT3(0, 0, 0);
-				vector<string> sl2 = split(sl[j], '/');
-				temp.x = std::stof(sl2[0]);
+			while (index < sl.size() && sl[index].size() > 0) {
+				XMFLOAT3 parsed = XMFLOAT3(0, 0, 0);
+				vector<string> sl2 = split(sl[index], '/');
+				parsed.x = std::stof(sl2[0]);
 				if (sl2.size() > 1) {
 					if (sl2[1] != "") {
-						temp.y = std::stof(sl2[1]);
+						parsed.y = std::stof(sl2[1]);
 					}
-					temp.z = std::stof(sl2[2]);
+					parsed.z = std::stof(sl2[2]);
 				}
-				j++;
+				index++;
 
-				face.faceData.push_back(temp);
-				intArr.push_back(f2);
+				face.faceData.push_back(parsed);
+				indiceArray.push_back(f2);
 				f2++;
 			}
 
 			// Indices aka Triangles
-			j = 1;
-			while (j + 2 < sl.size()) {
-				float x = intArr[0];
-				float y = intArr[j];
-				float z = intArr[j + 1];
+			index = 1;
+			while (index + 2 < sl.size()) {
+				float x = indiceArray[0];
+				float y = indiceArray[index];
+				float z = indiceArray[index + 1];
 				face.tris.push_back(XMFLOAT3(x, y, z));
-				j++;
+				index++;
 			}
 			faces.push_back(face);
 		}

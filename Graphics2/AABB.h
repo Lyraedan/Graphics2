@@ -1,9 +1,9 @@
-#pragma once
-#include <math.h>
-
+/*
+	Author: Luke Rapkin
+*/
 class AABB
 {
-public:
+public:	
 	float x, y, z;
 	float width, height, length;
 
@@ -19,6 +19,5 @@ public:
 			   a.z < b.z + b.length &&
 			   a.z + a.length > b.z;
 	}
-
 };
 

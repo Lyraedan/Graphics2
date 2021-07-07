@@ -1,4 +1,17 @@
-﻿  Graphics2.cpp
-  SceneNodePlane.cpp
-  Generating Code...
+﻿  SceneNodeChunk.cpp
+F:\Graphics2\Graphics2\HelperFunctions.h(1,9): warning C4068: unknown pragma 'once687628268'
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(55,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(56,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(56,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(58,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(82,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(82,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(99,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(99,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(126,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(127,13): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(159,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(224,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(223,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+F:\Graphics2\Graphics2\SceneNodeChunk.cpp(222,11): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Graphics2.vcxproj -> F:\Graphics2\x64\Debug\Graphics2.exe
